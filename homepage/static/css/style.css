@@ -1,0 +1,64 @@
+/* CUSTOM CSS */
+
+:root {
+    --background: #ffffff;
+    --secondary: #e6e8d7;
+    --accent1: #5a6b47;
+    --accent2: #32281b;
+    --accent3: #000000;
+}
+
+/* ----------------------------------- */
+/* index | sign-in */
+/* ----------------------------------- */
+
+/* SECTION */
+.sign-in input {
+    font-size: 14px !important;
+    padding-left: 36px;
+}
+
+/* ----------------------------------- */
+/* sign-up */
+/* ----------------------------------- */
+
+/* SECTION */
+.sign-up input {
+    font-size: 14px !important;
+    padding-left: 36px;
+}
+
+/* ----------------------------------- */
+/*  dashboard */
+/* ----------------------------------- */
+
+/* NAVBAR */
+
+.nav {
+    box-shadow: -5px 0 32px 11px rgba(0, 0, 0, 0.1) !important;
+}
+
+.nav li {
+    margin-top: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    transition: ease-in-out .3s !important;
+    width: 100% !important;
+}
+
+.nav li:hover {
+    transition: ease-in-out .3s !important;
+    color: var(--accent1) !important;
+}
+
+
+.nav li a {
+    margin-left: 8px !important;
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+}
+
+.nav .log-out:hover {
+    color: #b91c1c !important;
+}

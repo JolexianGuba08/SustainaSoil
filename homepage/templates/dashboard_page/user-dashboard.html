@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | SustainAsoil</title>
+    <!-- Tab Icon -->
+        <link rel="icon" type="image/x-icon" href="{% static 'images/logo-main.png' %}" />
+
+        <!-- Include DaisyUi -->
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <!-- Include Tailwind -->
+        <link href="{% static 'css/output.css' %}" rel="stylesheet" type="text/css" />
+        <!-- Include CSS -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="content bg-background min-h-screen flex font-san">
+    <!-- Navbar -->
+    <aside
+      class="nav min-w-[300px] min-h-[100%] pt-4 flex items-center flex-col sticky"
+    >
+      <!-- Logo -->
+      <div class="mt-6 flex items-center">
+        <img
+          src="{% static 'images/logo-secondary.png' %}"
+          alt="SustainAsoil logo"
+          class="w-20 mr-2"
+        />
+        <h1 class="text-base font-light tracking-[5px] text-accent1">
+          SUSTAIN<span class="text-2xl font-light">A</span>SOIL
+        </h1>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex justify-center mt-5">
+        <ul class="px-1">
+          <li class="text-accent1">
+            <svg
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13 21V11h8v10h-8ZM3 13V3h8v10H3Zm6-2V5H5v6h4ZM3 21v-6h8v6H3Zm2-2h4v-2H5v2Zm10 0h4v-6h-4v6ZM13 3h8v6h-8V3Zm2 2v2h4V5h-4Z"
+              ></path>
+            </svg>
+            <a>DASHBOARD</a>
+          </li>
+          <li>
+            <svg
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+              ></path>
+            </svg>
+            <a>GREENERY</a>
+          </li>
+
+          <li>
+            <svg
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 22a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4Zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6Zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z"
+              ></path>
+            </svg>
+            <a>PROFILE</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Profile & Log Out -->
+      <div class="flex justify-center mt-5 h-full items-end">
+        <ul class="px-1 mb-28">
+          <li class="log-out">
+            <svg
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3Zm2-7h7v2H6v3l-5-4 5-4v3Z"
+              ></path>
+            </svg>
+            <a href="{% url 'login_page' %}">LOG OUT</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex flex-grow flex-col items-center">
+      <!-- Header -->
+      <header class="bg-secondary mt-[60px] w-[90%] p-1 rounded-full mb-7">
+        <h1
+          class="text-accent1 font-bold tracking-[3px] text-sm bg-background inline-block p-3 px-5 rounded-full"
+        >
+          WELCOME TO DASHBOARD
+        </h1>
+      </header>
+      <!-- End Header -->
+
+      <!-- Greenery Count and Water & Pesticide Level Section -->
+      <section class="count-section flex w-[90%] justify-between h-[30%]">
+        <!-- Greenery Count  -->
+        <div
+          class="card w-[30%] bg-base-100 shadow-xl bg-secondary border border-secondary h-full"
+        >
+          <div class="card-body flex items-center">
+            <!-- DISPLAY COUNT -->
+            <p class="text-6xl text-accent1 text-center flex-grow-0">0</p>
+            <!-- Caption -->
+            <div class="flex items-center justify-center">
+              <svg
+                width="60"
+                height="60"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="text-accent1 flex-shrink-0"
+              >
+                <path
+                  d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                ></path>
+              </svg>
+              <h2 class="card-title text-accent1 text-2xl font-bold">
+                GREENERY COUNT
+              </h2>
+            </div>
+          </div>
+        </div>
+        <!-- End Greenery Count -->
+
+        <!-- Water & Pesticide Level  -->
+        <div class="card w-[68%] bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title">Card title!</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+          </div>
+        </div>
+      </section>
+      <!-- End Greenery Count and Water & Pesticide Level Section -->
+
+      <!-- Weather Section -->
+      <section class="weather-section"></section>
+      <!-- End Weather Section -->
+    </main>
+    <!-- End Main -->
+
+    <!-- Include GSAP & Animation JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+    <script src="{% static 'js/animation.js' %}"></script>
+  </body>
+</html>
