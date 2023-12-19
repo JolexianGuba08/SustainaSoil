@@ -1,169 +1,517 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard | SustainAsoil</title>
-    <!-- Tab Icon -->
-        <link rel="icon" type="image/x-icon" href="{% static 'images/logo-main.png' %}" />
 
-        <!-- Include DaisyUi -->
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
-        <!-- Include Tailwind -->
-        <link href="{% static 'css/output.css' %}" rel="stylesheet" type="text/css" />
-        <!-- Include CSS -->
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
-  </head>
+{% block title %} Dashboard | SustainAsoil {% endblock %}
 
-  <body class="content bg-background min-h-screen flex font-san">
-    <!-- Navbar -->
-    <aside
-      class="nav min-w-[300px] min-h-[100%] pt-4 flex items-center flex-col sticky"
+{% block dashboard %}
+    <li
+    class="text-accent1 bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
     >
-      <!-- Logo -->
-      <div class="mt-6 flex items-center">
+{% endblock %}
+
+{%  block content %}
+<!-- Main -->
+<main class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-40">
+  <!-- Header -->
+  <header
+    class="bg-secondary max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[60px] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+  >
+    <h1
+      class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background inline-block p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+    >
+      WELCOME TO DASHBOARD
+    </h1>
+  </header>
+  <!-- End Header -->
+
+  <!-- Greenery Count and Water & Pesticide Level Section -->
+  <section
+    class="count-section flex w-[90%] min-h-[240px] justify-between max-xl:flex-col"
+  >
+    <!-- Greenery Count Container -->
+    <div
+      class="card max-[450px]:bg-transparent max-[450px]:shadow-none max-[450px]:mb-0 w-[30%] bg-base-100 shadow-xl bg-secondary border-secondary rounded-[30px] max-xl:w-full max-xl:mb-5"
+    >
+      <div class="card-body text-accent1 flex items-center justify-center">
+        <h2
+          class="card-title text-3xl font-bold tracking-wider text-center mb-3"
+        >
+          GREENERY
+        </h2>
+        <div class="flex items-start justify-center w-full">
+          <svg
+            width="50"
+            height="50"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            class="flex-shrink-0 font-extralight"
+          >
+            <path
+              d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+            ></path>
+          </svg>
+          <!-- DISPLAY GREENERY COUNT -->
+          <p class="flex-grow-0 text-6xl font-light">0</p>
+        </div>
+      </div>
+    </div>
+    <!-- End Greenery Count Container -->
+
+    <!-- Average Water & Pesticide Level Container -->
+    <div
+      class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
+    >
+      <!-- No Device Connected Message -->
+      <div
+        class="empty_message w-full h-full text-sm flex justify-center items-center"
+      >
+        <p class="tracking-widest text-sm">NO DEVICE CONNECTED</p>
+      </div>
+
+      <!-- Water Level Container -->
+      <div
+        class="water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
+      >
+        <h2
+          class="card-title text-accent1 font-light indent-5 tracking-[5px] text-center text-sm"
+        >
+          WATER LEVEL
+        </h2>
+        <!-- Water Level -->
+        <div
+          class="w-full h-[100%] rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
+        >
+          <div class="water_level absolute h-[100vh] z-50"></div>
+        </div>
+      </div>
+      <!-- End Water Level Container -->
+
+      <!-- Pesticide Level Container -->
+      <div class="pesticide card-body p-6">
+        <h2
+          class="card-title text-accent1 font-light indent-5 tracking-[5px] text-center text-sm"
+        >
+          PESTICIDE LEVEL
+        </h2>
+        <!-- Pesticide Level -->
+        <div
+          class="w-full h-full rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
+        >
+          <div class="pesticide_level absolute h-[100vh] z-50"></div>
+        </div>
+      </div>
+      <!-- End Pesticide Level Container -->
+    </div>
+  </section>
+  <!-- End Greenery Count and Average Water & Pesticide Level Section -->
+
+  <!-- Weather Section -->
+  <section
+    class="weather-section relative flex w-[90%] flex-grow mt-10 mb-10 overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
+  >
+    <!-- Cloudy Animation -->
+    <img
+      src="{% static 'images/cloudy-animation.png' %}"
+      alt=""
+      class="cloudy_animation cloudy_animation1 absolute top-[50px] left-[100%]"
+    />
+
+    <img
+      src="{% static 'images/cloudy-animation.png' %}"
+      alt=""
+      class="cloudy_animation cloudy_animation2 absolute top-0 bottom-[30px] left-[100%]"
+    />
+
+    <img
+      src="{% static 'images/cloudy-animation.png' %}"
+      alt=""
+      class="cloudy_animation cloudy_animation3 absolute top-0 bottom-[50px] left-[100%]"
+    />
+    <!-- End Cloud Animation -->
+
+    <!-- Sunny Animation -->
+    <img
+      src="{% static 'images/sunny-animation.png' %}"
+      alt=""
+      class="sunny_animation sunny_animation1 absolute top-0 right-0 left-0 w-[100%] h-[100%]"
+    />
+
+    <img
+      src="{% static 'images/cloudy-animation.png' %}"
+      alt=""
+      class="sunny_animation sunny_animation2 absolute top-0 left-[-50%]"
+    />
+    <!-- End Sunny Animation -->
+
+    <!-- Rainy Animation -->
+    <div
+      class="rainy_animation rainy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+    >
+      <img
+        src="{% static 'images/cloudy-animation.png' %}"
+        alt=""
+        class="absolute top-0 w-full"
+      />
+
+      <img
+        src="{% static 'images/cloudy-animation.png' %}"
+        alt=""
+        class="cloudy_animation2 absolute top-0 bottom-[30px] left-[100%] w-full h-full"
+      />
+
+      <img
+        src="{% static 'images/cloudy-animation.png' %}"
+        alt=""
+        class="cloudy_animation3 absolute top-0 bottom-[50px] left-[100%] w-full h-full"
+      />
+    </div>
+    <!-- End Rainy Animation -->
+
+    <!-- Stormy Animation -->
+    <div
+      class="stormy_animation stormy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+    >
+      <img
+        src="{% static 'images/lightning-animation.png' %}"
+        alt=""
+        class="lightning_animation1 absolute top-0 w-full h-full z-40"
+      />
+
+      <img
+        src="{% static 'images/stormy-animation.png' %}"
+        alt=""
+        class="stormy_animation2 absolute top-[-5%] right-[0]"
+      />
+    </div>
+    <!-- End Stormy Animation -->
+
+    <!-- Location & Weather and Temperature Container -->
+    <div
+      class="flex flex-col min-w-[30%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
+    >
+      <!-- Location & Weather Container -->
+      <div class="">
+        <div class="flex items-center justify-between">
+          <!-- DISPLAY LOCATION -->
+          <h3 class="text-3xl text-accent2 tracking-widest mb-1 mr-3">
+            TAYUD
+          </h3>
+          <!-- DISPLAY WEATHER  -->
+          <h2
+            class="font-bold border border-accent2 bg-accent2 tracking-widest p-1 rounded-full px-5 text-background"
+          >
+            CLOUDY
+          </h2>
+        </div>
+
+        <!-- Icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-7 h-7 text-accent2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+          />
+        </svg>
+      </div>
+      <!-- End Location & Weather Conatiner -->
+
+      <!-- Temperature Container -->
+      <div class="flex items-end justify-center mt-0 mb-0">
+        <!-- DISPLAY TEMPERATURE NOW -->
+        <h2
+          class="temp text-center text-9xl text-accent1 xl:mt-12 xl:text-[150px]"
+          id="temp"
+        >
+          40&deg;
+        </h2>
         <img
           src="{% static 'images/logo-secondary.png' %}"
-          alt="SustainAsoil logo"
-          class="w-20 mr-2"
+          alt=""
+          class="w-[90px] h-[90px]"
         />
-        <h1 class="text-base font-light tracking-[5px] text-accent1">
-          SUSTAIN<span class="text-2xl font-light">A</span>SOIL
-        </h1>
       </div>
+      <!-- End Temperature Container -->
 
-      <!-- Navigation -->
-      <div class="flex justify-center mt-5">
-        <ul class="px-1">
-          <li class="text-accent1">
-            <svg
-              width="18"
-              height="18"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M13 21V11h8v10h-8ZM3 13V3h8v10H3Zm6-2V5H5v6h4ZM3 21v-6h8v6H3Zm2-2h4v-2H5v2Zm10 0h4v-6h-4v6ZM13 3h8v6h-8V3Zm2 2v2h4V5h-4Z"
-              ></path>
-            </svg>
-            <a>DASHBOARD</a>
-          </li>
-          <li>
-            <svg
-              width="18"
-              height="18"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-              ></path>
-            </svg>
-            <a>GREENERY</a>
-          </li>
-
-          <li>
-            <svg
-              width="18"
-              height="18"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 22a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4Zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6Zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z"
-              ></path>
-            </svg>
-            <a>PROFILE</a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Profile & Log Out -->
-      <div class="flex justify-center mt-5 h-full items-end">
-        <ul class="px-1 mb-28">
-          <li class="log-out">
-            <svg
-              width="18"
-              height="18"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3Zm2-7h7v2H6v3l-5-4 5-4v3Z"
-              ></path>
-            </svg>
-            <a href="{% url 'login_page' %}">LOG OUT</a>
-          </li>
-        </ul>
-      </div>
-    </aside>
-
-    <!-- Main -->
-    <main class="flex flex-grow flex-col items-center">
-      <!-- Header -->
-      <header class="bg-secondary mt-[60px] w-[90%] p-1 rounded-full mb-7">
-        <h1
-          class="text-accent1 font-bold tracking-[3px] text-sm bg-background inline-block p-3 px-5 rounded-full"
+      <!-- Day of the week -->
+      <div class="mt-10">
+        <!-- DISPLAY DAY OF THE WEEK -->
+        <h4
+          class="xl:text-[55px] text-center font-normal text-4xl text-accent1 tracking-wider xl:mt-1"
         >
-          WELCOME TO DASHBOARD
-        </h1>
-      </header>
-      <!-- End Header -->
+          THURSDAY
+        </h4>
+      </div>
+      <!-- End Day of the week -->
+    </div>
+    <!-- End Location & Weather and Temperature Container -->
 
-      <!-- Greenery Count and Water & Pesticide Level Section -->
-      <section class="count-section flex w-[90%] justify-between h-[30%]">
-        <!-- Greenery Count  -->
-        <div
-          class="card w-[30%] bg-base-100 shadow-xl bg-secondary border border-secondary h-full"
-        >
-          <div class="card-body flex items-center">
-            <!-- DISPLAY COUNT -->
-            <p class="text-6xl text-accent1 text-center flex-grow-0">0</p>
-            <!-- Caption -->
-            <div class="flex items-center justify-center">
-              <svg
-                width="60"
-                height="60"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-accent1 flex-shrink-0"
-              >
-                <path
-                  d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-                ></path>
-              </svg>
-              <h2 class="card-title text-accent1 text-2xl font-bold">
-                GREENERY COUNT
-              </h2>
-            </div>
+    <!-- Temperature Future -->
+    <div
+      class="temp_future min-w-[68%] flex-wrap h-full rounded-[20px] flex gap-4 items-center justify-end max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
+    >
+      <!-- Future 1 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 1 -->
+        <h2 class="text-center">FRIDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 1 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 1 -->
+            <p class="">20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
           </div>
         </div>
-        <!-- End Greenery Count -->
+      </div>
 
-        <!-- Water & Pesticide Level  -->
-        <div class="card w-[68%] bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title">Card title!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
+      <!-- Future 2 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 2 -->
+        <h2 class="text-center">SATURDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 2 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 2 -->
+            <p>20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
           </div>
         </div>
-      </section>
-      <!-- End Greenery Count and Water & Pesticide Level Section -->
+      </div>
 
-      <!-- Weather Section -->
-      <section class="weather-section"></section>
-      <!-- End Weather Section -->
-    </main>
-    <!-- End Main -->
+      <!-- Future 3 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 3 -->
+        <h2 class="text-center">SUNDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 3 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 3 -->
+            <p>20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
+          </div>
+        </div>
+      </div>
 
-    <!-- Include GSAP & Animation JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
-    <script src="{% static 'js/animation.js' %}"></script>
-  </body>
-</html>
+      <!-- Future 4 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 4 -->
+        <h2 class="text-center">MONDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 4 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 4 -->
+            <p>20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Future 5 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 5 -->
+        <h2 class="text-center">TUESDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 5 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 5 -->
+            <p>20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Future 6 -->
+      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+        <!-- DISPLAY DAY 6 -->
+        <h2 class="text-center">WEDNESDAY</h2>
+        <div class="flex flex-col items-center justify-center">
+          <!-- DISPLAY TEMPERATURE IMAGE 6 -->
+          <img
+            src="{% static 'images/cloudy.png' %}"
+            alt="logo"
+            id="weather-image"
+            class="w-14 h-14"
+          />
+          <div class="flex mt-1 items-center">
+            <!-- DISPLAY TEMPERATURE 6 -->
+            <p>20&deg;</p>
+            <img
+              src="{% static 'images/logo-secondary.png' %}"
+              alt="logo"
+              class="w-8 h-8"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Temperature Future -->
+  </section>
+  <!-- End Weather Section -->
+</main>
+<!-- End Main -->
+
+<!-- Include JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Include GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+
+<script>
+    // Content Animation
+    gsap.from(".count-section", {
+      duration: 2,
+      xPercent: 40,
+      opacity: 0,
+    });
+    gsap.from(".weather-section", {
+      duration: 2,
+      xPercent: 60,
+      opacity: 0,
+    });
+
+    // Weather Animation
+    gsap.from(".cloudy_animation1", {
+        duration: 400,
+        x: '-190%',
+        repeat: -1,
+      });
+    gsap.from(".cloudy_animation2", {
+        duration: 100,
+        x: '-200%',
+        repeat: -1,
+      });
+    gsap.from(".cloudy_animation3", {
+        duration: 300,
+        x: '-400%',
+        repeat: -1,
+      });
+    gsap.from(".sunny_animation1", {
+      duration: 10,
+      scale: 2,
+      yoyo: true,
+      repeat: -1,
+    });
+    gsap.from(".sunny_animation2", {
+      duration: 5,
+      x: "-7%",
+      yoyo: true,
+      repeat: -1,
+    });
+    gsap.to(".rainy_animation1", {
+      backgroundPositionY: '2000px',
+      duration: 2,
+      repeat: -1,
+      ease: 'linear',
+    });
+    gsap.to(".stormy_animation1", {
+      backgroundPositionY: '2000px',
+      duration: 2,
+      repeat: -1,
+      ease: 'linear',
+    });
+    gsap.to(".lightning_animation1", {
+      opacity: 0,
+      duration: 1,
+      repeat: -1,
+    });
+    gsap.to(".stormy_animation2", {
+      duration: 5,
+      x: '2%',
+      yoyo: true,
+      repeat: -1,
+    });
+    gsap.to(".water_level", {
+      y: '-80%',
+      duration: 20,
+      repeat: -1,
+      ease: 'linear',
+    });
+    gsap.to(".pesticide_level", {
+      y: '-80%',
+      duration: 20,
+      repeat: -1,
+      ease: 'linear',
+    });
+
+  <!-- Display Weather to Animate-->
+  $(document).ready(function () {
+    const get_temp = $("#temp").text();
+
+    const temp = parseInt(get_temp, 10);
+
+    // Display Sunny Animation
+     if (temp > 30) {
+      $(".rainy_animation").css({
+        visibility: "visible",
+        important: "true",
+      });
+      console.log("Cloudy");
+    }
+  });
+
+  const image = document.getElementById("weather-image");
+
+  //image.src = "./src/images/logo-secondary.png";
+</script>
+{% endblock %}

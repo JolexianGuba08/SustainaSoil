@@ -3,9 +3,8 @@
 :root {
     --background: #ffffff;
     --secondary: #e6e8d7;
-    --accent1: #5a6b47;
+    --accent1: #5a6b47 ;
     --accent2: #32281b;
-    --accent3: #000000;
 }
 
 /* ----------------------------------- */
@@ -28,6 +27,25 @@
     padding-left: 36px;
 }
 
+/* OTP */
+#otp_container input {
+    padding: 0;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+#otp_container input:nth-child(1) {
+    cursor: pointer;
+    pointer-events: all;
+}
+
+#resend-btn:disabled {
+    cursor: not-allowed !important;
+    color: #a6adc0 !important;
+    text-decoration: none;
+}
+
+
 /* ----------------------------------- */
 /*  dashboard */
 /* ----------------------------------- */
@@ -39,7 +57,7 @@
 }
 
 .nav li {
-    margin-top: 30px !important;
+    margin-top: 20px !important;
     display: flex !important;
     align-items: center !important;
     cursor: pointer !important;
@@ -54,11 +72,98 @@
 
 
 .nav li a {
-    margin-left: 8px !important;
     font-size: 14px !important;
-    letter-spacing: 2px !important;
+    letter-spacing: 3px !important;
 }
 
 .nav .log-out:hover {
     color: #b91c1c !important;
 }
+
+/* SECTION */
+.temp {
+    text-shadow: 6px 5px 4px rgba(148, 147, 147, 0.5);
+}
+
+.weather-section {
+    background-color: var(--secondary) !important;
+}
+
+.cloudy_animation {
+    visibility: hidden ;
+}
+
+.sunny_animation {
+    visibility: hidden ;
+}
+
+.rainy_animation {
+    background-image: url(../images/rainy-animation.png) !important;
+    visibility: hidden ;
+}
+
+.stormy_animation {
+    background-image: url(../images/rainy-animation.png) !important;
+    visibility: hidden;
+}
+
+.water_level {
+    width: 50% !important;
+
+    --mask:
+    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+    background-color: #38b6ff !important;
+}
+
+.pesticide_level{
+    width: 80% !important;
+
+    --mask:
+    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+    background-color: var(--secondary) !important;
+}
+
+.water, .pesticide {
+     /*display: none !important;*/
+}
+
+.empty_message {
+    display: none !important;
+}
+
+.temp_future .temp {
+    border-radius: 20px;
+    padding: 15px !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3px) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+}
+
+.temp_future .temp h2 {
+    font-size: 18px !important;
+    color: var(--accent1) !important;
+    text-shadow: none !important;
+    letter-spacing: 2px !important;
+}
+
+.temp_future .temp p {
+    font-size: 25px !important;
+    color: var(--accent1) !important;
+    text-shadow: none !important;
+}
+
+@media (min-width: 1280px) {
+    .temp_future .temp p {
+        font-size: 50px !important;
+    }
+
+}
+

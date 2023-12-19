@@ -1,12 +1,249 @@
-{% load static tailwind_tags %}
+{% load  static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% tailwind_css %}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title> {% block title %} Base | SustainAsoil {% endblock %} </title>
+    <!-- Tab Icon -->
+    <link
+            rel="icon"
+            type="image/x-icon"
+            href="{% static 'images/logo-secondary.png' %}"
+    />
+
+    <!-- Include DaisyUi -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+    <!-- Include Tailwind -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+
+    <!-- Include CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
-<body>
-    <h1 class="text-red-800">Hello World</h1>
+
+<body
+        class="content bg-background overflow-x-hidden min-h-screen flex font-san max-[450px]:flex max-[450px]:flex-col"
+>
+
+<!-- Mobile Navbar -->
+<div
+        class="navbar z-50 min-[450px]:hidden max-[450px]:visible max-[450px]:bg-background max-[450px]:shadow-lg"
+>
+    <div class="flex-1">
+        <img
+                src="{% static 'images/logo-secondary.png' %}"
+                alt=""
+                class="w-11 h-11 mr-2"
+        />
+        <h1 class="text-sm font-light tracking-[5px] text-accent1">
+            SUSTAIN<span class="text-lg font-light">A</span>SOIL
+        </h1>
+    </div>
+    <div class="flex-none">
+        <div class="dropdown dropdown-end">
+            <div
+                    tabindex="0"
+                    role="button"
+                    class="btn btn-ghost btn-circle avatar"
+            >
+                <div class="w-10 rounded-full">
+                    <img alt="Profile" src="{% static 'images/default-profile.png' %}"/>
+                </div>
+            </div>
+            <ul
+                    tabindex="0"
+                    class="menu-sm dropdown-content text-accent1 mt-3 z-[1] p-2 bg-background shadow rounded-box w-52"
+            >
+                <li class="active:bg-secondary rounded-lg">
+                    <!-- Dashboard Link -->
+                    <a href=""
+                    >
+                        <button class="p-0 w-full h-full text-left">
+                            Dashboard
+                        </button>
+                    </a
+                    >
+                </li>
+
+                <li class="active:bg-secondary rounded-lg">
+                    <!-- Greenery Link -->
+                    <a href=""
+                    >
+                        <button class="p-0 w-full h-full text-left">
+                            Greenery
+                        </button>
+                    </a
+                    >
+                </li>
+
+                <li class="active:bg-secondary rounded-lg">
+                    <!-- Profile Link -->
+                    <a href=""
+                    >
+                        <button class="p-0 w-full h-full text-left">Profile</button>
+                    </a
+                    >
+                </li>
+
+                <li class="active:bg-secondary rounded-lg">
+                    <!-- Log Out Link -->
+                    <a href="{% url 'login_page' %}"
+                    >
+                        <button class="p-0 w-full h-full text-left text-red">
+                            Log Out
+                        </button>
+                    </a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- End Mobile Navbar -->
+
+<!-- Web Navbar -->
+<aside
+        class="nav max-[450px]:hidden w-[280px] flex-shrink-0 min-h-[100%] pt-4 flex items-center flex-col max-xl:w-[80px] max-xl:transition-all"
+>
+    <!-- Logo -->
+    <div class="navbar mt-8 flex items-center justify-center">
+        <img
+                src="{% static 'images/logo-secondary.png' %}"
+                alt="SustainAsoil logo"
+                class="mr-2 max-xl:w-15 max-xl:mt-2 max-xl:mr-0 w-14"
+        />
+        <h1
+                class="text-sm font-light tracking-[5px] text-accent2 max-xl:hidden"
+        >
+            SUSTAIN<span class="text-xl font-light">A</span>SOIL
+        </h1>
+    </div>
+
+    <!-- Divider -->
+    <div class="w-[80%] h-[1px] bg-secondary mt-5"></div>
+
+    <!-- Navigation -->
+    <div class="flex mt-2 w-[71%]">
+        <ul class="w-full gap-2">
+            {% block dashboard %}
+                <li
+                        class="text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+                >
+            {% endblock %}
+            <!-- Dashboard Icon Link-->
+            <a href="">
+                <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
+                >
+                    <path
+                            d="M13 21V11h8v10h-8ZM3 13V3h8v10H3Zm6-2V5H5v6h4ZM3 21v-6h8v6H3Zm2-2h4v-2H5v2Zm10 0h4v-6h-4v6ZM13 3h8v6h-8V3Zm2 2v2h4V5h-4Z"
+                    ></path>
+                </svg>
+            </a>
+            <!-- Dashboard Link -->
+            <a class="ml-[5px] max-xl:hidden max-xl:ml-0">DASHBOARD</a>
+            </li>
+
+            {% block greenery %}
+                <li
+                        class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+                >
+            {% endblock %}
+            <!-- Greenery Icon Link -->
+            <a href="">
+                <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
+                >
+                    <path
+                            d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                    ></path>
+                </svg>
+            </a>
+            <!-- Greenery Link -->
+            <a href="" class="ml-[5px] max-xl:hidden max-xl:ml-0">GREENERY</a>
+            </li>
+
+            {% block profile %}
+                <li
+                        class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+                >
+            {% endblock %}
+            <!-- Profile Icon Link -->
+            <a href="">
+                <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
+                >
+                    <path
+                            d="M4 22a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4Zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6Zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z"
+                    ></path>
+                </svg>
+            </a>
+            <!-- Profile Link -->
+            <a class="ml-[5px] max-xl:hidden max-xl:ml-0">PROFILE</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Log Out -->
+    <div class="flex justify-center mt-5 h-full items-end w-[71%]">
+        <ul class="px-1 mb-28 w-full">
+            <li
+                    class="log-out px-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+            >
+                <!-- Log Out Icon Link -->
+                <a href="{% url 'logout_page' %}">
+                    <svg
+                            width="24"
+                            height="24"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
+                    >
+                        <path
+                                d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3Zm2-7h7v2H6v3l-5-4 5-4v3Z"
+                        ></path>
+                    </svg>
+                </a>
+                <!-- Log Out Link -->
+                <a
+                        href="{% url 'logout_page' %}"
+                        class="ml-[5px] max-xl:hidden max-xl:ml-0 text-9xl"
+                >LOG OUT</a
+                >
+            </li>
+        </ul>
+    </div>
+</aside>
+<!-- End Web Navbar -->
+
+{% block content %}
+    <!-- Content... -->
+{% endblock %}
+
+<!-- Include GSAP & Base JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+<script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

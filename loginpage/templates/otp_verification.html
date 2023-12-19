@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Authentication | SustainAsoil</title>
+    <!-- Tab Icon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo-secondary.png' %}"/>
+    <!-- Include DaisyUi -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Include Tailwind -->
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Include CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body
+        class="content min-h-screen flex flex-col font-sans bg-gradient-to-r from-g1 to-background"
+>
+<!-- Navbar -->
+<div
+        class="navbar sm:w-[100%] sm:pl-4 xl:w-[65%] xl:m-auto pt-4 max-xl:flex max-xl:justify-center"
+>
+    <img
+            src="{% static 'images/logo-secondary.png' %}"
+            alt="SustainAsoil logo"
+            class="w-20 mr-2 max-xl:w-32"
+    />
+    <h1
+            class="text-base font-light tracking-[5px] max-xl:hidden text-accent2"
+    >
+        SUSTAIN<span class="text-2xl font-light">A</span>SOIL
+    </h1>
+</div>
+<!-- End Navbar -->
+
+<!-- Main -->
+<main class="flex flex-grow">
+    <!-- Background Image -->
+    <aside class="aside-container max-xl:hidden w-full max-lg:flex-shrink-0">
+        <img
+                src="{% static 'images/background-image.png' %}"
+                alt="Plant image"
+                class="object-cover h-full w-full object-right"
+        />
+    </aside>
+    <!-- End Background Image -->
+
+    <!-- OTP Form Section -->
+    <section
+            class="section-container flex w-[80%] max-xl:justify-center max-xl:w-full"
+    >
+        <!-- OTP Form -->
+        <form
+                action=""
+                class="sign-in flex items-center flex-col mt-16 w-[90%]"
+                method="post"
+        >
+            {% csrf_token %}
+            <h1 class="font-bold text-2xl tracking-wider mb-5 text-accent1">
+                AUTHENTICATION
+            </h1>
+
+            <!-- DISPLAY EMAIL ADDRESS -->
+            <h3 class="mb-8 text-center text-md font-extralight">
+                Please enter the verification code <br/>
+                sent to
+                <span class="text-accent2 font-normal">
+              {{ email }}</span
+                >
+            </h3>
+            <!-- END DISPLAY EMAIL ADDRESS -->
+
+            <!-- OTP Form Container -->
+            <div class="flex flex-col items-center w-full">
+                <!-- OTP -->
+                <div
+                        id="otp_container"
+                        class="w-[300px] flex items-center gap-3 max-xl:w-[300px] mb-6 relative focus-within:text-accent1 tracking-wider"
+                >
+                    <!-- Icon -->
+                    <!-- <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-5 h-5 absolute ml-3 mt-1"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
+                      />
+                    </svg> -->
+
+                    <!-- OTP Form -->
+
+                    <!-- <input
+                      type="number"
+                      placeholder="E"
+                      pattern="\d6"
+                      required
+                      class="input input-bordered input-md w-full bg-transparent border-secondary pl-40 placeholder:tracking-wide"
+                    /> -->
+                    {{ form.otp1 }}
+                    {{ form.otp2 }}
+                    {{ form.otp3 }}
+                    {{ form.otp4 }}
+                    {{ form.otp5 }}
+                    {{ form.otp6 }}
+                    {#                    <input#}
+                    {#                            type="text"#}
+                    {#                            inputmode="numeric"#}
+                    {#                            maxlength="1"#}
+                    {#                            placeholder=""#}
+                    {#                            required#}
+                    {#                            class="input input-bordered text-center focus-within:text-center input-md w-full bg-transparent border-secondary pl-40 placeholder:tracking-wide"#}
+                    {#                            id="otp1"#}
+                    {#                    />#}
+                    {##}
+                    {#                    <input#}
+                    {#                            type="text"#}
+                    {#                            inputmode="numeric"#}
+                    {#                            maxlength="1"#}
+                    {#                            placeholder=""#}
+                    {#                            required#}
+                    {#                            class="input input-bordered text-center focus-within:text-center input-md w-full bg-transparent border-secondary pl-40 placeholder:tracking-wide"#}
+                    {#                            id="otp2"#}
+                    {#                    />#}
+                    {#                    <input#}
+                    {#                            type="text"#}
+                    {#                            inputmode="numeric"#}
+                    {#                            maxlength="1"#}
+                    {#                            placeholder=""#}
+                    {#                            required#}
+                    {#                            class="input input-bordered text-center focus-within:text-center input-md w-full bg-transparent border-secondary pl-40 placeholder:tracking-wide"#}
+                    {#                            id="otp3"#}
+                    {#                    />#}
+                    {#                    <input#}
+                    {#                            type="text"#}
+                    {#                            inputmode="numeric"#}
+                    {#                            maxlength="1"#}
+                    {#                            placeholder=""#}
+                    {#                            required#}
+                    {#                            class="input input-bordered text-center focus-within:text-center input-md w-full bg-transparent border-secondary pl-40 placeholder:tracking-wide"#}
+                    {#                            id="otp4"#}
+                    {#                    />#}
+                </div>
+            </div>
+            <!-- End OTP Form Container -->
+
+            <!-- Resend Button -->
+            <button
+                    type="button"
+                    id="resend-btn"
+                    disabled
+                    class="p-0 font-bold text-sm hover:underline tracking-widest mb-0 cursor-pointer text-accent1"
+                    data-form-url="{% url 'otp_resend' %}"
+            >
+                RESEND
+            </button>
+            <!-- Timer -->
+            <h2 class="mb-5" id="timer"></h2>
+            <!-- End Resend Button -->
+
+            <!-- Verify Button -->
+            <a href="">
+                <button
+                        type="submit"
+                        class="border p-2 w-[300px] bg-accent1 font-bold text-sm tracking-widest text-background rounded-lg border-solid border-1 border-accent1 transition ease-in-out hover:duration-500 hover:bg-transparent hover:text-accent1 hover:font-bold"
+                >
+                    VERIFY
+                </button>
+            </a>
+            <!-- End Verify Button -->
+
+            <!-- Redirect to Sign In Page -->
+            <div class="mt-3">
+                <p class="text-xs">
+                    Already have an account?
+                    <a
+                            href="{% url 'login_page' %}"
+                            class="font-bold text-accent2 hover:underline tracking-wide"
+                    >SIGN IN</a
+                    >
+                </p>
+            </div>
+            <!-- End Redirect to Sign In Page -->
+        </form>
+        <!-- End OTP Form -->
+    </section>
+    <!-- End Sign In Form Section -->
+</main>
+<!-- End Main -->
+
+
+<!-- Include JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- OTP JS -->
+<script>
+    // OTP Input Event
+    const otp = document.getElementById("otp_container");
+
+    otp.addEventListener("input", function (e) {
+        const target = e.target;
+        const val = target.value;
+
+        /*if (isNaN(val)) {
+            target.value = "";
+            return;
+        }*/
+
+        if (val !== "") {
+            const next = target.nextElementSibling;
+            if (next) {
+                next.focus();
+            }
+        }
+    });
+
+    // OTP Delete Event
+    otp.addEventListener("keyup", function (e) {
+        const target = e.target;
+        const val = target.value;
+
+        const key = e.key.toLowerCase();
+
+        if (key === "backspace" || key === "delete") {
+            target.value = "";
+            const prev = target.previousElementSibling;
+
+            if (prev) {
+                prev.focus();
+            }
+        } else if (val !== "") {
+            const next = target.nextElementSibling;
+            if (next) {
+                next.focus();
+            }
+        }
+    });
+
+    // OTP Timer
+    $(document).ready(function () {
+        let duration = 20;
+        let interval;
+
+        function startTimer() {
+            let timer = duration;
+
+            interval = setInterval(function () {
+                let time = ("0" + timer).slice(-2);
+
+                $("#timer").text(time);
+                timer--;
+
+                if (timer < 0) {
+                    clearInterval(interval);
+                    $("#resend-btn").prop("disabled", false);
+                    $("#timer").css("visibility", "hidden");
+                    $("#timer").css("margin-bottom", "0px");
+                }
+            }, 1000);
+        }
+
+        $("#resend-btn").click(function () {
+            $(this).prop("disabled", true);
+            $("#timer").css("visibility", "visible");
+            $("#timer").css("margin-bottom", "20px");
+            startTimer();
+        });
+
+        startTimer();
+    });
+
+    $(document).ready(function () {
+        $('#resend-btn').on('click', function () {
+            const url = $(this).data('form-url');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    // Handle success response if needed
+                    console.log('Resend OTP request successful');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response if needed
+                    console.error('Error in resending OTP:', error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
