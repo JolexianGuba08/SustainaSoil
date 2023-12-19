@@ -1,44 +1,27 @@
 import requests
+import datetime
 
 
-# // modify it your needs with version, city, API etc
-# http://history.openweathermap.org/data/2.5/history/city?[location]&type=hour&start={start}&cnt={cnt}&appid={YOUR_API_KEY}
-
-def fetch_weather_data(city):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid=7e0f514436e093338b9196987d835e02&units=metric'.format(
-        city)
+def fetch_weather_data(lat, lon, key):
+    url = f'https://api.weatherbit.io/v2.0/forecast/daily?&lat={lat}&lon={lon}&key={key}&days=7'
     res = requests.get(url)
-    return res.json()
+    data = res.json()
+    return data
 
 
 def display_weather_info(data):
-    humidity = data['main']['humidity']
-    pressure = data['main']['pressure']
-    wind = data['wind']['speed']
-    description = data['weather'][0]['description']
-    temp = data['main']['temp']
+    for day_data in data['data']:
+        date = day_data['datetime']
+        # Convert the date string to a datetime object
+        datetime_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+        # Get the day of the week (0 = Monday, 6 = Sunday)
+        day_of_week = datetime_obj.weekday()
+        # Get the day name corresponding to the day of the week
+        day_name = datetime_obj.strftime('%A')
+        temp = day_data['temp']
+        weather = day_data['weather']['description']
+        print(f"{day_name}: Temperature - {temp} °C  : Weather - {weather}")
 
-    print('Temperature:', temp, '°C')
-    print('Wind:', wind)
-    print('Pressure: ', pressure)
-    print('Humidity: ', humidity)
-    print('Description:', description)
 
-
-# Get user input for city
-city = input("Enter City: ")
-
-# Simulating different times of the day with the same data
-print("Morning Weather for", city + ":")
-morning_data = fetch_weather_data(city)
-display_weather_info(morning_data)
-print("\n")
-
-print("Afternoon Weather for", city + ":")
-afternoon_data = fetch_weather_data(city)
-display_weather_info(afternoon_data)
-print("\n")
-
-print("Night Weather for", city + ":")
-night_data = fetch_weather_data(city)
-display_weather_info(night_data)
+weather_data = fetch_weather_data('10.31028', '123.94944', '092fc961ff504a4daadc192d6466155b')
+display_weather_info(weather_data)
