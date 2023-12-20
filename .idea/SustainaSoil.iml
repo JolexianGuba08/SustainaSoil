@@ -20,11 +20,13 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gsap" level="application" />
     <orderEntry type="library" name="daisyui" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="gsap" level="application" />
   </component>
   <component name="PyNamespacePackagesService">
     <option name="namespacePackageFolders">
       <list>
-        <option value="$MODULE_DIR$/credentials" />
+        <option value="$MODULE_DIR$/homepage/credentials" />
       </list>
     </option>
   </component>

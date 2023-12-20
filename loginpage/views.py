@@ -65,6 +65,7 @@ def login_page(request):
     return render(request, 'login.html', {'form': LoginForm()})
 
 
+# Signup page with session
 def signup_page(request):
     if 'redirect_token' in request.session and 'redirect_email' in request.session:
         del_session(request)
@@ -103,6 +104,7 @@ def signup_page(request):
     return render(request, 'signup.html', {'form': form})
 
 
+# OTP Verification
 def otp_verification(request):
     if request.session.get('redirect_token') is None:
         return HttpResponse('403 Forbidden')
@@ -177,6 +179,7 @@ def otp_verification(request):
     return render(request, 'otp_verification.html', {'form': form, 'email': email})
 
 
+# Resend OTP Verification
 def resend_otp(request):
     redirect_email = request.session.get('redirect_email')
     redirect_token = request.session.get('redirect_token')
@@ -208,6 +211,7 @@ def resend_otp(request):
         print(f'Error in fetching the OTP Code: {e}')
 
 
+# Logout page
 def logout_page(request):
     del request.session['session_email']
     del request.session['session_user_id']

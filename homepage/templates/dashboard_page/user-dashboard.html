@@ -5,513 +5,412 @@
 
 {% block dashboard %}
     <li
-    class="text-accent1 bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+            class="text-accent1 bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
     >
 {% endblock %}
 
-{%  block content %}
-<!-- Main -->
-<main class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-40">
-  <!-- Header -->
-  <header
-    class="bg-secondary max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[60px] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
-  >
-    <h1
-      class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background inline-block p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
-    >
-      WELCOME TO DASHBOARD
-    </h1>
-  </header>
-  <!-- End Header -->
-
-  <!-- Greenery Count and Water & Pesticide Level Section -->
-  <section
-    class="count-section flex w-[90%] min-h-[240px] justify-between max-xl:flex-col"
-  >
-    <!-- Greenery Count Container -->
-    <div
-      class="card max-[450px]:bg-transparent max-[450px]:shadow-none max-[450px]:mb-0 w-[30%] bg-base-100 shadow-xl bg-secondary border-secondary rounded-[30px] max-xl:w-full max-xl:mb-5"
-    >
-      <div class="card-body text-accent1 flex items-center justify-center">
-        <h2
-          class="card-title text-3xl font-bold tracking-wider text-center mb-3"
+{% block content %}
+    <!-- Main -->
+    <main class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-40">
+        <!-- Header -->
+        <header
+                class="bg-secondary max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[60px] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
         >
-          GREENERY
-        </h2>
-        <div class="flex items-start justify-center w-full">
-          <svg
-            width="50"
-            height="50"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            class="flex-shrink-0 font-extralight"
-          >
-            <path
-              d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-            ></path>
-          </svg>
-          <!-- DISPLAY GREENERY COUNT -->
-          <p class="flex-grow-0 text-6xl font-light">0</p>
-        </div>
-      </div>
-    </div>
-    <!-- End Greenery Count Container -->
+            <h1
+                    class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background inline-block p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+            >
+                WELCOME TO DASHBOARD
+            </h1>
+        </header>
+        <!-- End Header -->
 
-    <!-- Average Water & Pesticide Level Container -->
-    <div
-      class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
-    >
-      <!-- No Device Connected Message -->
-      <div
-        class="empty_message w-full h-full text-sm flex justify-center items-center"
-      >
-        <p class="tracking-widest text-sm">NO DEVICE CONNECTED</p>
-      </div>
-
-      <!-- Water Level Container -->
-      <div
-        class="water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
-      >
-        <h2
-          class="card-title text-accent1 font-light indent-5 tracking-[5px] text-center text-sm"
+        <!-- Greenery Count and Water & Pesticide Level Section -->
+        <section
+                class="count-section flex w-[90%] min-h-[240px] justify-between max-xl:flex-col"
         >
-          WATER LEVEL
-        </h2>
-        <!-- Water Level -->
-        <div
-          class="w-full h-[100%] rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
+            <!-- Greenery Count Container -->
+            <div
+                    class="card max-[450px]:bg-transparent max-[450px]:shadow-none max-[450px]:mb-0 w-[30%] bg-base-100 shadow-xl bg-secondary border-secondary rounded-[30px] max-xl:w-full max-xl:mb-5"
+            >
+                <div class="card-body text-accent1 flex items-center justify-center">
+                    <h2
+                            class="card-title text-3xl font-bold tracking-wider text-center mb-3"
+                    >
+                        GREENERY
+                    </h2>
+                    <div class="flex items-start justify-center w-full">
+                        <svg
+                                width="50"
+                                height="50"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="flex-shrink-0 font-extralight"
+                        >
+                            <path
+                                    d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                            ></path>
+                        </svg>
+                        <!-- DISPLAY GREENERY COUNT -->
+                        <p class="flex-grow-0 text-6xl font-normal">0</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Greenery Count Container -->
+
+            <!-- Average Water & Pesticide Level Container -->
+            <div
+                    class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
+            >
+                <!-- No Device Connected Message -->
+                <div
+                        class="empty_message w-full h-full text-sm flex justify-center items-center"
+                >
+                    <p class="tracking-widest text-sm">NO DEVICE CONNECTED</p>
+                </div>
+
+                <!-- Water Level Container -->
+                <div
+                        class="water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
+                >
+                    <h2
+                            class="card-title text-accent1 font-bold indent-5 tracking-[5px] text-center text-sm"
+                    >
+                        WATER LEVEL
+                    </h2>
+                    <!-- Water Level -->
+                    <div
+                            class="w-full h-[100%] rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
+                    >
+                        <div class="water_level absolute h-[100vh] z-50"></div>
+                    </div>
+                </div>
+                <!-- End Water Level Container -->
+
+                <!-- Pesticide Level Container -->
+                <div class="pesticide card-body p-6">
+                    <h2
+                            class="card-title text-accent1 font-bold indent-5 tracking-[5px] text-center text-sm"
+                    >
+                        PESTICIDE LEVEL
+                    </h2>
+                    <!-- Pesticide Level -->
+                    <div
+                            class="w-full h-full rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
+                    >
+                        <div class="pesticide_level absolute h-[100vh] z-50"></div>
+                    </div>
+                </div>
+                <!-- End Pesticide Level Container -->
+            </div>
+        </section>
+        <!-- End Greenery Count and Average Water & Pesticide Level Section -->
+
+        <!-- Weather Section -->
+        <section
+                class="weather-section relative flex w-[90%] flex-grow mt-10 mb-10 overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
         >
-          <div class="water_level absolute h-[100vh] z-50"></div>
-        </div>
-      </div>
-      <!-- End Water Level Container -->
-
-      <!-- Pesticide Level Container -->
-      <div class="pesticide card-body p-6">
-        <h2
-          class="card-title text-accent1 font-light indent-5 tracking-[5px] text-center text-sm"
-        >
-          PESTICIDE LEVEL
-        </h2>
-        <!-- Pesticide Level -->
-        <div
-          class="w-full h-full rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
-        >
-          <div class="pesticide_level absolute h-[100vh] z-50"></div>
-        </div>
-      </div>
-      <!-- End Pesticide Level Container -->
-    </div>
-  </section>
-  <!-- End Greenery Count and Average Water & Pesticide Level Section -->
-
-  <!-- Weather Section -->
-  <section
-    class="weather-section relative flex w-[90%] flex-grow mt-10 mb-10 overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
-  >
-    <!-- Cloudy Animation -->
-    <img
-      src="{% static 'images/cloudy-animation.png' %}"
-      alt=""
-      class="cloudy_animation cloudy_animation1 absolute top-[50px] left-[100%]"
-    />
-
-    <img
-      src="{% static 'images/cloudy-animation.png' %}"
-      alt=""
-      class="cloudy_animation cloudy_animation2 absolute top-0 bottom-[30px] left-[100%]"
-    />
-
-    <img
-      src="{% static 'images/cloudy-animation.png' %}"
-      alt=""
-      class="cloudy_animation cloudy_animation3 absolute top-0 bottom-[50px] left-[100%]"
-    />
-    <!-- End Cloud Animation -->
-
-    <!-- Sunny Animation -->
-    <img
-      src="{% static 'images/sunny-animation.png' %}"
-      alt=""
-      class="sunny_animation sunny_animation1 absolute top-0 right-0 left-0 w-[100%] h-[100%]"
-    />
-
-    <img
-      src="{% static 'images/cloudy-animation.png' %}"
-      alt=""
-      class="sunny_animation sunny_animation2 absolute top-0 left-[-50%]"
-    />
-    <!-- End Sunny Animation -->
-
-    <!-- Rainy Animation -->
-    <div
-      class="rainy_animation rainy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
-    >
-      <img
-        src="{% static 'images/cloudy-animation.png' %}"
-        alt=""
-        class="absolute top-0 w-full"
-      />
-
-      <img
-        src="{% static 'images/cloudy-animation.png' %}"
-        alt=""
-        class="cloudy_animation2 absolute top-0 bottom-[30px] left-[100%] w-full h-full"
-      />
-
-      <img
-        src="{% static 'images/cloudy-animation.png' %}"
-        alt=""
-        class="cloudy_animation3 absolute top-0 bottom-[50px] left-[100%] w-full h-full"
-      />
-    </div>
-    <!-- End Rainy Animation -->
-
-    <!-- Stormy Animation -->
-    <div
-      class="stormy_animation stormy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
-    >
-      <img
-        src="{% static 'images/lightning-animation.png' %}"
-        alt=""
-        class="lightning_animation1 absolute top-0 w-full h-full z-40"
-      />
-
-      <img
-        src="{% static 'images/stormy-animation.png' %}"
-        alt=""
-        class="stormy_animation2 absolute top-[-5%] right-[0]"
-      />
-    </div>
-    <!-- End Stormy Animation -->
-
-    <!-- Location & Weather and Temperature Container -->
-    <div
-      class="flex flex-col min-w-[30%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
-    >
-      <!-- Location & Weather Container -->
-      <div class="">
-        <div class="flex items-center justify-between">
-          <!-- DISPLAY LOCATION -->
-          <h3 class="text-3xl text-accent2 tracking-widest mb-1 mr-3">
-            TAYUD
-          </h3>
-          <!-- DISPLAY WEATHER  -->
-          <h2
-            class="font-bold border border-accent2 bg-accent2 tracking-widest p-1 rounded-full px-5 text-background"
-          >
-            CLOUDY
-          </h2>
-        </div>
-
-        <!-- Icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-7 h-7 text-accent2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-          />
-        </svg>
-      </div>
-      <!-- End Location & Weather Conatiner -->
-
-      <!-- Temperature Container -->
-      <div class="flex items-end justify-center mt-0 mb-0">
-        <!-- DISPLAY TEMPERATURE NOW -->
-        <h2
-          class="temp text-center text-9xl text-accent1 xl:mt-12 xl:text-[150px]"
-          id="temp"
-        >
-          40&deg;
-        </h2>
-        <img
-          src="{% static 'images/logo-secondary.png' %}"
-          alt=""
-          class="w-[90px] h-[90px]"
-        />
-      </div>
-      <!-- End Temperature Container -->
-
-      <!-- Day of the week -->
-      <div class="mt-10">
-        <!-- DISPLAY DAY OF THE WEEK -->
-        <h4
-          class="xl:text-[55px] text-center font-normal text-4xl text-accent1 tracking-wider xl:mt-1"
-        >
-          THURSDAY
-        </h4>
-      </div>
-      <!-- End Day of the week -->
-    </div>
-    <!-- End Location & Weather and Temperature Container -->
-
-    <!-- Temperature Future -->
-    <div
-      class="temp_future min-w-[68%] flex-wrap h-full rounded-[20px] flex gap-4 items-center justify-end max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
-    >
-      <!-- Future 1 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 1 -->
-        <h2 class="text-center">FRIDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 1 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 1 -->
-            <p class="">20&deg;</p>
+            <!-- Cloudy Animation -->
             <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
+                    src="{% static 'images/cloudy-animation.png' %}"
+                    alt=""
+                    class="cloudy_animation cloudy_animation1 absolute top-[50px] left-[100%]"
             />
-          </div>
-        </div>
-      </div>
 
-      <!-- Future 2 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 2 -->
-        <h2 class="text-center">SATURDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 2 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 2 -->
-            <p>20&deg;</p>
             <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
+                    src="{% static 'images/cloudy-animation.png' %}"
+                    alt=""
+                    class="cloudy_animation cloudy_animation2 absolute top-0 bottom-[30px] left-[100%]"
             />
-          </div>
-        </div>
-      </div>
 
-      <!-- Future 3 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 3 -->
-        <h2 class="text-center">SUNDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 3 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 3 -->
-            <p>20&deg;</p>
             <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
+                    src="{% static 'images/cloudy-animation.png' %}"
+                    alt=""
+                    class="cloudy_animation cloudy_animation3 absolute top-0 bottom-[50px] left-[100%]"
             />
-          </div>
-        </div>
-      </div>
+            <!-- End Cloud Animation -->
 
-      <!-- Future 4 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 4 -->
-        <h2 class="text-center">MONDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 4 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 4 -->
-            <p>20&deg;</p>
+            <!-- Sunny Animation -->
             <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
+                    src="{% static 'images/sunny-animation.png' %}"
+                    alt=""
+                    class="sunny_animation sunny_animation1 absolute top-0 right-0 left-0 w-[100%] h-[100%]"
             />
-          </div>
-        </div>
-      </div>
 
-      <!-- Future 5 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 5 -->
-        <h2 class="text-center">TUESDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 5 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 5 -->
-            <p>20&deg;</p>
             <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
+                    src="{% static 'images/cloudy-animation.png' %}"
+                    alt=""
+                    class="sunny_animation sunny_animation2 absolute top-0 left-[-50%]"
             />
-          </div>
-        </div>
-      </div>
+            <!-- End Sunny Animation -->
 
-      <!-- Future 6 -->
-      <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-        <!-- DISPLAY DAY 6 -->
-        <h2 class="text-center">WEDNESDAY</h2>
-        <div class="flex flex-col items-center justify-center">
-          <!-- DISPLAY TEMPERATURE IMAGE 6 -->
-          <img
-            src="{% static 'images/cloudy.png' %}"
-            alt="logo"
-            id="weather-image"
-            class="w-14 h-14"
-          />
-          <div class="flex mt-1 items-center">
-            <!-- DISPLAY TEMPERATURE 6 -->
-            <p>20&deg;</p>
-            <img
-              src="{% static 'images/logo-secondary.png' %}"
-              alt="logo"
-              class="w-8 h-8"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Temperature Future -->
-  </section>
-  <!-- End Weather Section -->
-</main>
-<!-- End Main -->
+            <!-- Rainy Animation -->
+            <div
+                    class="rainy_animation rainy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+            >
+                <img
+                        src="{% static 'images/cloudy-animation.png' %}"
+                        alt=""
+                        class="absolute top-0 w-full"
+                />
 
-<!-- Include JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- Include GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+                <img
+                        src="{% static 'images/cloudy-animation.png' %}"
+                        alt=""
+                        class="cloudy_animation2 absolute top-0 bottom-[30px] left-[100%] w-full h-full"
+                />
 
-<script>
-    // Content Animation
-    gsap.from(".count-section", {
-      duration: 2,
-      xPercent: 40,
-      opacity: 0,
-    });
-    gsap.from(".weather-section", {
-      duration: 2,
-      xPercent: 60,
-      opacity: 0,
-    });
+                <img
+                        src="{% static 'images/cloudy-animation.png' %}"
+                        alt=""
+                        class="cloudy_animation3 absolute top-0 bottom-[50px] left-[100%] w-full h-full"
+                />
+            </div>
+            <!-- End Rainy Animation -->
 
-    // Weather Animation
-    gsap.from(".cloudy_animation1", {
-        duration: 400,
-        x: '-190%',
-        repeat: -1,
-      });
-    gsap.from(".cloudy_animation2", {
-        duration: 100,
-        x: '-200%',
-        repeat: -1,
-      });
-    gsap.from(".cloudy_animation3", {
-        duration: 300,
-        x: '-400%',
-        repeat: -1,
-      });
-    gsap.from(".sunny_animation1", {
-      duration: 10,
-      scale: 2,
-      yoyo: true,
-      repeat: -1,
-    });
-    gsap.from(".sunny_animation2", {
-      duration: 5,
-      x: "-7%",
-      yoyo: true,
-      repeat: -1,
-    });
-    gsap.to(".rainy_animation1", {
-      backgroundPositionY: '2000px',
-      duration: 2,
-      repeat: -1,
-      ease: 'linear',
-    });
-    gsap.to(".stormy_animation1", {
-      backgroundPositionY: '2000px',
-      duration: 2,
-      repeat: -1,
-      ease: 'linear',
-    });
-    gsap.to(".lightning_animation1", {
-      opacity: 0,
-      duration: 1,
-      repeat: -1,
-    });
-    gsap.to(".stormy_animation2", {
-      duration: 5,
-      x: '2%',
-      yoyo: true,
-      repeat: -1,
-    });
-    gsap.to(".water_level", {
-      y: '-80%',
-      duration: 20,
-      repeat: -1,
-      ease: 'linear',
-    });
-    gsap.to(".pesticide_level", {
-      y: '-80%',
-      duration: 20,
-      repeat: -1,
-      ease: 'linear',
-    });
+            <!-- Stormy Animation -->
+            <div
+                    class="stormy_animation stormy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+            >
+                <img
+                        src="{% static 'images/lightning-animation.png' %}"
+                        alt=""
+                        class="lightning_animation1 absolute top-0 w-full h-full z-40"
+                />
 
-  <!-- Display Weather to Animate-->
-  $(document).ready(function () {
-    const get_temp = $("#temp").text();
+                <img
+                        src="{% static 'images/stormy-animation.png' %}"
+                        alt=""
+                        class="stormy_animation2 absolute top-[-5%] right-[0]"
+                />
+            </div>
+            <!-- End Stormy Animation -->
 
-    const temp = parseInt(get_temp, 10);
+            <!-- Location & Weather and Temperature Container -->
+            <div
+                    class="flex flex-col min-w-[30%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
+            >
+                <!-- Location & Weather Container -->
+                <div class="">
+                    <div class="flex items-center justify-between">
+                        <!-- DISPLAY LOCATION -->
+                        <h3 class="text-3xl text-accent2 tracking-widest mb-1 mr-3 font-normal">
+                            {{ city_name }}
+                        </h3>
+                        <!-- DISPLAY WEATHER  -->
+                        <h2
+                                class="font-bold border border-accent2 bg-accent2 tracking-widest p-1 rounded-full px-5 text-background"
+                        >
+                            {{ weather_info.today.0.weather }}
+                        </h2>
+                    </div>
 
-    // Display Sunny Animation
-     if (temp > 30) {
-      $(".rainy_animation").css({
-        visibility: "visible",
-        important: "true",
-      });
-      console.log("Cloudy");
-    }
-  });
+                    <!-- Icon -->
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-7 h-7 text-accent2"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"></path>
+                    </svg>
+                </div>
+                <!-- End Location & Weather Conatiner -->
 
-  const image = document.getElementById("weather-image");
+                <!-- Temperature Container -->
+                <div class="flex items-end justify-center mt-0 mb-0">
+                    <!-- DISPLAY TEMPERATURE NOW -->
+                    <h2
+                            class="temp text-center text-9xl text-accent1 xl:mt-12 xl:text-[150px]"
+                            id="temp"
+                    >
+                        {{ weather_info.today.0.temp }}&deg;
+                    </h2>
+                    <img
+                            src="{% static 'images/logo-secondary.png' %}"
+                            alt=""
+                            class="w-[90px] h-[90px]"
+                    />
+                </div>
+                <!-- End Temperature Container -->
 
-  //image.src = "./src/images/logo-secondary.png";
-</script>
+                <!-- Day of the week -->
+                <div class="mt-10">
+                    <!-- DISPLAY DAY OF THE WEEK -->
+                    <h4
+                            class="xl:text-[55px] text-center font-normal text-4xl text-accent1 tracking-wider xl:mt-1"
+                    >
+                        {{ weather_info.today.0.day_name }}
+                    </h4>
+                </div>
+                <!-- End Day of the week -->
+            </div>
+            <!-- End Location & Weather and Temperature Container -->
+
+            <!-- Temperature Future -->
+            <div
+                    class="temp_future min-w-[68%] flex-wrap h-full rounded-[20px] flex gap-4 items-center justify-end max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
+            >
+                {% for day_info in weather_info.following_days %}
+                    <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+                        <!-- DISPLAY DAY -->
+                        <h2 class="text-center font-bold">{{ day_info.day_name }}</h2>
+                        <div class="flex flex-col items-center justify-center">
+                            <!-- DISPLAY WEATHER IMAGE -->
+                            <img src="{{ day_info.weather_icon }}" alt="logo" id="weather-image"
+                                 class="w-14 h-14"/>
+                            <div class="flex mt-1 items-center">
+                                <!-- DISPLAY TEMPERATURE -->
+                                <p class="">{{ day_info.temp }}&deg;</p>
+                                <img src="{% static 'images/logo-secondary.png' %}" alt="logo" class="w-8 h-8"/>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- End Temperature Future -->
+        </section>
+        <!-- End Weather Section -->
+    </main>
+    <!-- End Main -->
+
+    <!-- Include JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Include GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+
+    <script>
+        
+        // Weather Animation
+        gsap.from(".cloudy_animation1", {
+            duration: 400,
+            x: '-190%',
+            repeat: -1,
+        });
+        gsap.from(".cloudy_animation2", {
+            duration: 100,
+            x: '-200%',
+            repeat: -1,
+        });
+        gsap.from(".cloudy_animation3", {
+            duration: 300,
+            x: '-400%',
+            repeat: -1,
+        });
+        gsap.from(".sunny_animation1", {
+            duration: 10,
+            scale: 2,
+            yoyo: true,
+            repeat: -1,
+        });
+        gsap.from(".sunny_animation2", {
+            duration: 5,
+            x: "-7%",
+            yoyo: true,
+            repeat: -1,
+        });
+        gsap.to(".rainy_animation1", {
+            backgroundPositionY: '2000px',
+            duration: 2,
+            repeat: -1,
+            ease: 'linear',
+        });
+        gsap.to(".stormy_animation1", {
+            backgroundPositionY: '2000px',
+            duration: 2,
+            repeat: -1,
+            ease: 'linear',
+        });
+        gsap.to(".lightning_animation1", {
+            opacity: 0,
+            duration: 1,
+            repeat: -1,
+        });
+        gsap.to(".stormy_animation2", {
+            duration: 5,
+            x: '2%',
+            yoyo: true,
+            repeat: -1,
+        });
+        gsap.to(".water_level", {
+            y: '-80%',
+            duration: 20,
+            repeat: -1,
+            ease: 'linear',
+        });
+        gsap.to(".pesticide_level", {
+            y: '-80%',
+            duration: 20,
+            repeat: -1,
+            ease: 'linear',
+        });
+
+        <!-- Display Weather to Animate-->
+        $(document).ready(function () {
+            const get_temp = $("#temp").text();
+
+            const temp = parseInt(get_temp, 10);
+
+            // Display Sunny Animation
+            if (temp > 30) {
+                $(".sunny_animation").css({
+                    visibility: "visible",
+                    important: "true",
+                });
+                console.log("Sunny");
+            }
+            if (temp < 30) {
+                $(".cloudy_animation").css({
+                    visibility: "visible",
+                    important: "true",
+                });
+                console.log("Cloudy");
+            }
+        });
+
+        const image = document.getElementById("weather-image");
+
+        //image.src = "./src/images/logo-secondary.png";
+        /*
+        // Get the User Location this code reserve for location page don't removed
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        getLocation();
+
+        // Send the User Location to Django Backend
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            fetch('/location/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    {#'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for Security#}
+                },
+                body: JSON.stringify({'latitude': latitude, 'longitude': longitude})
+            })
+                .then(response => {
+                    console.log('Status code:', response.status);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }*/
+    </script>
 {% endblock %}

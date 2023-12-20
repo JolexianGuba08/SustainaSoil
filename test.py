@@ -21,6 +21,7 @@ def display_weather_info(data):
         temp = day_data['temp']
         weather = day_data['weather']['description']
         print(f"{day_name}: Temperature - {temp} °C  : Weather - {weather}")
+        print(data['city_name'])
 
 
 weather_data = fetch_weather_data('10.31028', '123.94944', '092fc961ff504a4daadc192d6466155b')
