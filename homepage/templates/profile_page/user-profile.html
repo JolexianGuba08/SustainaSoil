@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Profile | SustainAsoil {% endblock %}
+
+{% block profile %}
+    <li
+    class="text-accent1 bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+    >
+{% endblock %}
+
+
+{% block content %}
+    <!-- Main -->
+    <main
+      class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-50 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    >
+      <!-- Header -->
+      <header
+        class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+      >
+        <h1
+          class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background inline-block p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+        >
+          PROFILE
+        </h1>
+
+          <!-- Include Notification -->
+          {% include 'web_notification.html' %}
+      </header>
+      <!-- End Header -->
+
+      <!-- Profile Section -->
+      <section
+        class="profile-section w-[90%] h-full mb-[2%] flex flex-col gap-2 z-40"
+      >
+        <!-- Cover Photo -->
+        <div
+          class="cover h-[50%] w-full rounded-t-3xl bg-secondary flex items-end justify-between"
+          id="cover"
+        >
+          <!-- Profile Container -->
+          <div
+            class="w-[310px] z-50 h-full flex-shrink-0 flex justify-center items-end relative max-lg:w-[230px]"
+          >
+            <!-- Profile  -->
+            <div
+              class="profile group relative cursor-pointer border-2 border-background bg-secondary top-[60px] h-[190px] w-[190px] rounded-full flex justify-center items-center"
+              id="profile"
+            >
+              <!-- File Input -->
+              <input title="Upload File" type="file" id="file" class="hidden" />
+              <!-- End File Input -->
+
+              <!-- Camera Icon -->
+              <label
+                for="file"
+                id="upload_btn"
+                class="opacity-0 group-hover:opacity-90 transition-opacity absolute cursor-pointer z-50"
+                onclick="edit()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-14 h-14 text-background"
+                >
+                  <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </label>
+              <!-- End Camera Icon -->
+            </div>
+            <!-- End Profile  -->
+          </div>
+          <!-- End Profile Container -->
+
+          <!-- Edit Cover Photo -->
+          <input type="file" id="cover_file" class="hidden" />
+
+          <label
+            class="border p-2 px-3 z-50 mr-3 mb-3 cursor-pointer bg-accent1 font-bold max-[450px]:text-[11px] max-[450px]:p-1 max-[450px]:px-2 text-sm tracking-widest text-background rounded-lg border-solid border-1 border-accent1 transition ease-in-out hover:duration-500 hover:bg-transparent hover:text-accent1"
+            for="cover_file"
+            id="cover_btn"
+            onclick="edit()"
+          >
+            EDIT COVER
+          </label>
+          <!-- End Cover Photo -->
+        </div>
+        <!-- End Cover Photo -->
+
+        <!-- Side Menu & Content -->
+        <div class="h-full w-full flex gap-2 max-md:flex max-lg:flex-col">
+          <!-- Side Menu -->
+          <div
+            class="side h-full w-[310px] max-lg:h-[140px] max-lg:w-full shrink-0 bg-secondary max-lg:rounded-none rounded-bl-3xl"
+          >
+            <ul
+              class="mt-32 max-lg:mt-8 flex-shrink-0 px-10 w-full bg-rd flex flex-col max-lg:px-1 justify-start max-lg:flex-row max-lg:h-full max-lg:items-center max-lg:justify-start"
+            >
+              <li
+                class="active mb-5 max-lg:mb-0 max-lg:mx-1 max-[450px]:p-0"
+                id="overview_btn"
+              >
+                <button
+                  class="text-[16px] max-[450px]:text-[12px]"
+                  onclick="overview()"
+                >
+                  Overview
+                </button>
+              </li>
+              <li class="truncate mb-5 max-lg:mb-0 max-lg:mx-1" id="edit_btn">
+                <button
+                  class="truncate text-[16px] max-[450px]:text-[12px] max-[450px]:truncate-none"
+                  onclick="edit()"
+                >
+                  Edit Profile
+                </button>
+              </li>
+              <li
+                class="truncate mb-5 max-lg:mb-0 max-lg:mx-1"
+                id="password_btn"
+              >
+                <button
+                  class="truncate text-[16px] max-[450px]:text-[12px]"
+                  onclick="password()"
+                >
+                  Change Password
+                </button>
+              </li>
+            </ul>
+          </div>
+          <!-- End Side Menu -->
+
+          <!-- Content -->
+          <div
+            class="content w-full p-8 max-2xl:p-5 max-[450px]:p-3 bg-secondary rounded-br-3xl max-lg:rounded-bl-3xl border border-secondary"
+          >
+              <!-- Include Overview Section -->
+              {% include 'profile_page/include_overview.html' %}
+
+              <!-- Include Edit Profile Section -->
+              {% include 'profile_page/include_edit_profile.html' %}
+
+              <!-- Include Change Password Section -->
+              {% include 'profile_page/include_change_password.html' %}
+          </div>
+          <!-- End Content -->
+        </div>
+        <!-- End Side Menu & Content -->
+      </section>
+      <!-- End Greenery Section -->
+    </main>
+    <!-- End Main -->
+
+    <!-- Include GSAP & Animation JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+
+    <!-- Include JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+      // Accept Only Numeric Contact No. Field
+      const form = document.getElementById("contact");
+
+      form.addEventListener("input", function (e) {
+        const target = e.target;
+        const val = target.value;
+
+        if (isNaN(val)) {
+          target.value = val.slice(0, -1);
+          return;
+        }
+      });
+
+      //Display Overview Function
+      function overview() {
+        let overview = document.getElementById("overview");
+        let overview_btn = document.getElementById("overview_btn");
+
+        let edit = document.getElementById("edit");
+        let edit_btn = document.getElementById("edit_btn");
+
+        let password = document.getElementById("password");
+        let password_btn = document.getElementById("password_btn");
+
+        // Display Change Password Only
+        overview.style.display = "block";
+        edit.style.display = "none";
+        password.style.display = "none";
+
+        // Add or Remove Active State
+        overview_btn.classList.add("active");
+        edit_btn.classList.remove("active");
+        password_btn.classList.remove("active");
+      }
+
+      //Display Edit Profile Function
+      function edit() {
+        let overview = document.getElementById("overview");
+        let overview_btn = document.getElementById("overview_btn");
+
+        let edit = document.getElementById("edit");
+        let edit_btn = document.getElementById("edit_btn");
+
+        let password = document.getElementById("password");
+        let password_btn = document.getElementById("password_btn");
+
+        // Display Edit Profile Only
+        overview.style.display = "none";
+        edit.style.display = "block";
+        password.style.display = "none";
+
+        overview_btn.classList.remove("active");
+        edit_btn.classList.add("active");
+        password_btn.classList.remove("active");
+      }
+
+      //Display Change Password Function
+      function password() {
+        let overview = document.getElementById("overview");
+        let overview_btn = document.getElementById("overview_btn");
+
+        let edit = document.getElementById("edit");
+        let edit_btn = document.getElementById("edit_btn");
+
+        let password = document.getElementById("password");
+        let password_btn = document.getElementById("password_btn");
+
+        // Display Change Password Only
+        overview.style.display = "none";
+        edit.style.display = "none";
+        password.style.display = "block";
+
+        // Add or Remove Active State
+        overview_btn.classList.remove("active");
+        edit_btn.classList.remove("active");
+        password_btn.classList.add("active");
+      }
+
+      // Display Profile Image
+      const image = document.querySelector("#profile");
+      const file = document.querySelector("#file");
+      const upload_btn = document.querySelector("#upload_btn");
+
+      file.addEventListener("change", function () {
+        const chosed_file = this.files[0];
+
+        if (chosed_file) {
+          const reader = new FileReader();
+
+          reader.addEventListener("load", function () {
+            //image.setAttribute("src", reader.result);
+            image.style.setProperty(
+              "background-image",
+              `url('${reader.result}')`,
+              "important"
+            );
+          });
+          reader.readAsDataURL(chosed_file);
+        }
+      });
+
+      // Display Cover Photo
+      const cover = document.querySelector("#cover");
+      const cover_file = document.querySelector("#cover_file");
+      const cover_btn = document.querySelector("#cover_btn");
+
+      cover_file.addEventListener("change", function () {
+        const chosed_file = this.files[0];
+
+        if (chosed_file) {
+          const reader = new FileReader();
+
+          reader.addEventListener("load", function () {
+            cover.style.setProperty(
+              "background-image",
+              `url('${reader.result}')`,
+              "important"
+            );
+          });
+          reader.readAsDataURL(chosed_file);
+        }
+      });
+    </script>
+{% endblock %}

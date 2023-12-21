@@ -1,0 +1,68 @@
+<!-- Edit Profile Section -->
+<div
+  class="edit p-9 max-2xl:p-5 w-full h-full rounded-br-3xl max-lg:rounded-bl-3xl max-[450px]:rounded-bl-3xl"
+  id="edit"
+>
+  <h1
+    class="text-2xl tracking-widest font-extralight text-accent1 mb-5 max-[450px]:text-center"
+  >
+    EDIT PROFILE
+  </h1>
+
+  <!-- Divider -->
+  <div class="w-full h-[1px] border-t border-accent1"></div>
+
+  <!-- Details -->
+  <div class="details mt-10 max-2xl:mt-7 w-full">
+    <form action="">
+      <!-- DISPLAY FIRSTNAME -->
+      <div class="flex gap-2 max-md:flex-col">
+        <input
+          type="text"
+          placeholder="Firstname"
+          value="Gianni Dylan"
+          required
+          class="input input-bordered input-md w-[98%] mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide"
+        />
+
+        <!-- DISPLAY LASTNAME -->
+        <input
+          type="text"
+          placeholder="Lastname"
+          value="Cabahug"
+          required
+          class="input input-bordered input-md w-[98%] mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide"
+        />
+      </div>
+
+      <!-- DISPLAY EMAIL ADDRESS -->
+      <input
+        type="email"
+        placeholder="Email Address"
+        value="giannidylancbhg@gmail.com"
+        required
+        class="input input-bordered input-md w-full mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide"
+      />
+
+      <!-- DISPLAY CONTACT NO. -->
+      <input
+        type="text"
+        inputmode="numeric"
+        placeholder="Contact No."
+        value="09054793449"
+        maxlength="11"
+        required
+        id="contact"
+        class="input input-bordered input-md w-full mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide"
+      />
+
+      <button
+        type="submit"
+        class="border p-2 w-[200px] max-lg:w-full mt-10 max-2xl:mt-5 bg-accent1 font-bold text-sm tracking-widest text-background rounded-lg border-solid border-1 border-accent1 transition ease-in-out hover:duration-500 hover:bg-transparent hover:text-accent1 hover:font-bold"
+      >
+        SAVE CHANGES
+      </button>
+    </form>
+  </div>
+</div>
+<!-- End Edit Profile Section -->

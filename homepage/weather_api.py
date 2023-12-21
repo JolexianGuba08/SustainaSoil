@@ -30,8 +30,6 @@ def get_weather_data_context(request):
 
     email = request.session.get('session_email')
     acc_greenery_query = read_account_greenery_location(email)
-    print(read_package_iot('package_key'))
-    add_package_iot('package_key', 'soil_moisture_id', 'temp_humid_id', 'flow_sensor_id', 'water_lvl_id', 'pump_id')
     latitude, longitude = '', ''
     for doc in acc_greenery_query:
         latitude = doc.to_dict()['latitude']

@@ -3,8 +3,65 @@
 :root {
     --background: #ffffff;
     --secondary: #e6e8d7;
-    --accent1: #5a6b47 ;
+    --accent1: #5a6b47;
     --accent2: #32281b;
+}
+
+/* ----------------------------------- */
+/* preloader */
+/* ----------------------------------- */
+
+.preloader {
+    transition: .30s ease-out !important;
+}
+
+.preloader img {
+    animation: loading 2s linear infinite !important;
+}
+
+.preloader--hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: .30s ease-out !important;
+}
+
+
+.preloader .container {
+    display: inline-block !important;
+}
+
+.preloader .container p {
+    width: 100%;
+    /* background-color: red; */
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid;
+    animation: typing 3s steps(35) infinite, cursor .4s step-end infinite alternate;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 110%;
+    }
+}
+
+
+@keyframes cursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(1turn);
+    }
+    to {
+        transform: rotate(0turn);
+    }
 }
 
 /* ----------------------------------- */
@@ -45,12 +102,9 @@
     text-decoration: none;
 }
 
-
 /* ----------------------------------- */
-/*  dashboard */
+/*  navbar */
 /* ----------------------------------- */
-
-/* NAVBAR */
 
 .nav {
     box-shadow: -5px 0 32px 11px rgba(0, 0, 0, 0.1) !important;
@@ -80,6 +134,10 @@
     color: #b91c1c !important;
 }
 
+/* ----------------------------------- */
+/*  dashboard */
+/* ----------------------------------- */
+
 /* SECTION */
 .temp {
     text-shadow: 6px 5px 4px rgba(148, 147, 147, 0.5);
@@ -90,16 +148,16 @@
 }
 
 .cloudy_animation {
-    visibility: hidden ;
+    visibility: hidden;
 }
 
 .sunny_animation {
-    visibility: hidden ;
+    visibility: hidden;
 }
 
 .rainy_animation {
     background-image: url(../images/rainy-animation.png) !important;
-    visibility: hidden ;
+    visibility: hidden;
 }
 
 .stormy_animation {
@@ -110,27 +168,25 @@
 .water_level {
     width: 50% !important;
 
-    --mask:
-    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
-    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
-  -webkit-mask: var(--mask);
-          mask: var(--mask);
+    --mask: radial-gradient(24.60px at calc(100% - 33.00px) 50%, #000 99%, #0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%, #0000 99%, #000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
     background-color: #38b6ff !important;
 }
 
-.pesticide_level{
+.pesticide_level {
     width: 80% !important;
 
-    --mask:
-    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
-    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
-  -webkit-mask: var(--mask);
-          mask: var(--mask);
+    --mask: radial-gradient(24.60px at calc(100% - 33.00px) 50%, #000 99%, #0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%, #0000 99%, #000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
     background-color: var(--secondary) !important;
 }
 
 .water, .pesticide {
-     /*display: none !important;*/
+    /* display: none !important; */
 }
 
 .empty_message {
@@ -152,6 +208,7 @@
     color: var(--accent1) !important;
     text-shadow: none !important;
     letter-spacing: 2px !important;
+    text-transform: uppercase !important;
 }
 
 .temp_future .temp p {
@@ -160,10 +217,207 @@
     text-shadow: none !important;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1824px) {
     .temp_future .temp p {
         font-size: 50px !important;
     }
+}
+
+.profile_drp {
+    background: url(../images/default-profile.png) no-repeat center center !important;
+    background-size: cover !important;
+}
+
+.prfl_lgt ul li a:focus {
+    background-color: var(--secondary) !important;
+    color: var(--accent1) !important;
+}
+
+.p_f:active {
+    background-color: var(--secondary) !important;
+    color: var(--accent1) !important;
+}
+
+.p_f:hover {
+    color: var(--accent1) !important;
+}
+
+.l_g:focus {
+    color: #b91c1c !important;
+}
+
+.l_g:hover {
+    color: #b91c1c !important;
+}
+
+.notification_btn {
+    padding: 0;
+}
+
+.notification_btn:active {
+    background-color: transparent !important;
+}
+
+.notification_btn:hover {
+    background-color: transparent !important;
+}
+
+.notif li h1 {
+    cursor: auto !important;
+}
+
+.notif li h1 {
+    cursor: auto !important;
+}
+
+.notif li h1:active {
+    background-color: transparent !important;
+    color: var(--accent1) !important;
+    pointer-events: none !important;
+}
+
+.notif li .see_all:active {
+    background-color: transparent !important;
+    color: var(--accent1) !important;
+    pointer-events: none !important;
+}
+
+.notif li h2 {
+    cursor: auto !important;
 
 }
+
+
+.notif li h2:active {
+    background-color: var(--secondary) !important;
+    color: white !important;
+    pointer-events: none !important;
+}
+
+
+.notif li p {
+    cursor: auto !important;
+}
+
+
+.notif li p:active {
+    background-color: transparent !important;
+    color: var(--accent2) !important;
+}
+
+.notif li p:hover {
+    background-color: transparent !important;
+}
+
+.notif li button:focus {
+    background-color: transparent !important;
+    color: var(--accent1) !important;
+}
+
+.notif .n_div {
+    cursor: auto !important;
+}
+
+.notif .n_div:hover {
+    background-color: transparent !important;
+}
+
+.notif .n_div:focus {
+    background-color: transparent !important;
+}
+
+.notif::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* ----------------------------------- */
+/*  profile */
+/* ----------------------------------- */
+
+/* SECTION */
+
+.side li {
+    transition: ease-in-out .3s;
+
+}
+
+.side li button {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: lighter;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+@media (max-width: 450px) {
+    .side li button {
+        padding: 10px 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: lighter;
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+}
+
+.side li:hover {
+    background: rgba(255, 255, 255, 0.28) !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3pxs) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+    transition: ease-in-out .3s !important;
+    color: var(--accent1) !important;
+}
+
+.active {
+    background: rgba(255, 255, 255, 0.28) !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3px) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+    transition: ease-in-out .3s !important;
+    color: var(--accent1) !important;
+}
+
+.overview, .edit, .password {
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3px) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+}
+
+.overview {
+    /* display: none; */
+    background: url(../images/background-image-2.png) no-repeat bottom right fixed !important;
+}
+
+@media (max-width: 1527px) {
+    .overview {
+        background: none !important;
+    }
+}
+
+.edit {
+    display: none;
+}
+
+.password {
+    display: none;
+}
+
+.cover {
+    background: url(..) no-repeat center center !important;
+    background-size: cover !important;
+    background-color: var(--secondary) !important;
+}
+
+.profile {
+    background: url(../images/default-profile.png) no-repeat center center !important;
+    background-size: cover !important;
+    background-color: var(--secondary) !important;
+}
+
 

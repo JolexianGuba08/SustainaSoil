@@ -1,32 +1,40 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block title %} Dashboard | SustainAsoil {% endblock %}
 
 {% block dashboard %}
     <li
-            class="text-accent1 bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+            class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
     >
 {% endblock %}
 
+
 {% block content %}
     <!-- Main -->
-    <main class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-40">
+    <main
+            class="flex flex-grow flex-col items-center max-[450px]:mt-5 max-[450px]:mb-2 z-40 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    >
         <!-- Header -->
         <header
-                class="bg-secondary max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[60px] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+                class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
         >
+
             <h1
                     class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background inline-block p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
             >
                 WELCOME TO DASHBOARD
             </h1>
+
+            <!-- Include Notification -->
+            {% include 'web_notification.html' %}
         </header>
         <!-- End Header -->
 
         <!-- Greenery Count and Water & Pesticide Level Section -->
         <section
-                class="count-section flex w-[90%] min-h-[240px] justify-between max-xl:flex-col"
+                class="count-section flex w-[90%] h-[25%] z-40 justify-between max-xl:h-auto max-xl:flex-col"
         >
             <!-- Greenery Count Container -->
             <div
@@ -64,7 +72,7 @@
             >
                 <!-- No Device Connected Message -->
                 <div
-                        class="empty_message w-full h-full text-sm flex justify-center items-center"
+                        class="empty_message w-full h-full p-5 text-sm flex justify-center items-center"
                 >
                     <p class="tracking-widest text-sm">NO DEVICE CONNECTED</p>
                 </div>
@@ -74,7 +82,7 @@
                         class="water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
                 >
                     <h2
-                            class="card-title text-accent1 font-bold indent-5 tracking-[5px] text-center text-sm"
+                            class="card-title text-accent1 font-normal indent-5 tracking-[5px] text-center text-sm"
                     >
                         WATER LEVEL
                     </h2>
@@ -90,7 +98,7 @@
                 <!-- Pesticide Level Container -->
                 <div class="pesticide card-body p-6">
                     <h2
-                            class="card-title text-accent1 font-bold indent-5 tracking-[5px] text-center text-sm"
+                            class="card-title text-accent1 font-normal indent-5 tracking-[5px] text-center text-sm"
                     >
                         PESTICIDE LEVEL
                     </h2>
@@ -108,7 +116,7 @@
 
         <!-- Weather Section -->
         <section
-                class="weather-section relative flex w-[90%] flex-grow mt-10 mb-10 overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
+                class="weather-section relative flex w-[90%] flex-grow mt-10 mb-[2%] overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
         >
             <!-- Cloudy Animation -->
             <img
@@ -188,18 +196,22 @@
 
             <!-- Location & Weather and Temperature Container -->
             <div
-                    class="flex flex-col min-w-[30%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
+                    class="flex flex-col min-w-[35%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
             >
                 <!-- Location & Weather Container -->
-                <div class="">
-                    <div class="flex items-center justify-between">
+                <div
+                        class="max-[450px]:flex max-[450px]:flex-col max-[450px]:items-center"
+                >
+                    <div class="flex items-center justify-between max-[450px]:flex-col">
                         <!-- DISPLAY LOCATION -->
-                        <h3 class="text-3xl text-accent2 tracking-widest mb-1 mr-3 font-normal">
+                        <h3
+                                class="text-2xl text-accent2 max-[450px]:text-xl tracking-wide mb-1 mr-3 uppercase"
+                        >
                             {{ city_name }}
                         </h3>
                         <!-- DISPLAY WEATHER  -->
                         <h2
-                                class="font-bold border border-accent2 bg-accent2 tracking-widest p-1 rounded-full px-5 text-background"
+                                class="font-extralight max-[450px]:mt-2 max-[450px]:max-w-[60%] border uppercase text-md text-center border-accent2 truncate max-w-[50%] bg-accent2 m-w-full tracking-widest p-1 rounded-full px-5 text-background"
                         >
                             {{ weather_info.today.0.weather }}
                         </h2>
@@ -212,16 +224,18 @@
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-7 h-7 text-accent2"
+                            class="w-7 h-7 text-accent2 max-[450px]:mt-4 max-[450px]:mb-5"
                     >
                         <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
                         <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"></path>
+                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                        />
                     </svg>
                 </div>
                 <!-- End Location & Weather Conatiner -->
@@ -230,7 +244,7 @@
                 <div class="flex items-end justify-center mt-0 mb-0">
                     <!-- DISPLAY TEMPERATURE NOW -->
                     <h2
-                            class="temp text-center text-9xl text-accent1 xl:mt-12 xl:text-[150px]"
+                            class="temp text-center text-9xl text-accent1 min-[1824px]:mt-12 min-[1824px]:text-[150px]"
                             id="temp"
                     >
                         {{ weather_info.today.0.temp }}&deg;
@@ -247,7 +261,7 @@
                 <div class="mt-10">
                     <!-- DISPLAY DAY OF THE WEEK -->
                     <h4
-                            class="xl:text-[55px] text-center font-normal text-4xl text-accent1 tracking-wider xl:mt-1"
+                            class="text-center font-normal uppercase text-4xl text-accent1 tracking-wider min-[1824px]:mt-1 min-[1824px]:text-5xl"
                     >
                         {{ weather_info.today.0.day_name }}
                     </h4>
@@ -258,7 +272,7 @@
 
             <!-- Temperature Future -->
             <div
-                    class="temp_future min-w-[68%] flex-wrap h-full rounded-[20px] flex gap-4 items-center justify-end max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
+                    class="temp_future min-w-[60%] flex-wrap h-full rounded-[20px] flex gap-1 items-center justify-evenly max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
             >
                 {% for day_info in weather_info.following_days %}
                     <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
@@ -283,27 +297,26 @@
     </main>
     <!-- End Main -->
 
+    <!-- Include GSAP & Animation JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
     <!-- Include JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- Include GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
 
     <script>
-        
         // Weather Animation
         gsap.from(".cloudy_animation1", {
             duration: 400,
-            x: '-190%',
+            x: "-190%",
             repeat: -1,
         });
         gsap.from(".cloudy_animation2", {
             duration: 100,
-            x: '-200%',
+            x: "-200%",
             repeat: -1,
         });
         gsap.from(".cloudy_animation3", {
             duration: 300,
-            x: '-400%',
+            x: "-400%",
             repeat: -1,
         });
         gsap.from(".sunny_animation1", {
@@ -319,16 +332,16 @@
             repeat: -1,
         });
         gsap.to(".rainy_animation1", {
-            backgroundPositionY: '2000px',
+            backgroundPositionY: "2000px",
             duration: 2,
             repeat: -1,
-            ease: 'linear',
+            ease: "linear",
         });
         gsap.to(".stormy_animation1", {
-            backgroundPositionY: '2000px',
+            backgroundPositionY: "2000px",
             duration: 2,
             repeat: -1,
-            ease: 'linear',
+            ease: "linear",
         });
         gsap.to(".lightning_animation1", {
             opacity: 0,
@@ -337,24 +350,24 @@
         });
         gsap.to(".stormy_animation2", {
             duration: 5,
-            x: '2%',
+            x: "2%",
             yoyo: true,
             repeat: -1,
         });
         gsap.to(".water_level", {
-            y: '-80%',
+            y: "-80%",
             duration: 20,
             repeat: -1,
-            ease: 'linear',
+            ease: "linear",
         });
         gsap.to(".pesticide_level", {
-            y: '-80%',
+            y: "-80%",
             duration: 20,
             repeat: -1,
-            ease: 'linear',
+            ease: "linear",
         });
 
-        <!-- Display Weather to Animate-->
+        // Display Weather to Animate
         $(document).ready(function () {
             const get_temp = $("#temp").text();
 
@@ -362,13 +375,6 @@
 
             // Display Sunny Animation
             if (temp > 30) {
-                $(".sunny_animation").css({
-                    visibility: "visible",
-                    important: "true",
-                });
-                console.log("Sunny");
-            }
-            if (temp < 30) {
                 $(".cloudy_animation").css({
                     visibility: "visible",
                     important: "true",
@@ -376,41 +382,5 @@
                 console.log("Cloudy");
             }
         });
-
-        const image = document.getElementById("weather-image");
-
-        //image.src = "./src/images/logo-secondary.png";
-        /*
-        // Get the User Location this code reserve for location page don't removed
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        getLocation();
-
-        // Send the User Location to Django Backend
-        function showPosition(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-
-            fetch('/location/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    {#'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for Security#}
-                },
-                body: JSON.stringify({'latitude': latitude, 'longitude': longitude})
-            })
-                .then(response => {
-                    console.log('Status code:', response.status);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }*/
     </script>
 {% endblock %}

@@ -1,11 +1,11 @@
-{% load  static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title> {% block title %} Base | SustainAsoil {% endblock %} </title>
+    <title>{% block title %} Dashboard | SustainAsoil {% endblock %}</title>
     <!-- Tab Icon -->
     <link
             rel="icon"
@@ -19,21 +19,18 @@
             rel="stylesheet"
             type="text/css"
     />
-
     <!-- Include Tailwind -->
     <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
-
     <!-- Include CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
 
 <body
-        class="content bg-background overflow-x-hidden min-h-screen flex font-san max-[450px]:flex max-[450px]:flex-col"
+        class="content bg-background relative overflow-x-hidden min-h-screen flex font-san max-[450px]:flex max-[450px]:flex-col"
 >
-
 <!-- Mobile Navbar -->
 <div
-        class="navbar z-50 min-[450px]:hidden max-[450px]:visible max-[450px]:bg-background max-[450px]:shadow-lg"
+        class="navbar min-[450px]:hidden shadow-lg sticky top-0 bg-background z-50"
 >
     <div class="flex-1">
         <img
@@ -45,6 +42,34 @@
             SUSTAIN<span class="text-lg font-light">A</span>SOIL
         </h1>
     </div>
+
+    <!-- Notification Icon -->
+    <div class="mr-3 relative">
+        <a href="{% url 'mobile_notif' %}">
+            <!-- DISPLAY NUMBER OF NOTIFICATION -->
+            <h1
+                    class="absolute cursor-pointer font-bold text-accent1 left-6 bottom-3"
+            >
+                5
+            </h1>
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    data-slot="icon"
+                    class="w-7 h-7 text-accent1"
+            >
+                <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                />
+            </svg>
+        </a>
+    </div>
+
     <div class="flex-none">
         <div class="dropdown dropdown-end">
             <div
@@ -61,8 +86,7 @@
                     class="menu-sm dropdown-content text-accent1 mt-3 z-[1] p-2 bg-background shadow rounded-box w-52"
             >
                 <li class="active:bg-secondary rounded-lg">
-                    <!-- Dashboard Link -->
-                    <a href=""
+                    <a href="{% url 'homepage' %}"
                     >
                         <button class="p-0 w-full h-full text-left">
                             Dashboard
@@ -70,9 +94,7 @@
                     </a
                     >
                 </li>
-
                 <li class="active:bg-secondary rounded-lg">
-                    <!-- Greenery Link -->
                     <a href=""
                     >
                         <button class="p-0 w-full h-full text-left">
@@ -81,18 +103,14 @@
                     </a
                     >
                 </li>
-
                 <li class="active:bg-secondary rounded-lg">
-                    <!-- Profile Link -->
-                    <a href=""
+                    <a href="{% url 'profile' %}"
                     >
                         <button class="p-0 w-full h-full text-left">Profile</button>
                     </a
                     >
                 </li>
-
                 <li class="active:bg-secondary rounded-lg">
-                    <!-- Log Out Link -->
                     <a href="{% url 'login_page' %}"
                     >
                         <button class="p-0 w-full h-full text-left text-red">
@@ -109,10 +127,10 @@
 
 <!-- Web Navbar -->
 <aside
-        class="nav max-[450px]:hidden w-[280px] flex-shrink-0 min-h-[100%] pt-4 flex items-center flex-col max-xl:w-[80px] max-xl:transition-all"
+        class="nav max-[450px]:hidden w-[280px] z-50 flex-shrink-0 bg-background fixed h-[100%] pt-4 flex items-center flex-col max-xl:w-[80px] max-xl:transition-all"
 >
     <!-- Logo -->
-    <div class="navbar mt-8 flex items-center justify-center">
+    <div class="navbar mt-[4%] flex items-center justify-center">
         <img
                 src="{% static 'images/logo-secondary.png' %}"
                 alt="SustainAsoil logo"
@@ -131,13 +149,14 @@
     <!-- Navigation -->
     <div class="flex mt-2 w-[71%]">
         <ul class="w-full gap-2">
+
+            <!-- Dashboard Link -->
             {% block dashboard %}
                 <li
-                        class="text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+                        class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
                 >
             {% endblock %}
-            <!-- Dashboard Icon Link-->
-            <a href="">
+            <a href="{% url 'homepage' %}">
                 <svg
                         width="24"
                         height="24"
@@ -151,16 +170,16 @@
                     ></path>
                 </svg>
             </a>
-            <!-- Dashboard Link -->
-            <a class="ml-[5px] max-xl:hidden max-xl:ml-0">DASHBOARD</a>
+            <!-- Dashboard Icon Link -->
+            <a href="{% url 'homepage' %}" class="ml-[5px] max-xl:hidden max-xl:ml-0">DASHBOARD</a>
             </li>
 
+            <!-- Greenery Link -->
             {% block greenery %}
                 <li
                         class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
                 >
             {% endblock %}
-            <!-- Greenery Icon Link -->
             <a href="">
                 <svg
                         width="24"
@@ -175,75 +194,69 @@
                     ></path>
                 </svg>
             </a>
-            <!-- Greenery Link -->
-            <a href="" class="ml-[5px] max-xl:hidden max-xl:ml-0">GREENERY</a>
-            </li>
-
-            {% block profile %}
-                <li
-                        class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
-                >
-            {% endblock %}
-            <!-- Profile Icon Link -->
-            <a href="">
-                <svg
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
-                >
-                    <path
-                            d="M4 22a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4Zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6Zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z"
-                    ></path>
-                </svg>
-            </a>
-            <!-- Profile Link -->
-            <a class="ml-[5px] max-xl:hidden max-xl:ml-0">PROFILE</a>
+            <!-- Greenery Icon Link -->
+            <a href="" class="ml-[5px] max-xl:hidden max-xl:ml-0"
+            >GREENERY</a
+            >
             </li>
         </ul>
     </div>
 
-    <!-- Log Out -->
-    <div class="flex justify-center mt-5 h-full items-end w-[71%]">
-        <ul class="px-1 mb-28 w-full">
-            <li
-                    class="log-out px-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+    <!-- Profile & Log Out -->
+    <div
+            class="prfl_lgt flex justify-center mt-5 h-full items-end w-[71%] z-50"
+    >
+        <div
+                class="dropdown dropdown-top mb-[10%] w-full max-xl:mb-[40%] h-[60px]"
+        >
+            <div
+                    tabindex="0"
+                    role="button"
+                    class="btn m-0 group focus:bg-secondary bg-transparent w-full p-3 flex justify-start flex-nowrap h-full rounded-xl hover:bg-secondary border-none shadow-none"
             >
-                <!-- Log Out Icon Link -->
-                <a href="{% url 'logout_page' %}">
-                    <svg
-                            width="24"
-                            height="24"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="max-xl:w-[25px] max-xl:h-[25px] mr-4 max-xl:mr-0"
-                    >
-                        <path
-                                d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3Zm2-7h7v2H6v3l-5-4 5-4v3Z"
-                        ></path>
-                    </svg>
-                </a>
-                <!-- Log Out Link -->
-                <a
-                        href="{% url 'logout_page' %}"
-                        class="ml-[5px] max-xl:hidden max-xl:ml-0 text-9xl"
-                >LOG OUT</a
+                <!-- DISPLAY PROFILE PICTURE -->
+                <div
+                        class="profile_drp w-[40px] h-[40px] max-xl:w-[35px] max-xl:h-[35px] rounded-full bg-secondary p-0 m-0"
+                ></div>
+                <!-- DISPLAY NAME -->
+                <p
+                        class="truncate text-lg max-xl:hidden w-[110px] tracking-wide font-extralight group-focus:text-accent1 group-hover:text-accent1"
                 >
-            </li>
-        </ul>
+                    Gianni Dylan Cabahug
+                </p>
+            </div>
+            <ul
+                    tabindex="0"
+                    class="dropdown-content z-50 mb-3 flex-nowrap items-start menu pb-5 px-3 gap-0 drop-shadow-lg border bg-background border-secondary rounded-box w-[200px]"
+            >
+
+                <!-- Profile Link -->
+                <li class="mt-0">
+                    <a
+                            href="{% url 'profile' %}"
+                            class="w-full tracking-normal focus:bg-secondary hover:bg-secondary"
+                    >MY PROFILE</a
+                    >
+                </li>
+
+                <!--Log Out Link -->
+                <li class="mt-0">
+                    <a
+                            href="{% url 'login_page' %}"
+                            class="l_g w-full h-full tracking-normal focus:bg-secondary"
+                    >LOG OUT</a
+                    >
+                </li>
+            </ul>
+        </div>
     </div>
 </aside>
 <!-- End Web Navbar -->
 
+<!-- Content -->
 {% block content %}
-    <!-- Content... -->
+
 {% endblock %}
-
-<!-- Include GSAP & Base JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
-
+<!-- End Content -->
 </body>
 </html>

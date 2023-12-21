@@ -27,3 +27,32 @@ def process_location(request):
         return JsonResponse({'message': 'Location received successfully'})
     else:
         return JsonResponse({'message': 'Invalid request method'})
+
+
+def preloader(request):
+    return render(request, 'preloader.html')
+
+
+def web_notif(request):
+    return render(request, 'web_notification.html')
+
+
+def mobile_notif(request):
+    return render(request, 'mobile_notification.html')
+
+
+# Profile Views
+def profile(request):
+    return render(request, 'profile_page/user-profile.html')
+
+
+def overview(request):
+    return render(request, 'profile_page/include_overview.html')
+
+
+def edit_profile(request):
+    return render(request, 'profile_page/include_edit_profile.html')
+
+
+def change_password(request):
+    return render(request, 'profile_page/include_change_password.html')

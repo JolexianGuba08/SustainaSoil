@@ -1,11 +1,11 @@
 gsap.from("aside", {
-  duration: 2,
-  xPercent: -30,
+  duration: 1,
+  xPercent: -20,
   opacity: 0,
 });
 
 gsap.from("header", {
-  duration: 2,
+  duration: 1,
   xPercent: 20,
   opacity: 0,
 });
