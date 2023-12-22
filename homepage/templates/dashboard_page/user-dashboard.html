@@ -12,9 +12,11 @@
 
 
 {% block content %}
+    <!-- Include Preloader-->
+    {% include 'preloader.html' %}
     <!-- Main -->
-    <main
-            class="flex flex-grow flex-col items-center max-[450px]:mt-5 max-[450px]:mb-2 z-40 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    <main id="pageContent"
+          class="flex flex-grow flex-col items-center max-[450px]:mt-5 max-[450px]:mb-2 z-40 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
     >
         <!-- Header -->
         <header
@@ -303,6 +305,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
+        window.addEventListener('load', function () {
+            console.log('Page is loaded');
+            // Hide the preloader
+            document.getElementById('preloader').style.display = 'none';
+        });
+
         // Weather Animation
         gsap.from(".cloudy_animation1", {
             duration: 400,

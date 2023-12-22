@@ -2,44 +2,44 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Loading...</title>
     <!-- Tab Icon -->
     <link
-      rel="icon"
-      type="image/x-icon"
-      href="{% static 'images/logo-secondary.png' %}"
+            rel="icon"
+            type="image/x-icon"
+            href="{% static 'images/logo-secondary.png' %}"
     />
 
     <!-- Include Tailwind -->
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
     <!-- Include CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  </head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
 
-  <body class="m-h-screen">
-    <!-- Preloader -->
-    <div
-      class="preloader bg-gradient-to-r from-g1 to-background fixed w-full h-full z-50 flex flex-col justify-center items-center"
-    >
-      <img
-        src="{% static 'images/logo-secondary.png' %}"
-        alt="Loading "
-        class="w-[110px] h-[110px]"
-      />
+<body class="m-h-screen">
+<!-- Preloader -->
+<div id="preloader"
+     class="preloader bg-gradient-to-r from-g1 to-background fixed w-full h-full z-50 flex flex-col justify-center items-center"
+>
+    <img
+            src="{% static 'images/logo-secondary.png' %}"
+            alt="Loading "
+            class="w-[110px] h-[110px]"
+    />
 
-      <div class="relative bottom-[20px] right-[35px]">
+    <div class="relative bottom-[20px] right-[35px]">
         <p class="mt-5 tracking-widest text-accent1">LOADING...</p>
 
-        <div class="container">
-          <p class="mt-1 text-accent2 uppercase tracking-widest">
-            Setting Up Environment
-          </p>
-        </div>
-      </div>
+        {#        <div class="container">#}
+        {#            <p class="mt-1 text-accent2 uppercase tracking-widest">#}
+        {#                Setting Up Environment#}
+        {#            </p>#}
+        {#        </div>#}
     </div>
-    <!-- End Preloader -->
-  </body>
+</div>
+<!-- End Preloader -->
+</body>
 </html>
