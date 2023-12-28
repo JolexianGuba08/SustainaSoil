@@ -1,47 +1,47 @@
 <!-- Overview Section -->
 <div
-  class="overview justify-between p-9 w-full h-full rounded-br-3xl max-lg:rounded-bl-3xl max-[450px]:p-8 max-[450px]:rounded-bl-3xl"
-  id="overview"
+        class="overview justify-between p-9 w-full h-full rounded-br-3xl max-lg:rounded-bl-3xl max-[450px]:p-8 max-[450px]:rounded-bl-3xl"
+        id="overview"
 >
-  <h1
-    class="text-2xl tracking-widest font-extralight text-accent1 mb-5 max-[450px]:text-lg max-[450px]:text-center"
-  >
-    PROFILE INFORMATION
-  </h1>
+    <h1
+            class="text-2xl tracking-widest font-extralight text-accent1 mb-5 max-[450px]:text-lg max-[450px]:text-center"
+    >
+        PROFILE INFORMATION
+    </h1>
 
-  <!-- Divider -->
-  <div class="w-full h-[1px] border-t border-accent1"></div>
+    <!-- Divider -->
+    <div class="w-full h-[1px] border-t border-accent1"></div>
 
-  <!--  Details -->
-  <div class="details mt-10 w-full">
-    <!-- DISPLAY NAME -->
-    <h2
-      class="tracking-wider text-md text-accent1 font-extralight max-[450px]:text-sm"
-    >
-      NAME: <span class="text-accent2">Gianni Dylan Cabahug</span>
-    </h2>
-    <!-- DISPLAY EMAIL ADDRESS -->
-    <h2
-      class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
-    >
-      EMAIL:
-      <span class="text-accent2">giannidylancbhg@gmail.com</span>
-    </h2>
-    <!-- DISPLAY CONTACT NO. -->
-    <h2
-      class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
-    >
-      CONTACT NO:
-      <span class="text-accent2">09054793449</span>
-    </h2>
+    <!--  Details -->
+    <div class="details mt-10 w-full">
+        <!-- DISPLAY NAME -->
+        <h2
+                class="tracking-wider text-md text-accent1 font-extralight max-[450px]:text-sm"
+        >
+            NAME: <span class="text-accent2">{{ name }}</span>
+        </h2>
+        <!-- DISPLAY EMAIL ADDRESS -->
+        <h2
+                class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
+        >
+            EMAIL:
+            <span class="text-accent2">{{ user_email }}</span>
+        </h2>
+        <!-- DISPLAY CONTACT NO. -->
+        <h2
+                class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
+        >
+            CONTACT NO:
+            <span class="text-accent2">{{ phone }}</span>
+        </h2>
 
-    <!-- DISPLAY ACCOUNT CREATED -->
-    <h2
-      class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
-    >
-      ACCOUNT CREATED:
-      <span class="text-accent2">12/18/2023</span>
-    </h2>
-  </div>
+        <!-- DISPLAY ACCOUNT CREATED -->
+        <h2
+                class="tracking-wider text-md text-accent1 font-extralight mt-3 max-[450px]:text-sm"
+        >
+            ACCOUNT CREATED:
+            <span class="text-accent2">{{ acc_created_date }}</span>
+        </h2>
+    </div>
 </div>
 <!-- End Overview Section -->

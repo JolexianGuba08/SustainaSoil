@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Plant Profile | SustainAsoil {% endblock %}
+
+{% block greenery %}
+      <li
+        class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+      >
+{% endblock %}
+
+
+{% block content %}
+    <!-- Main -->
+    <main
+      class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    >
+      <!-- Header -->
+      <header
+        class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+      >
+        <!-- Back Redirect to Greenery & DISPLAY PLANT NAME -->
+        <h1
+          class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+        >
+          <a href="{% url 'presets' %}" class="flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+            &nbsp;PLANT NAME
+          </a>
+        </h1>
+        <!-- End Back Redirect to Greenery & DISPLAY PLANT NAME -->
+
+          <!-- Include Notification -->
+          {% include 'web_notification.html' %}
+      </header>
+      <!-- End Header -->
+
+      <!-- Plant Profile Section -->
+      <section class="plant_profile w-[80%] max-lg:w-[90%] max-lg:mb-8">
+        {% include 'greenery_page/include_plant_profile/plant_profile_section.html' %}
+      </section>
+
+      <!-- Preference Section -->
+      <section
+        class="w-[80%] h-full mb-[2%] flex max-lg:flex-col max-sm:mb-10 max-pc:mt-10"
+      >
+        <!-- Set Preference -->
+        <div class="s_preference w-[250px] flex flex-col">
+          <h2
+            class="flex indent-1 text-xl text-accent1 items-center tracking-widest mt-28 max-lg:mt-3 font-extralight"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+            PREFERENCE
+          </h2>
+
+          <div class="w-full flex items-center mt-8 max-lg:mb-8">
+            <ul
+              class="font-extralight tracking-widest ml-7 max-[450px]:ml-0 text-accent2 max-lg:flex max-lg:justify-center max-lg:items-center"
+            >
+              <li class="w-full rounded-lg cursor-pointer max-xl:mr-5">
+                <button
+                  class="pref_active tracking-wide w-full p-2 px-5 rounded-lg"
+                >
+                  PARAMETER
+                </button>
+              </li>
+              <li
+                class="mt-3 max-lg:mt-0 hover:bg-secondary rounded-lg transition-colors ease-in-out duration-500 cursor-pointer"
+              >
+                <button class="w-full p-2 px-5 tracking-wide rounded-lg">
+                  SCHEDULE
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- End  Set Preference -->
+
+        <!-- Content Preference  -->
+        <div
+          class="c_preference flex-1 flex justify-center items-center flex-grow max-lg:mt-3"
+        >
+          <div
+            class="cont bg-secondary flex flex-col flex-grow relative rounded-[50px] max-sm:rounded-3xl w-[100%] m-h-[85%] max-lg:h-full p-5 py-6 pc:py-7 shadow-lg"
+          >
+            <!-- Heading -->
+            <div class="flex items-center">
+              <img
+                src="{% static 'images/logo-secondary.png' %}"
+                alt="Logo"
+                class="w-[80px] h-[80px] max-sm:w-[70px] max-sm:h-[70px] max-2xl:w-[70px] max-2xl:h-[70px]"
+              />
+
+              <div class="ml-2">
+                <p class="tracking-[5px] text-accent2 text-md">CARE</p>
+                <h2
+                  class="tracking-[5px] text-accent1 max-2xl:text-md font-extrabold max-[450px]:text-[25px] text-3xl max-sm:text-md"
+                >
+                  GREENERY
+                </h2>
+              </div>
+            </div>
+            <!-- End Heading -->
+
+            <!-- Parameter Form -->
+            <form action="">
+              {% include 'greenery_page/include_plant_profile/parameter_form.html' %}
+            </form>
+            <!-- End Parameter Form -->
+
+           <!-- Schedule form -->
+            <form action="">
+              {% include 'greenery_page/include_plant_profile/schedule_form.html' %}
+            </form>
+           <!-- End Schedule form -->
+
+          </div>
+        </div>
+        <!-- End Content Preference  -->
+      </section>
+      <!-- End Preference Section -->
+    </main>
+    <!-- End Main -->
+
+    <script>
+      let max_moisture = document.getElementById("max_moisture_level");
+      let min_moisture = document.getElementById("min_moisture_level");
+      let max_temperature = document.getElementById("max_temperature_level");
+      let min_temperature = document.getElementById("min_temperature_level");
+
+      function maxMoistureSlider(value) {
+        max_moisture.innerHTML = value + "%";
+      }
+
+      function minMoistureSlider(value) {
+        min_moisture.innerHTML = value + "%";
+      }
+
+      function maxTemperatureSlider(value) {
+        max_temperature.innerHTML = value + "%";
+      }
+
+      function minTemperatureSlider(value) {
+        min_temperature.innerHTML = value + "%";
+      }
+    </script>
+{% endblock %}

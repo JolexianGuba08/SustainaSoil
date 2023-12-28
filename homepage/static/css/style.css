@@ -3,7 +3,7 @@
 :root {
     --background: #ffffff;
     --secondary: #e6e8d7;
-    --accent1: #5a6b47;
+    --accent1: #5a6b47 ;
     --accent2: #32281b;
 }
 
@@ -30,7 +30,7 @@
     display: inline-block !important;
 }
 
-.preloader .container p {
+.preloader  .container p {
     width: 100%;
     /* background-color: red; */
     white-space: nowrap;
@@ -56,12 +56,8 @@
 }
 
 @keyframes loading {
-    from {
-        transform: rotate(1turn);
-    }
-    to {
-        transform: rotate(0turn);
-    }
+    from {transform: rotate(1turn);}
+    to{transform: rotate(0turn);}
 }
 
 /* ----------------------------------- */
@@ -148,16 +144,16 @@
 }
 
 .cloudy_animation {
-    visibility: hidden;
+    visibility: hidden ;
 }
 
 .sunny_animation {
-    visibility: hidden;
+    visibility: hidden ;
 }
 
 .rainy_animation {
     background-image: url(../images/rainy-animation.png) !important;
-    visibility: hidden;
+    visibility: hidden ;
 }
 
 .stormy_animation {
@@ -168,20 +164,22 @@
 .water_level {
     width: 50% !important;
 
-    --mask: radial-gradient(24.60px at calc(100% - 33.00px) 50%, #000 99%, #0000 101%) 0 calc(50% - 22px)/100% 44px,
-    radial-gradient(24.60px at calc(100% + 22.00px) 50%, #0000 99%, #000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
+    --mask:
+    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
     background-color: #38b6ff !important;
 }
 
-.pesticide_level {
+.pesticide_level{
     width: 80% !important;
 
-    --mask: radial-gradient(24.60px at calc(100% - 33.00px) 50%, #000 99%, #0000 101%) 0 calc(50% - 22px)/100% 44px,
-    radial-gradient(24.60px at calc(100% + 22.00px) 50%, #0000 99%, #000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
+    --mask:
+    radial-gradient(24.60px at calc(100% - 33.00px) 50%,#000 99%,#0000 101%) 0 calc(50% - 22px)/100% 44px,
+    radial-gradient(24.60px at calc(100% + 22.00px) 50%,#0000 99%,#000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
     background-color: var(--secondary) !important;
 }
 
@@ -228,12 +226,12 @@
     background-size: cover !important;
 }
 
-.prfl_lgt ul li a:focus {
+.prfl_lgt ul li a:focus  {
     background-color: var(--secondary) !important;
     color: var(--accent1) !important;
 }
 
-.p_f:active {
+.p_f:active  {
     background-color: var(--secondary) !important;
     color: var(--accent1) !important;
 }
@@ -242,89 +240,88 @@
     color: var(--accent1) !important;
 }
 
-.l_g:focus {
+.l_g:focus  {
     color: #b91c1c !important;
 }
 
-.l_g:hover {
+.l_g:hover  {
     color: #b91c1c !important;
 }
 
-.notification_btn {
+.notification_btn{
     padding: 0;
 }
 
-.notification_btn:active {
+.notification_btn:active{
     background-color: transparent !important;
 }
 
-.notification_btn:hover {
+.notification_btn:hover{
     background-color: transparent !important;
 }
 
 .notif li h1 {
     cursor: auto !important;
-}
+ }
 
-.notif li h1 {
+ .notif li h1 {
     cursor: auto !important;
-}
+ }
 
 .notif li h1:active {
-    background-color: transparent !important;
-    color: var(--accent1) !important;
-    pointer-events: none !important;
+   background-color: transparent !important;
+   color: var(--accent1) !important;
+   pointer-events: none !important;
 }
 
 .notif li .see_all:active {
     background-color: transparent !important;
     color: var(--accent1) !important;
     pointer-events: none !important;
-}
+ }
 
 .notif li h2 {
     cursor: auto !important;
 
-}
+ }
 
 
 .notif li h2:active {
-    background-color: var(--secondary) !important;
-    color: white !important;
-    pointer-events: none !important;
+   background-color: var(--secondary) !important;
+   color: white !important;
+   pointer-events: none !important;
 }
 
 
 .notif li p {
     cursor: auto !important;
-}
+ }
 
 
 .notif li p:active {
     background-color: transparent !important;
     color: var(--accent2) !important;
-}
+ }
 
-.notif li p:hover {
+ .notif li p:hover {
     background-color: transparent !important;
-}
+ }
 
-.notif li button:focus {
+ .notif li button:focus {
     background-color: transparent !important;
     color: var(--accent1) !important;
-}
+ }
 
-.notif .n_div {
+ .notif .n_div {
     cursor: auto !important;
-}
-
-.notif .n_div:hover {
+ }
+ .notif .n_div:hover {
     background-color: transparent !important;
-}
+ }
 
-.notif .n_div:focus {
+ .notif .n_div:focus {
     background-color: transparent !important;
-}
+ }
 
 .notif::-webkit-scrollbar {
     display: none !important;
@@ -409,15 +406,112 @@
 }
 
 .cover {
-    background: url(..) no-repeat center center !important;
+    background: url(..) no-repeat center center  !important;
     background-size: cover !important;
     background-color: var(--secondary) !important;
 }
 
 .profile {
-    background: url(../images/default-profile.png) no-repeat center center !important;
+    background: url(../images/default-profile.png) no-repeat center center  !important;
     background-size: cover !important;
     background-color: var(--secondary) !important;
 }
 
+/* ----------------------------------- */
+/*  greenery */
+/* ----------------------------------- */
 
+/* SECTION */
+.plant_profile .profile{
+    background: url(../images/plant-profile.png) no-repeat center center !important;
+    background-size: cover !important;
+}
+
+
+.range {
+    appearance: none !important;
+}
+
+.range::-webkit-slider-thumb {
+    background: var(--secondary);
+}
+
+.range::-webkit-slider-runnable-track {
+    background: var(--background) !important;
+}
+
+
+.set_schedule .cont input:focus {
+    outline: none !important;
+}
+
+.set_schedule .cont input {
+    outline: none !important;
+    border: 1px solid var(--accent1) !important;
+}
+
+.set_schedule .cont {
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3px) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+}
+
+.modal-action .save {
+    outline: none !important;
+    border: 1px solid var(--accent1) !important;
+}
+
+.modal-action .cancel {
+    outline: none !important;
+    border: 1px solid #b91c1c !important;
+}
+
+.modal-action .cancel:hover {
+    outline: none !important;
+    border: 1px solid #b91c1c !important;
+}
+
+.modal-action ul {
+    background-color: var(--accent1) !important;
+}
+
+.autocomplete-wrapper {
+    display: inline-block !important;
+}
+
+.autocomplete-list {
+    background-color: var(--background) !important;
+    list-style: none !important;
+    position: absolute !important;
+    width: 100%;
+    padding: 10px !important;
+    border: 1px solid var(--secondary) !important;
+    border-radius: 10px !important;
+    margin-top: 10px !important;
+    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.autocomplete-list li {
+    padding: 5px !important;
+    width: 100% !important ;
+    border-bottom: 1px solid var(--secondary) !important;
+}
+
+.autocomplete-list li:hover {
+    background-color: var(--secondary) !important;
+    /* border-radius: 5px !important; */
+    border-bottom: 1px solid transparent !important;
+}
+
+.autocomplete-list button {
+    width: 100% !important;
+    text-align: left !important;
+    color: var(--accent1) !important;
+}
+
+.pref_active {
+    background-color: var(--secondary) !important;
+}

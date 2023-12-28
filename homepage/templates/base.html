@@ -95,7 +95,7 @@
                     >
                 </li>
                 <li class="active:bg-secondary rounded-lg">
-                    <a href=""
+                    <a href="{% url 'greenery' %}"
                     >
                         <button class="p-0 w-full h-full text-left">
                             Greenery
@@ -216,13 +216,15 @@
             >
                 <!-- DISPLAY PROFILE PICTURE -->
                 <div
-                        class="profile_drp w-[40px] h-[40px] max-xl:w-[35px] max-xl:h-[35px] rounded-full bg-secondary p-0 m-0"
+                        class="w-[40px] h-[40px] max-xl:w-[35px] max-xl:h-[35px] rounded-full bg-secondary p-0 m-0"
+                        style="background: url({{ user_profile_pic }}) no-repeat center center !important; background-size: cover !important;"
                 ></div>
+
                 <!-- DISPLAY NAME -->
                 <p
                         class="truncate text-lg max-xl:hidden w-[110px] tracking-wide font-extralight group-focus:text-accent1 group-hover:text-accent1"
                 >
-                    Gianni Dylan Cabahug
+                    {{ name }}
                 </p>
             </div>
             <ul

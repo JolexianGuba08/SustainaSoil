@@ -24,9 +24,9 @@ class Account(models.Model):
     acc_profile_img = models.URLField(max_length=500, default='https://res.cloudinary.com/duku3q6xf/image/upload'
                                                               '/v1700856645/Aquamelya/default-user_a8bkjg.png',
                                       verbose_name='profile image')
-    # acc_background_img = models.URLField(max_length=500, default='https://res.cloudinary.com/duku3q6xf/image/upload'
-    #                                                              '/v1700856645/Aquamelya/default-user_a8bkjg.png',
-    #                                      verbose_name='profile image')
+    acc_background_img = models.URLField(max_length=500,
+                                         default='https://res.cloudinary.com/duku3q6xf/image/upload/v1703269291/default_back_img_p4mkzo.png',
+                                         verbose_name='profile image')
     acc_phone = models.CharField(max_length=11, default='', verbose_name='phone number')
     acc_date_added = models.DateTimeField(auto_now_add=True)
     acc_date_last_updated = models.DateTimeField(auto_now=True)

@@ -1,8 +1,9 @@
 import bcrypt
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.template.loader import render_to_string
 from google.cloud.firestore_v1 import FieldFilter
 
 from loginpage.forms import LoginForm, SignUpPageForm, OTPVerificationForm
@@ -36,7 +37,7 @@ def login_page(request):
                             if account.acc_type == 1:
                                 # Account is an admin
                                 print('Admin login')
-                                return redirect('homepage')
+                                # return redirect('homepage')
                             elif account.acc_type == 0:
                                 # Account is customer
                                 messages.success(request, 'Supplier successfully deleted.')
@@ -44,20 +45,26 @@ def login_page(request):
                                 request.session['session_user_id'] = account.acc_id
                                 request.session['session_user_type'] = account.acc_type
                                 print('Customer login')
-                                return redirect('homepage')
+                                # Assuming the login is successful, return a JSON response
+                                dashboard_html = render_to_string('dashboard_page/user-dashboard.html')
+                                return JsonResponse({'success': True, 'dashboard_html': dashboard_html})
                         elif account.acc_status == 2:
                             print('Error: This account has been removed and is no longer accessible.')
-                            return redirect('login_page')
+                            errors = form.errors.as_json()
+                            return JsonResponse({'success': False, 'errors': errors})
                         else:
                             print('Incorrect Email or Password: Please verify and try again.')
-                            return redirect('login_page')
+                            errors = form.errors.as_json()
+                            return JsonResponse({'success': False, 'errors': errors})
                     else:
                         print('Incorrect Email or Password: Please verify and try again.')
-                        return redirect('login_page')
+                        errors = form.errors.as_json()
+                        return JsonResponse({'success': False, 'errors': errors})
 
                 except ObjectDoesNotExist:
                     print('Account not found')
-                    return redirect('login_page')
+                    errors = form.errors.as_json()
+                    return JsonResponse({'success': False, 'errors': errors})
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")

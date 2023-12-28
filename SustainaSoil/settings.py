@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -64,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'homepage.weather_api.get_weather_data_context',
+                'homepage.user_context.context_processor.user_context',
             ],
         },
     },
@@ -73,11 +78,20 @@ WSGI_APPLICATION = 'SustainaSoil.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+DATABASES_USER = os.getenv('PGUSER')
+DATABASES_PASSWORD = os.getenv('PGPASSWORD')
+DATABASES_HOST = os.getenv('PGHOST')
+DATABASES_PORT = os.getenv('PGPORT')
+DATABASES_NAME = os.getenv('PGDATABASE')
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DATABASES_NAME,
+        "USER": DATABASES_USER,
+        "PASSWORD": DATABASES_PASSWORD,
+        "HOST": DATABASES_HOST,
+        "PORT": DATABASES_PORT,
     }
 }
 
@@ -114,6 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'homepage/static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

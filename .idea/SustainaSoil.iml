@@ -18,8 +18,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12 (SustainaSoil)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="gsap" level="application" />
-    <orderEntry type="library" name="daisyui" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="gsap" level="application" />
   </component>
@@ -27,6 +27,8 @@
     <option name="namespacePackageFolders">
       <list>
         <option value="$MODULE_DIR$/homepage/credentials" />
+        <option value="$MODULE_DIR$/homepage/firestore_db_modules" />
+        <option value="$MODULE_DIR$/homepage/user_context" />
       </list>
     </option>
   </component>

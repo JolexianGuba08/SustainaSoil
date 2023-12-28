@@ -1,0 +1,340 @@
+<!-- Water & Pesticide Schedule -->
+<div class="flex flex-grow flex-wrap">
+    <!-- Water Schedule -->
+    <div class="flex flex-1 flex-col px-3">
+      <!-- Heading -->
+      <div class="flex justify-between items-center mt-9">
+        <h2
+          class="text-accent1 text-xl tracking-wide font-normal pc:ml-3"
+        >
+          WATER
+        </h2>
+
+        <div class="flex flex-grow justify-start ml-3 gap-3">
+            <!-- Schedule Button -->
+          <button
+            class="border p-1 px-3 text-sm tracking-widest text-accent1 rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-accent1 hover:text-background font-bold"
+          >
+            SCHEDULE
+          </button>
+            <!-- Reset Button -->
+          <button
+            class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
+          >
+            RESET
+          </button>
+        </div>
+      </div>
+      <!-- Heading -->
+
+      <!-- Set Schedule -->
+      <div
+        class="set_schedule flex justify-center flex-col flex-1 flex-grow gap-4 items-center"
+      >
+        <div
+          class="cont flex flex-col mt-8 p-4 w-[100%] h-[190px] max-md:h-full justify-center rounded-xl"
+        >
+          <div
+            class="w-full flex gap-5 items-center ml-3 max-sm:ml-0 max-sm:gap-2 max-sm:flex-col max-pc:justify-center"
+          >
+            <div class="flex gap-5 items-center">
+              <input
+                title="Hours"
+                type="text"
+                inputmode="numeric"
+                placeholder="00"
+                name=""
+                id=""
+                maxlength="2"
+                class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
+              />
+              <p class="text-accent1 text-xl font-extrabold">:</p>
+              <input
+                title="Minutes"
+                type="text"
+                inputmode="numeric"
+                placeholder="00"
+                name=""
+                id=""
+                maxlength="2"
+                class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
+              />
+            </div>
+            <div
+              class="flex gap-5 max-sm:justify-center max-sm:mt-2"
+            >
+              <label
+                for="am"
+                class="flex items-center text-accent1 font-light text-lg gap-2"
+              >
+                <input
+                  title="am/pm"
+                  type="radio"
+                  name="radio-1"
+                  id="am"
+                  class="radio checked:bg-accent1"
+                />AM</label
+              >
+
+              <label
+                for="pm"
+                class="flex items-center text-accent1 font-light text-lg gap-2"
+              >
+                <input
+                  title="am/pm"
+                  type="radio"
+                  name="radio-1"
+                  id="am"
+                  class="radio checked:bg-accent1"
+                />PM</label
+              >
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div
+            class="w-[95%] mx-auto h-[1px] bg-accent1 mt-5"
+          ></div>
+
+          <!-- Select Day -->
+          <div
+            class="form-control flex w-full flex-row gap-2 flex-wrap justify-center mt-5"
+          >
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">Su</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">M</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">Tu</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">We</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">Th</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">Fri</span>
+            </label>
+
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                class="checkbox border-accent1 rounded-md"
+              />
+              <span class="label-text text-accent1 ml-2">Sa</span>
+            </label>
+          </div>
+          <!-- End Select Day -->
+        </div>
+      </div>
+      <!-- End Set Schedule -->
+    </div>
+    <!-- End Water Schedule -->
+
+        <!-- Pesticide Schedule -->
+        <div class="flex flex-1 flex-col px-3">
+          <!-- Heading -->
+          <div class="flex justify-between items-center mt-9">
+            <h2
+              class="text-accent1 text-xl tracking-wide font-normal pc:ml-3"
+            >
+              PESTICIDE
+            </h2>
+
+            <div class="flex flex-grow justify-start ml-3 gap-3">
+                <!--Schedule Button -->
+              <button
+                class="border p-1 px-3 text-sm tracking-widest text-accent1 rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 bg-accent1 text-background font-bold"
+              >
+                SCHEDULE
+              </button>
+                <!-- Reset Button -->
+              <button
+                class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
+              >
+                RESET
+              </button>
+            </div>
+          </div>
+          <!-- Heading -->
+
+          <!-- Set Schedule -->
+          <div
+            class="set_schedule flex justify-center flex-col flex-1 flex-grow gap-4 items-center"
+          >
+            <div
+              class="cont flex flex-col mt-8 p-4 w-[100%] h-[190px] max-md:h-full justify-center rounded-xl"
+            >
+              <div
+                class="w-full flex gap-5 items-center ml-3 max-sm:ml-0 max-sm:gap-2 max-sm:flex-col max-pc:justify-center"
+              >
+                <div class="flex gap-5 items-center">
+                  <input
+                    title="Hours"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="00"
+                    name=""
+                    id=""
+                    maxlength="2"
+                    class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
+                  />
+                  <p class="text-accent1 text-xl font-extrabold">:</p>
+                  <input
+                    title="Minutes"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="00"
+                    name=""
+                    id=""
+                    maxlength="2"
+                    class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
+                  />
+                </div>
+                <div
+                  class="flex gap-5 max-sm:justify-center max-sm:mt-2"
+                >
+                  <label
+                    for="am"
+                    class="flex items-center text-accent1 font-light text-lg gap-2"
+                  >
+                    <input
+                      title="am/pm"
+                      type="radio"
+                      name="radio-1"
+                      id="am"
+                      class="radio checked:bg-accent1"
+                    />AM</label
+                  >
+
+                  <label
+                    for="pm"
+                    class="flex items-center text-accent1 font-light text-lg gap-2"
+                  >
+                    <input
+                      title="am/pm"
+                      type="radio"
+                      name="radio-1"
+                      id="am"
+                      class="radio checked:bg-accent1"
+                    />PM</label
+                  >
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div
+                class="w-[95%] mx-auto h-[1px] bg-accent1 mt-5"
+              ></div>
+
+              <!-- Select Day -->
+              <div
+                class="form-control flex w-full flex-row gap-2 flex-wrap justify-center mt-5"
+              >
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">Su</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">M</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">Tu</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">We</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">Th</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">Fri</span>
+                </label>
+
+                <label class="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="checkbox border-accent1 rounded-md"
+                  />
+                  <span class="label-text text-accent1 ml-2">Sa</span>
+                </label>
+              </div>
+              <!-- End Select Day -->
+            </div>
+          </div>
+          <!-- End Set Schedule -->
+        </div>
+        <!-- End Pesticide Schedule -->
+
+    <!-- Save Changes Button -->
+    <div class="w-[90%] m-auto mt-8 flex justify-end">
+      <!-- Save Changes Button -->
+      <button
+        class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
+      >
+        SAVE CHANGES
+      </button>
+    </div>
+    <!-- End Save Changes Button -->
+</div>
+<!-- End Water & Pesticide Schedule -->
