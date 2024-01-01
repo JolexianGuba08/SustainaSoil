@@ -12,6 +12,7 @@ from homepage.user_context.context_processor import user_context
 import homepage.firestore_db_modules.cloud_storage as cloud_storage
 import homepage.firestore_db_modules.account_greenery as account_greenery
 
+
 # Create your views here.
 def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
@@ -95,22 +96,24 @@ def greenery(request):
     except Account_Package.DoesNotExist:
         return render(request, 'greenery_page/user-greenery.html')
 
+
 def check_package_id(request):
     if request.method == 'POST':
         package_id = request.POST.get('package_id')
         print(package_id)
         try:
-            package_id = Packages.objects.get(package_key = package_id).pk
+            package_id = Packages.objects.get(package_key=package_id).pk
             if package_id:
-                package_id_exist = Account_Package.objects.filter(package_key = package_id).first()
+                package_id_exist = Account_Package.objects.filter(package_key=package_id).first()
                 if not package_id_exist:
-                    return JsonResponse({'status':'True','message':'Package successfully registered. Thank you!'})
+                    return JsonResponse({'status': 'True', 'message': 'Package successfully registered. Thank you!'})
                 else:
-                    return JsonResponse({'status':'False','message':'Package is already registered.'})
+                    return JsonResponse({'status': 'False', 'message': 'Package is already registered.'})
         except Packages.DoesNotExist:
-            return JsonResponse({'status':"Error",'message':'Package does not exist'})
+            return JsonResponse({'status': "Error", 'message': 'Package does not exist'})
 
     return render(request, 'greenery_page/add-plant.html')
+
 
 def add_package(request):
     if request.method == 'POST':
@@ -127,7 +130,8 @@ def add_package(request):
                 package_id_exist = Account_Package.objects.filter(package_key=package_id).first()
                 if not package_id_exist:
                     account_greenery.add_account_greenery_location(user_email, lat, long, package_location)
-                    Account_Package.objects.create(acc_package_name=package_name, package_key=package_key, user_id=email)
+                    Account_Package.objects.create(acc_package_name=package_name, package_key=package_key,
+                                                   user_id=email)
                     return JsonResponse({'message': 'Package added successfully'})
                 else:
                     return JsonResponse({'message': 'Package is already registered.'})
@@ -138,7 +142,7 @@ def add_package(request):
             return JsonResponse({'error': f'Error on registering package {e}'})
 
 
-def add_plant(request,package_key):
+def add_plant(request, package_key):
     try:
         account_plant = Account_Plants.objects.filter(
             package_key=package_key,
@@ -153,6 +157,7 @@ def add_plant(request,package_key):
         'account_plants': account_plant,  # Use account_plant instead of account_plants
         'package_key': package_key
     })
+
 
 # add location end point
 def get_location(request):
@@ -177,17 +182,24 @@ def get_location(request):
             return JsonResponse({'message': 'Latitude and longitude parameters are required'})
 
 
-def presets(request,package_key):
+def presets(request, package_key):
     plants = Plants.objects.all()
+
     if plants:
-        return render(request, 'greenery_page/user-presets.html', {'plants': plants,'package_key':package_key})
-    return render(request, 'greenery_page/user-presets.html',{'package_key':package_key})
+        for plant in plants:
+            # Adding the image URL to each plant object
+            plant.plant_image_url = cloud_storage.get_file_url_from_firebase(plant.plant_image)
+
+        print(plants)  # Adding the plant preferences to each plant objec
+        return render(request, 'greenery_page/user-presets.html',
+                      {'plants': plants, 'package_key': package_key})
+
+    return render(request, 'greenery_page/user-presets.html', {'package_key': package_key})
 
 
 def plant_profile(request, package_key, plant_id):
     user_id = request.session.get('session_user_id')
     print(user_id, plant_id, package_key)
-
     # Check if Account_Plants object exists
     exist = Account_Plants.objects.filter(
         plant_id=plant_id,
@@ -197,14 +209,17 @@ def plant_profile(request, package_key, plant_id):
     take_cared = exist
     # Retrieve the Plants object based on plant_id
     plants = get_object_or_404(Plants, pk=plant_id)
-    acc_plant = Account_Plants.objects.get(
-        plant_id=plant_id,
-        user_id=user_id,
-        package_key=package_key
-    )
-    print(take_cared)
-    print(acc_plant.acc_plant_pref_id.acc_plant_max_temp)
+    plant_image_url = cloud_storage.get_file_url_from_firebase(plants.plant_image)
 
+    try:
+        acc_plant = Account_Plants.objects.get(
+            plant_id=plant_id,
+            user_id=user_id,
+            package_key=package_key
+        )
+    except Account_Plants.DoesNotExist:
+        # Handle the case where the object is not found
+        acc_plant = None
     return render(
         request,
         'greenery_page/plant-profile.html',
@@ -212,9 +227,11 @@ def plant_profile(request, package_key, plant_id):
             'plants': plants,
             'package_key': package_key,
             'take_cared': take_cared,
-            'acc_plant': acc_plant
+            'acc_plant': acc_plant,
+            'plant_image_url': plant_image_url
         }
     )
+
 
 def take_care_plant(request):
     if request.method == 'POST':
@@ -225,19 +242,21 @@ def take_care_plant(request):
             plant = Plants.objects.get(pk=plant_id)
             user_id = Account.objects.get(pk=user_id)
             acc_package = Account_Package.objects.get(package_key=package_key, user_id=user_id)
-            acc_preferences = Account_Plant_Preferences.objects.create(acc_plant_min_temp=plant.plant_pref_id.plant_min_temp,
-                                                     acc_plant_max_temp=plant.plant_pref_id.plant_max_temp,
-                                                     acc_plant_min_moist_lvl=plant.plant_pref_id.plant_min_moist_lvl,
-                                                     acc_plant_max_moist_lvl=plant.plant_pref_id.plant_max_moist_lvl)
+            acc_preferences = Account_Plant_Preferences.objects.create(
+                acc_plant_min_temp=plant.plant_pref_id.plant_min_temp,
+                acc_plant_max_temp=plant.plant_pref_id.plant_max_temp,
+                acc_plant_min_moist_lvl=plant.plant_pref_id.plant_min_moist_lvl,
+                acc_plant_max_moist_lvl=plant.plant_pref_id.plant_max_moist_lvl)
 
             Account_Plants.objects.create(plant_id=plant,
                                           user_id=acc_package.user_id,
                                           package_key=acc_package.package_key,
-                                          acc_plant_pref_id = acc_preferences)
+                                          acc_plant_pref_id=acc_preferences)
             return JsonResponse({'message': 'Plant taken cared successfully'})
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'{e}'})
+
 
 def save_acc_preferences(request):
     if request.method == 'POST':
@@ -262,13 +281,14 @@ def save_acc_preferences(request):
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'{e}'})
+
+
 def plant_profile_section(request):
     return render(request, 'greenery_page/plant-profile.html')
 
 
 # Includes Plant Profile Views
 def parameter_form(request):
-
     return render(request, 'greenery_page/include_plant_profile/parameter_form.html')
 
 

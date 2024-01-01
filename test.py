@@ -35,68 +35,66 @@ import homepage.firestore_db_modules.account_greenery as account_greenery
 # display_weather_info(weather_data)
 
 
-# import firebase_admin
-# from firebase_admin import credentials, storage
-# from dotenv import load_dotenv
-# import os
-# from datetime import datetime, timedelta
-#
-# load_dotenv()
-# start_time = datetime.now()
-# # Initialize Firebase Admin SDK
-# cred = credentials.Certificate(os.getenv("FIRESTORE_KEY_PATH"))
-# firebase_admin.initialize_app(cred, {
-#     'storageBucket': os.getenv("FIREBASE_STORAGE_BUCKET")
-# })
-#
-#
-# def upload_file_to_firebase(file_path, destination_path):
-#     try:
-#         bucket = storage.bucket()
-#         blob = bucket.blob(destination_path)
-#         blob.upload_from_filename(file_path)
-#         print(f"File {file_path} uploaded to {destination_path} in Firebase Storage")
-#         file_url = get_file_url_from_firebase(destination_path)
-#         return file_url, destination_path  # Return both URL and storage path
-#     except Exception as e:
-#         print(f"Error uploading file: {e}")
-#         return None, None
-#
-#
-# def get_file_url_from_firebase(file_path):
-#     try:
-#         bucket = storage.bucket()
-#         blob = bucket.blob(file_path)
-#         expiration = datetime.now() + timedelta(days=7)  # Expiration in 7 days (adjust as needed)
-#         url = blob.generate_signed_url(expiration=expiration)  # Set the expiration time
-#         return url
-#     except Exception as e:
-#         print(f"Error getting file URL: {e}")
-#         return None
-#
-#
-# # Usage example:
-# uploaded_file_url, storage_path = upload_file_to_firebase(
-#     r"C:\Users\REY\Downloads\279650263_1294819024260510_1850353223875052676_n.jpg",
-#     'profile_images/profile.jpg')
-# if uploaded_file_url and storage_path:
-#     print(f"URL of uploaded file: {uploaded_file_url}")
-#     print(f"Storage path for database usage: {storage_path}")
-#     # Now, you can pass the URL to your HTML template for display/download
-#     # Store the storage_path in your database to reference the file in Firebase Storage
-# else:
-#     print("File upload failed, URL or storage path not available")
-#
-# end_time = datetime.now()  # Record the end time
-#
-# elapsed_time = end_time - start_time  # Calculate the elapsed time
-# print(f"Elapsed time: {elapsed_time.total_seconds()} seconds")
+import firebase_admin
+from firebase_admin import credentials, storage
+from dotenv import load_dotenv
+import os
+from datetime import datetime, timedelta
+
+load_dotenv()
+start_time = datetime.now()
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(os.getenv("FIRESTORE_KEY_PATH"))
+firebase_admin.initialize_app(cred, {
+    'storageBucket': os.getenv("FIREBASE_STORAGE_BUCKET")
+})
+
+
+def upload_file_to_firebase(file_path, destination_path):
+    try:
+        bucket = storage.bucket()
+        blob = bucket.blob(destination_path)
+        blob.upload_from_filename(file_path)
+        print(f"File {file_path} uploaded to {destination_path} in Firebase Storage")
+        file_url = get_file_url_from_firebase(destination_path)
+        return file_url, destination_path  # Return both URL and storage path
+    except Exception as e:
+        print(f"Error uploading file: {e}")
+        return None, None
+
+
+def get_file_url_from_firebase(file_path):
+    try:
+        bucket = storage.bucket()
+        blob = bucket.blob(file_path)
+        expiration = datetime.now() + timedelta(days=7)  # Expiration in 7 days (adjust as needed)
+        url = blob.generate_signed_url(expiration=expiration)  # Set the expiration time
+        return url
+    except Exception as e:
+        print(f"Error getting file URL: {e}")
+        return None
+
+
+# Usage example:
+uploaded_file_url, storage_path = upload_file_to_firebase(
+    r"D:\REY\Downloads\cabbage_plant_img.jpg",
+    'plant_images/cabbage_plant_img.jpg')
+if uploaded_file_url and storage_path:
+    print(f"URL of uploaded file: {uploaded_file_url}")
+    print(f"Storage path for database usage: {storage_path}")
+    # Now, you can pass the URL to your HTML template for display/download
+    # Store the storage_path in your database to reference the file in Firebase Storage
+else:
+    print("File upload failed, URL or storage path not available")
+
+end_time = datetime.now()  # Record the end time
+
+elapsed_time = end_time - start_time  # Calculate the elapsed time
+print(f"Elapsed time: {elapsed_time.total_seconds()} seconds")
 # import homepage.firestore_db_modules.cloud_storage as cloud_storage
 #
 # # get file url from firebase
-# file_url = cloud_storage.get_file_url_from_firebase('profile_images/profile_img_back.jpg')
 # upload_path = cloud_storage.upload_file_to_firebase(
-#     r"C:\Users\REY\Downloads\279650263_1294819024260510_1850353223875052676_n.jpg",
-#     'profile_images/profile_img_back.jpg')
+#     r"D:\REY\Downloads\kangkong_plant_img.jpg",
+#     'plants_images/kangkong_plant_img.jpg')
 # print(upload_path)
-# print(file_url)

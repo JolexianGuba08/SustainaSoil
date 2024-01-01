@@ -4,103 +4,105 @@
 {% block title %} Presets | SustainAsoil {% endblock %}
 
 {% block greenery %}
-      <li
-        class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
-      >
+    <li
+            class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+    >
 {% endblock %}
 
 
 {% block content %}
-  <!-- Main -->
+    <!-- Main -->
     <main
-      class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+            class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
     >
-      <!-- Header -->
-      <header
-        class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
-      >
-        <!-- Back Redirect to Greenery -->
-        <h1
-          class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+        <!-- Header -->
+        <header
+                class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
         >
-            <a href="{% url 'add_plant' package_key %}" class="flex">
-
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
+            <!-- Back Redirect to Greenery -->
+            <h1
+                    class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
-            </svg>
-            &nbsp;PRESETS
-          </a>
-        </h1>
-        <!-- End Back Redirect to Greenery -->
+                <a href="{% url 'add_plant' package_key %}" class="flex">
 
-          <!-- Include Notification -->
-          {% include 'web_notification.html' %}
-      </header>
 
-      <!-- Presets Section -->
-      <section
-        class="presets w-[90%] h-full mb-[2%] max-sm:justify-center flex gap-11 flex-wrap">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
+                    </svg>
+                    &nbsp;PRESETS
+                </a>
+            </h1>
+            <!-- End Back Redirect to Greenery -->
 
-        {% if plants %}
-        {% for plant in plants %}
-            <!-- Select Plant 1 Button -->
-            <button
-                onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id %}"
-              title="card"
-              class="group hover:bg-secondary hover:shadow-2xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[250px] rounded-3xl max-md:w-full"
-            >
-              <!-- DISPLAY IMAGE -->
+            <!-- Include Notification -->
+            {% include 'web_notification.html' %}
+        </header>
 
-              <div class="bg-accent1 w-full h-[150px] rounded-2xl"></div>
-              <!-- END DISPLAY IMAGE -->
+        <!-- Presets Section -->
+        <section
+                class="presets w-[90%] h-full mb-[2%] max-sm:justify-center flex gap-11 flex-wrap">
 
-              <!-- DISPLAY NAME -->
-              <div class="w-full mt-3">
-                <h2
-                  class="w-full text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
-                  {{ plant.plant_name }}
-                </h2>
-                <!-- END DISPLAY NAME -->
+            {% if plants %}
+                {% for plant in plants %}
+                    <!-- Select Plant 1 Button -->
+                    <button
+                            onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id %}"
+                            title="card"
+                            class="group hover:bg-secondary hover:shadow-2xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[250px] rounded-3xl max-md:w-full"
+                    >
+                        <!-- DISPLAY IMAGE -->
 
-                <!-- DISPLAY DESCRIPTION -->
-                <p
-                  class="flex w-full mt-1 indent-1 items-center tracking-wide pl-2 pr-2 truncate">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 indent-5"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
-                  </svg>
-                    {{plant.plant_species}}
-                </p>
-              </div>
-              <!-- END DISPLAY DESCRIPTION -->
-            </button
-              >
-        <!-- End Select Plant 1 Button -->
-        {% endfor %}
-        {% endif %}
+                        <div class="bg-accent1 w-full h-[150px] rounded-2xl"
+                             style="background: url('{{ plant.plant_image_url }}') no-repeat center center"
+                        ></div>
+                        <!-- END DISPLAY IMAGE -->
 
-      </section>
+                        <!-- DISPLAY NAME -->
+                        <div class="w-full mt-3">
+                            <h2
+                                    class="w-full text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
+                                {{ plant.plant_name }}
+                            </h2>
+                            <!-- END DISPLAY NAME -->
+
+                            <!-- DISPLAY DESCRIPTION -->
+                            <p
+                                    class="flex w-full mt-1 indent-1 items-center tracking-wide pl-2 pr-2 truncate">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-5 h-5 indent-5"
+                                >
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+                                </svg>
+                                {{ plant.plant_species }}
+                            </p>
+                        </div>
+                        <!-- END DISPLAY DESCRIPTION -->
+                    </button
+                    >
+                    <!-- End Select Plant 1 Button -->
+                {% endfor %}
+            {% endif %}
+
+        </section>
     </main>
     <!-- End Main -->
 {% endblock %}
