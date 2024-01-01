@@ -144,6 +144,17 @@ def add_package(request):
 
 def add_plant(request, package_key):
     global plant_img, package_name
+    plant_img = None
+    package_name = None
+
+    try:
+        package_name = Account_Package.objects.get(package_key=package_key)
+        package_name = package_name.acc_package_name
+        
+    except Account_Package.DoesNotExist:
+        # Handle the case where the object is not found
+        package_name = None
+
     try:
         account_plant = Account_Plants.objects.filter(
             package_key=package_key,
@@ -151,8 +162,9 @@ def add_plant(request, package_key):
         )
 
         account_plants = Account_Plants.objects.get(user_id=request.session.get('session_user_id'))
-        plant_img = cloud_storage.get_file_url_from_firebase(account_plants.plant_id.plant_image)
-        package_name = Account_Package.objects.get(package_key=package_key)
+        if account_plants:
+            plant_img = cloud_storage.get_file_url_from_firebase(account_plants.plant_id.plant_image)
+            print(plant_img)
 
     except Account_Plants.DoesNotExist:
         # Handle the case where the object is not found
@@ -162,7 +174,7 @@ def add_plant(request, package_key):
         'account_plants': account_plant,  # Use account_plant instead of account_plants
         'package_key': package_key,
         'plant_img': plant_img,
-        'package_name': package_name.acc_package_name
+        'package_name': package_name
     })
 
 

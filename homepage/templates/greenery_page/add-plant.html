@@ -90,7 +90,7 @@
                 {% endif %}
                 <!-- End Add Plant -->
                 <!-- Added Plant -->
-                {% if account_plants %}
+                {% if account_plants and plant_img %}
                     {% for plant in account_plants %}
                         <button
                                 onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id.pk %}"

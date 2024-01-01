@@ -1,5 +1,4 @@
 import bcrypt
-from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -40,7 +39,7 @@ def login_page(request):
                                 # return redirect('homepage')
                             elif account.acc_type == 0:
                                 # Account is customer
-                                messages.success(request, 'Supplier successfully deleted.')
+
                                 request.session['session_email'] = acc_email
                                 request.session['session_user_id'] = account.acc_id
                                 request.session['session_user_type'] = account.acc_type
