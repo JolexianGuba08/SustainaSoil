@@ -43,9 +43,7 @@
                    const message = response.message;
                    console.log(message)
                    if (response.status === 'True'){
-                        alert(message);
                         postGreeneryData();
-
                    }
                    else if (response.status === 'False') {
                         alert(message);
@@ -111,7 +109,6 @@
         }
 
         function postGreeneryData(){
-            my_modal_6.close();
             const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
             const coordinates = $('#autocomplete-wrapper').data('data-coordinates')
             var data = {
@@ -132,6 +129,9 @@
                 dataType: 'json',
                 success: function(response) {
                     alert('Greenery registered successfully');
+                    if(response.status === 'True'){
+                        window.location.href =  response.redirect_to;
+                    }
                 },
                 error: function(error) {
                     console.error('Error on registration:', error);
@@ -251,7 +251,6 @@
         $('#registerGreeneryBttn').on('click', function(event) {
             event.preventDefault();
             validateForm();
-            console.log('Greenery registered bttn clicked');
         });
 
         $('#cancelGreeneryBttn').on('click', function(event) {

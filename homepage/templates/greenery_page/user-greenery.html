@@ -221,9 +221,7 @@
    <script>
        $('#addPlantButton').on('click', function (event) {
                 event.preventDefault();
-                // Access the data-id attribute
                 var package_key = $(this).data('packagekey');
-                console.log('Add plant button clicked for account ID:', package_key);
                 window.location.href = "/add_plant/" + package_key
         });
    </script>

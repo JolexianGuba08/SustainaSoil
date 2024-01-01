@@ -24,7 +24,12 @@
             <h1
                     class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
             >
+                {% if take_cared %}
+                <a href="{% url 'add_plant' package_key %}" class="flex">
+                {% else  %}
                 <a href="{% url 'presets' package_key %}" class="flex">
+                {% endif %}
+
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -39,7 +44,12 @@
                                 d="M15.75 19.5 8.25 12l7.5-7.5"
                         />
                     </svg>
-                    &nbsp;{{ plants.plant_name }}
+                {% if take_cared %}
+                    &nbsp{{ plants.plant_name }}
+                {% else  %}
+                    &nbsp<span>Presets</span>
+                {% endif %}
+
                 </a>
             </h1>
             <!-- End Back Redirect to Greenery & DISPLAY PLANT NAME -->

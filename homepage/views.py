@@ -4,6 +4,7 @@ from django.contrib.sites import requests
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import requests
+from django.urls import reverse
 
 # Other imports...
 from homepage.forms import EditProfileForm
@@ -11,7 +12,6 @@ from homepage.models import Packages, Account_Package, Account, Account_Plants, 
 from homepage.user_context.context_processor import user_context
 import homepage.firestore_db_modules.cloud_storage as cloud_storage
 import homepage.firestore_db_modules.account_greenery as account_greenery
-
 
 # Create your views here.
 def homepage(request):
@@ -96,24 +96,22 @@ def greenery(request):
     except Account_Package.DoesNotExist:
         return render(request, 'greenery_page/user-greenery.html')
 
-
 def check_package_id(request):
     if request.method == 'POST':
         package_id = request.POST.get('package_id')
         print(package_id)
         try:
-            package_id = Packages.objects.get(package_key=package_id).pk
+            package_id = Packages.objects.get(package_key = package_id).pk
             if package_id:
-                package_id_exist = Account_Package.objects.filter(package_key=package_id).first()
+                package_id_exist = Account_Package.objects.filter(package_key = package_id).first()
                 if not package_id_exist:
-                    return JsonResponse({'status': 'True', 'message': 'Package successfully registered. Thank you!'})
+                    return JsonResponse({'status':'True','message':'Package successfully registered. Thank you!'})
                 else:
-                    return JsonResponse({'status': 'False', 'message': 'Package is already registered.'})
+                    return JsonResponse({'status':'False','message':'Package is already registered.'})
         except Packages.DoesNotExist:
-            return JsonResponse({'status': "Error", 'message': 'Package does not exist'})
+            return JsonResponse({'status':"Error",'message':'Package does not exist'})
 
     return render(request, 'greenery_page/add-plant.html')
-
 
 def add_package(request):
     if request.method == 'POST':
@@ -132,9 +130,10 @@ def add_package(request):
                     account_greenery.add_account_greenery_location(user_email, lat, long, package_location)
                     Account_Package.objects.create(acc_package_name=package_name, package_key=package_key,
                                                    user_id=email)
-                    return JsonResponse({'message': 'Package added successfully'})
+                    add_plant_url = reverse("add_plant", kwargs={'package_key': package_key})
+                    return JsonResponse({'status':'True','message': 'Package added successfully','redirect_to': add_plant_url})
                 else:
-                    return JsonResponse({'message': 'Package is already registered.'})
+                    return JsonResponse({'status':'False','message': 'Package is already registered.'})
         except Packages.DoesNotExist:
             return JsonResponse({'error': 'Package does not exist'})
         except Exception as e:
@@ -150,7 +149,7 @@ def add_plant(request, package_key):
     try:
         package_name = Account_Package.objects.get(package_key=package_key)
         package_name = package_name.acc_package_name
-        
+
     except Account_Package.DoesNotExist:
         # Handle the case where the object is not found
         package_name = None
@@ -219,6 +218,7 @@ def presets(request, package_key):
 def plant_profile(request, package_key, plant_id):
     user_id = request.session.get('session_user_id')
     print(user_id, plant_id, package_key)
+
     # Check if Account_Plants object exists
     exist = Account_Plants.objects.filter(
         plant_id=plant_id,
@@ -308,6 +308,7 @@ def plant_profile_section(request):
 
 # Includes Plant Profile Views
 def parameter_form(request):
+
     return render(request, 'greenery_page/include_plant_profile/parameter_form.html')
 
 
