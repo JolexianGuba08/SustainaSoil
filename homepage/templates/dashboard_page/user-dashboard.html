@@ -117,183 +117,192 @@
         <!-- End Greenery Count and Average Water & Pesticide Level Section -->
 
         <!-- Weather Section -->
-        <section
-                class="weather-section relative flex w-[90%] flex-grow mt-10 mb-[2%] overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
-        >
-            <!-- Cloudy Animation -->
-            <img
-                    src="{% static 'images/cloudy-animation.png' %}"
-                    alt=""
-                    class="cloudy_animation cloudy_animation1 absolute top-[50px] left-[100%]"
-            />
-
-            <img
-                    src="{% static 'images/cloudy-animation.png' %}"
-                    alt=""
-                    class="cloudy_animation cloudy_animation2 absolute top-0 bottom-[30px] left-[100%]"
-            />
-
-            <img
-                    src="{% static 'images/cloudy-animation.png' %}"
-                    alt=""
-                    class="cloudy_animation cloudy_animation3 absolute top-0 bottom-[50px] left-[100%]"
-            />
-            <!-- End Cloud Animation -->
-
-            <!-- Sunny Animation -->
-            <img
-                    src="{% static 'images/sunny-animation.png' %}"
-                    alt=""
-                    class="sunny_animation sunny_animation1 absolute top-0 right-0 left-0 w-[100%] h-[100%]"
-            />
-
-            <img
-                    src="{% static 'images/cloudy-animation.png' %}"
-                    alt=""
-                    class="sunny_animation sunny_animation2 absolute top-0 left-[-50%]"
-            />
-            <!-- End Sunny Animation -->
-
-            <!-- Rainy Animation -->
-            <div
-                    class="rainy_animation rainy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+        {% if data == 'No data' %}
+            <section
+                    class="weather-section relative flex w-[90%] flex-grow mt-10 mb-[2%] overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
             >
+                <p class="card-title text-3xl font-bold tracking-wider text-center mb-3">No weather data</p>
+            </section>
+        {% else %}
+            <section
+                    class="weather-section relative flex w-[90%] flex-grow mt-10 mb-[2%] overflow-hidden rounded-[30px] shadow-lg justify-between border border-secondary p-6 max-xl:flex-col"
+            >
+                <!-- Cloudy Animation -->
                 <img
                         src="{% static 'images/cloudy-animation.png' %}"
                         alt=""
-                        class="absolute top-0 w-full"
+                        class="cloudy_animation cloudy_animation1 absolute top-[50px] left-[100%]"
                 />
 
                 <img
                         src="{% static 'images/cloudy-animation.png' %}"
                         alt=""
-                        class="cloudy_animation2 absolute top-0 bottom-[30px] left-[100%] w-full h-full"
+                        class="cloudy_animation cloudy_animation2 absolute top-0 bottom-[30px] left-[100%]"
                 />
 
                 <img
                         src="{% static 'images/cloudy-animation.png' %}"
                         alt=""
-                        class="cloudy_animation3 absolute top-0 bottom-[50px] left-[100%] w-full h-full"
+                        class="cloudy_animation cloudy_animation3 absolute top-0 bottom-[50px] left-[100%]"
                 />
-            </div>
-            <!-- End Rainy Animation -->
+                <!-- End Cloud Animation -->
 
-            <!-- Stormy Animation -->
-            <div
-                    class="stormy_animation stormy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
-            >
+                <!-- Sunny Animation -->
                 <img
-                        src="{% static 'images/lightning-animation.png' %}"
+                        src="{% static 'images/sunny-animation.png' %}"
                         alt=""
-                        class="lightning_animation1 absolute top-0 w-full h-full z-40"
+                        class="sunny_animation sunny_animation1 absolute top-0 right-0 left-0 w-[100%] h-[100%]"
                 />
 
                 <img
-                        src="{% static 'images/stormy-animation.png' %}"
+                        src="{% static 'images/cloudy-animation.png' %}"
                         alt=""
-                        class="stormy_animation2 absolute top-[-5%] right-[0]"
+                        class="sunny_animation sunny_animation2 absolute top-0 left-[-50%]"
                 />
-            </div>
-            <!-- End Stormy Animation -->
+                <!-- End Sunny Animation -->
 
-            <!-- Location & Weather and Temperature Container -->
-            <div
-                    class="flex flex-col min-w-[35%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
-            >
-                <!-- Location & Weather Container -->
+                <!-- Rainy Animation -->
                 <div
-                        class="max-[450px]:flex max-[450px]:flex-col max-[450px]:items-center"
+                        class="rainy_animation rainy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
                 >
-                    <div class="flex items-center justify-between max-[450px]:flex-col">
-                        <!-- DISPLAY LOCATION -->
-                        <h3
-                                class="text-2xl text-accent2 max-[450px]:text-xl tracking-wide mb-1 mr-3 uppercase"
-                        >
-                            {{ city_name }}
-                        </h3>
-                        <!-- DISPLAY WEATHER  -->
-                        <h2
-                                class="font-extralight max-[450px]:mt-2 max-[450px]:max-w-[100%] max-[450px]:text-sm max-[450px]:whitespace-normal border uppercase text-md text-center border-accent2 truncate max-w-[50%] bg-accent2 m-w-full tracking-widest p-1 rounded-full px-5 text-background">
-                            {{ weather_info.today.0.weather }}
-                        </h2>
-                    </div>
-
-                    <!-- Icon -->
-                    <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-7 h-7 text-accent2 max-[450px]:mt-4 max-[450px]:mb-5"
-                    >
-                        <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                        />
-                    </svg>
-                </div>
-                <!-- End Location & Weather Conatiner -->
-
-                <!-- Temperature Container -->
-                <div class="flex items-end justify-center mt-0 mb-0">
-                    <!-- DISPLAY TEMPERATURE NOW -->
-                    <h2
-                            class="temp text-center text-9xl text-accent1 min-[1824px]:mt-12 min-[1824px]:text-[150px]"
-                            id="temp"
-                    >
-                        {{ weather_info.today.0.temp }}&deg;
-                    </h2>
                     <img
-                            src="{% static 'images/logo-secondary.png' %}"
+                            src="{% static 'images/cloudy-animation.png' %}"
                             alt=""
-                            class="w-[90px] h-[90px]"
+                            class="absolute top-0 w-full"
+                    />
+
+                    <img
+                            src="{% static 'images/cloudy-animation.png' %}"
+                            alt=""
+                            class="cloudy_animation2 absolute top-0 bottom-[30px] left-[100%] w-full h-full"
+                    />
+
+                    <img
+                            src="{% static 'images/cloudy-animation.png' %}"
+                            alt=""
+                            class="cloudy_animation3 absolute top-0 bottom-[50px] left-[100%] w-full h-full"
                     />
                 </div>
-                <!-- End Temperature Container -->
+                <!-- End Rainy Animation -->
 
-                <!-- Day of the week -->
-                <div class="mt-10">
-                    <!-- DISPLAY DAY OF THE WEEK -->
-                    <h4
-                            class="text-center font-normal uppercase text-4xl text-accent1 tracking-wider min-[1824px]:mt-1 min-[1824px]:text-5xl"
-                    >
-                        {{ weather_info.today.0.day_name }}
-                    </h4>
+                <!-- Stormy Animation -->
+                <div
+                        class="stormy_animation stormy_animation1 absolute top-0 left-0 w-[100%] h-[100%]"
+                >
+                    <img
+                            src="{% static 'images/lightning-animation.png' %}"
+                            alt=""
+                            class="lightning_animation1 absolute top-0 w-full h-full z-40"
+                    />
+
+                    <img
+                            src="{% static 'images/stormy-animation.png' %}"
+                            alt=""
+                            class="stormy_animation2 absolute top-[-5%] right-[0]"
+                    />
                 </div>
-                <!-- End Day of the week -->
-            </div>
-            <!-- End Location & Weather and Temperature Container -->
+                <!-- End Stormy Animation -->
 
-            <!-- Temperature Future -->
-            <div
-                    class="temp_future min-w-[60%] flex-wrap h-full rounded-[20px] flex gap-1 items-center justify-evenly max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
-            >
-                {% for day_info in weather_info.following_days %}
-                    <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
-                        <!-- DISPLAY DAY -->
-                        <h2 class="text-center font-bold">{{ day_info.day_name }}</h2>
-                        <div class="flex flex-col items-center justify-center">
-                            <!-- DISPLAY WEATHER IMAGE -->
-                            <img src="{{ day_info.weather_icon }}" alt="logo" id="weather-image"
-                                 class="w-14 h-14"/>
-                            <div class="flex mt-1 items-center">
-                                <!-- DISPLAY TEMPERATURE -->
-                                <p class="">{{ day_info.temp }}&deg;</p>
-                                <img src="{% static 'images/logo-secondary.png' %}" alt="logo" class="w-8 h-8"/>
+                <!-- Location & Weather and Temperature Container -->
+                <div
+                        class="flex flex-col min-w-[35%] p-5 z-50 rounded-[20px] pb-0 max-xl:mb-3"
+                >
+                    <!-- Location & Weather Container -->
+                    <div
+                            class="max-[450px]:flex max-[450px]:flex-col max-[450px]:items-center"
+                    >
+                        <div class="flex items-center justify-between max-[450px]:flex-col">
+                            <!-- DISPLAY LOCATION -->
+                            <h3
+                                    class="text-2xl text-accent2 max-[450px]:text-xl tracking-wide mb-1 mr-3 uppercase"
+                            >
+                                {{ city_name }}
+                            </h3>
+                            <!-- DISPLAY WEATHER  -->
+                            <h2
+                                    id='weather-info'
+                                    title="{{ weather_info.today.0.weather }}"
+                                    class="font-extralight max-[450px]:mt-2 max-[450px]:max-w-[100%] max-[450px]:text-sm max-[450px]:whitespace-normal border uppercase text-md text-center border-accent2 truncate max-w-[50%] bg-accent2 m-w-full tracking-widest p-1 rounded-full px-5 text-background">
+                                {{ weather_info.today.0.weather }}
+                            </h2>
+                        </div>
+
+                        <!-- Icon -->
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-7 h-7 text-accent2 max-[450px]:mt-4 max-[450px]:mb-5"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"></path>
+                        </svg>
+                    </div>
+                    <!-- End Location & Weather Conatiner -->
+
+                    <!-- Temperature Container -->
+                    <div class="flex items-end justify-center mt-0 mb-0">
+                        <!-- DISPLAY TEMPERATURE NOW -->
+                        <h2
+                                class="temp text-center text-9xl text-accent1 min-[1824px]:mt-12 min-[1824px]:text-[150px]"
+                                id="temp"
+                        >
+                            {{ weather_info.today.0.temp }}&deg;
+                        </h2>
+                        <img
+                                src="{% static 'images/logo-secondary.png' %}"
+                                alt=""
+                                class="w-[90px] h-[90px]"
+                        />
+                    </div>
+                    <!-- End Temperature Container -->
+
+                    <!-- Day of the week -->
+                    <div class="mt-10">
+                        <!-- DISPLAY DAY OF THE WEEK -->
+                        <h4
+
+                                class="text-center font-normal uppercase text-4xl text-accent1 tracking-wider min-[1824px]:mt-1 min-[1824px]:text-5xl"
+                        >
+                            {{ weather_info.today.0.day_name }}
+                        </h4>
+                    </div>
+                    <!-- End Day of the week -->
+                </div>
+                <!-- End Location & Weather and Temperature Container -->
+
+                <!-- Temperature Future -->
+                <div
+                        class="temp_future min-w-[60%] flex-wrap h-full rounded-[20px] flex gap-1 items-center justify-evenly max-xl:mt-9 max-xl:justify-center flex-row max-xl:gap-3"
+                >
+                    {% for day_info in weather_info.following_days %}
+                        <div class="temp min-w-[25%] max-xl:w-[45%] xl:h-[45%]">
+                            <!-- DISPLAY DAY -->
+                            <h2 class="text-center font-bold">{{ day_info.day_name }}</h2>
+                            <div class="flex flex-col items-center justify-center">
+                                <!-- DISPLAY WEATHER IMAGE -->
+                                <img src="{{ day_info.weather_icon }}" alt="logo" id="weather-image"
+                                     class="w-14 h-14"/>
+                                <div class="flex mt-1 items-center">
+                                    <!-- DISPLAY TEMPERATURE -->
+                                    <p class="">{{ day_info.temp }}&deg;</p>
+                                    <img src="{% static 'images/logo-secondary.png' %}" alt="logo" class="w-8 h-8"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <!-- End Temperature Future -->
-        </section>
+                    {% endfor %}
+                </div>
+                <!-- End Temperature Future -->
+            </section>
+        {% endif %}
         <!-- End Weather Section -->
     </main>
     <!-- End Main -->
@@ -376,17 +385,70 @@
 
         // Display Weather to Animate
         $(document).ready(function () {
-            const get_temp = $("#temp").text();
 
-            const temp = parseInt(get_temp, 10);
+            const get_weather_info = $("#weather-info").attr("title");
+            console.log(get_weather_info);
+            const sunnyWeather = [
+                "CLEAR SKY",
+                "FEW CLOUDS",
+                "SCATTERED CLOUDS",
+                "BROKEN CLOUDS",
+                "OVERCAST CLOUDS"
+            ];
 
+            const cloudyWeather = [
+                "MIST",
+                "SMOKE",
+                "HAZE",
+                "SAND/DUST",
+                "FOG",
+                "FREEZING FOG"
+            ];
+
+            const rainyWeather = [
+                "LIGHT RAIN",
+                "MODERATE RAIN",
+                "HEAVY RAIN",
+                "FREEZING RAIN",
+                "LIGHT SHOWER RAIN",
+                "SHOWER RAIN",
+                "HEAVY SHOWER RAIN"
+            ];
+
+            const thunderstormWeather = [
+                "THUNDERSTORM WITH LIGHT RAIN",
+                "THUNDERSTORM WITH RAIN",
+                "THUNDERSTORM WITH HEAVY RAIN",
+                "THUNDERSTORM WITH LIGHT DRIZZLE",
+                "THUNDERSTORM WITH DRIZZLE",
+                "THUNDERSTORM WITH HEAVY DRIZZLE",
+                "THUNDERSTORM WITH HAIL"
+            ];
             // Display Sunny Animation
-            if (temp > 30) {
+            if (sunnyWeather.includes(get_weather_info)) {
+                $(".sunny_animation").css({
+                    visibility: "visible",
+                    important: "true",
+                });
+                console.log("Sunny");
+            } else if (cloudyWeather.includes(get_weather_info)) {
                 $(".cloudy_animation").css({
                     visibility: "visible",
                     important: "true",
                 });
                 console.log("Cloudy");
+            } else if (rainyWeather.includes(get_weather_info)) {
+                $(".rainy_animation").css({
+                    visibility: "visible",
+                    important: "true",
+                });
+                console.log("Rainy");
+            } else if (thunderstormWeather.includes(get_weather_info)) {
+                $(".stormy_animation").css({
+                    visibility: "visible",
+                    important: "true",
+                });
+                console.log("Thunderstorm");
             }
         });
     </script>
