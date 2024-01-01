@@ -18,6 +18,7 @@
 <body
         class="content min-h-screen flex flex-col font-sans bg-gradient-to-r from-g1 to-background"
 >
+
 <!-- Navbar -->
 <div
         class="navbar sm:w-[100%] sm:pl-4 xl:w-[65%] xl:m-auto pt-4 max-xl:flex max-xl:justify-center"
@@ -54,6 +55,7 @@
     <section
             class="section-container flex w-[80%] max-xl:justify-center max-xl:w-full"
     >
+
         <form
                 id="login-form"
                 action=""
@@ -61,6 +63,10 @@
                 class="sign-in flex items-center flex-col mt-16 w-[90%]"
         >
             {% csrf_token %}
+            <p class="text-xs text-accent2 mb-4" id="error">
+                Sign in to your account
+            </p>
+
             <h1 class="font-bold text-4xl tracking-wide mb-8 text-accent1">
                 SIGN IN
             </h1>
@@ -169,9 +175,11 @@
                     } else {
                         // Handle unsuccessful login (if needed)
                         console.log("Login unsuccessful");
+                        document.getElementById('error').innerHTML = response.errors;
                         // Hide the loader
                         $('#preloader').hide();
                         // Display error messages (if available)
+
                         if (response.errors) {
                             // Handle errors (display errors to the user)
                             console.log(response.errors);

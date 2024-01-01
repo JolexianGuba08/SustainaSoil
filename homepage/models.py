@@ -25,12 +25,10 @@ class Account(models.Model):
         (4, 'DEACTIVATED')
     )
     acc_status = models.IntegerField(choices=ACC_STATUS, default=1, verbose_name='account status')
-    acc_profile_img = models.URLField(max_length=500, default='https://res.cloudinary.com/duku3q6xf/image/upload'
-                                                              '/v1700856645/Aquamelya/default-user_a8bkjg.png',
-                                      verbose_name='profile image')
-    acc_background_img = models.URLField(max_length=500,
-                                         default='https://res.cloudinary.com/duku3q6xf/image/upload/v1703269291/default_back_img_p4mkzo.png',
-                                         verbose_name='profile image')
+    acc_profile_img = models.CharField(max_length=500, default='profile_images/default_profile_img.png',
+                                       verbose_name='profile image')
+    acc_background_img = models.CharField(max_length=500, default='background_images/default_background_img.png',
+                                          verbose_name='background image')
     acc_phone = models.CharField(max_length=11, default='', verbose_name='phone number')
     acc_date_added = models.DateTimeField(auto_now_add=True)
     acc_date_last_updated = models.DateTimeField(auto_now=True)
@@ -71,8 +69,8 @@ class Plants(models.Model):
     plant_name = models.CharField(max_length=50, verbose_name='plant name', unique=True)
     plant_species = models.CharField(max_length=100, verbose_name='plant species')
     plant_description = models.TextField(default='', verbose_name='plant description')
-    plant_image = models.CharField(max_length=500, default='plant_images/default_plant_img.img',
-                                  verbose_name='plant image')
+    plant_image = models.CharField(max_length=500, default='plant_images/default_plant_img.png',
+                                   verbose_name='plant image')
     plant_date_added = models.DateTimeField(auto_now_add=True)
     plant_date_last_updated = models.DateTimeField(auto_now=True)
     plant_pref_id = models.ForeignKey(Plant_Preferences, on_delete=models.CASCADE, db_column='plant_pref_id',
@@ -90,6 +88,8 @@ class Plants(models.Model):
         db_table = 'plants'
         verbose_name = 'plant'
         verbose_name_plural = 'plants'
+
+
 def random_string(length):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
@@ -105,18 +105,21 @@ def default_starting_id(model, pk):
     else:
         return 1001
 
+
 def default_package_id():
     prefix = "HESUYAM"
     random_suffix = random_string(5)
     return f"{prefix}{random_suffix}_{default_starting_id(Packages, 'package_key')}"
 
+
 class Packages(models.Model):
-    package_key = models.CharField(primary_key=True,default = default_package_id)
+    package_key = models.CharField(primary_key=True, default=default_package_id, max_length=50,
+                                   verbose_name='package key')
     package_name = models.CharField(max_length=50, verbose_name='package name')
     package_description = models.TextField(default='', verbose_name='package description')
     package_slot = models.IntegerField(default=0, verbose_name='package slot')
     package_image = models.CharField(max_length=500, default='package_images/default_package.png',
-                                    verbose_name='package image')
+                                     verbose_name='package image')
     package_date_added = models.DateTimeField(auto_now_add=True)
     package_date_last_updated = models.DateTimeField(auto_now=True)
     PACKAGE_STATUS = (
@@ -177,6 +180,7 @@ class Account_Plant_Preferences(models.Model):
         verbose_name = 'acc_plant preference'
         verbose_name_plural = 'acc_plant preferences'
 
+
 class Account_Plants(models.Model):
     acc_plant_id = models.AutoField(primary_key=True)
     plant_id = models.ForeignKey(Plants, on_delete=models.CASCADE, db_column='plant_id', verbose_name='plant')
@@ -192,8 +196,6 @@ class Account_Plants(models.Model):
         db_table = 'account_plants'
         verbose_name = 'account plant'
         verbose_name_plural = 'account plants'
-
-
 
 
 class Schedules(models.Model):

@@ -79,20 +79,26 @@ WSGI_APPLICATION = 'SustainaSoil.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES_USER = os.getenv('PGUSER')
-DATABASES_PASSWORD = os.getenv('PGPASSWORD')
-DATABASES_HOST = os.getenv('PGHOST')
-DATABASES_PORT = os.getenv('PGPORT')
-DATABASES_NAME = os.getenv('PGDATABASE')
-
+# DATABASES_USER = os.getenv('PGUSER')
+# DATABASES_PASSWORD = os.getenv('PGPASSWORD')
+# DATABASES_HOST = os.getenv('PGHOST')
+# DATABASES_PORT = os.getenv('PGPORT')
+# DATABASES_NAME = os.getenv('PGDATABASE')
+#
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": DATABASES_NAME,
+#         "USER": DATABASES_USER,
+#         "PASSWORD": DATABASES_PASSWORD,
+#         "HOST": DATABASES_HOST,
+#         "PORT": DATABASES_PORT,
+#     }
+# }
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": DATABASES_NAME,
-        "USER": DATABASES_USER,
-        "PASSWORD": DATABASES_PASSWORD,
-        "HOST": DATABASES_HOST,
-        "PORT": DATABASES_PORT,
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db.sqlite3",
     }
 }
 

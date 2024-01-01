@@ -1,4 +1,5 @@
 from homepage.models import Account, Account_Plants
+from homepage.firestore_db_modules.cloud_storage import get_file_url_from_firebase
 
 
 def user_context(request):
@@ -10,7 +11,9 @@ def user_context(request):
 
         user_name = user.acc_first_name + ' ' + user.acc_last_name
         user_profile_pic = user.acc_profile_img
+        user_profile = get_file_url_from_firebase(user_profile_pic)
         user_background_img = user.acc_background_img
+        user_background = get_file_url_from_firebase(user_background_img)
         first_name = user.acc_first_name
         last_name = user.acc_last_name
         phone = user.acc_phone
@@ -21,8 +24,8 @@ def user_context(request):
         context = {
             'user_email': user_email,
             'name': user_name.upper(),
-            'background_img': user_background_img,
-            'user_profile_pic': user_profile_pic,
+            'background_img': user_background,
+            'user_profile_pic': user_profile,
             'first_name': first_name,
             'last_name': last_name,
             'phone': phone,

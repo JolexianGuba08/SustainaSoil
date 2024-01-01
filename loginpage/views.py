@@ -53,16 +53,16 @@ def login_page(request):
                             return JsonResponse({'success': False, 'errors': errors})
                         else:
                             print('Incorrect Email or Password: Please verify and try again.')
-                            errors = form.errors.as_json()
+                            errors = 'Incorrect Email or Password: Please verify and try again.'
                             return JsonResponse({'success': False, 'errors': errors})
                     else:
                         print('Incorrect Email or Password: Please verify and try again.')
-                        errors = form.errors.as_json()
+                        errors = 'Incorrect Email or Password: Please verify and try again.'
                         return JsonResponse({'success': False, 'errors': errors})
 
                 except ObjectDoesNotExist:
                     print('Account not found')
-                    errors = form.errors.as_json()
+                    errors = 'Account not found'
                     return JsonResponse({'success': False, 'errors': errors})
 
         except Exception as e:
