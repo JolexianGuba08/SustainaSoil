@@ -5,7 +5,7 @@ from google.cloud import firestore
 
 
 # Add Greenery Location
-def add_account_greenery_location(email, latitude, longitude):
+def add_account_greenery_location(email, latitude, longitude, location):
     db = firestore_db()
 
     account_greenery_set = {
@@ -14,6 +14,7 @@ def add_account_greenery_location(email, latitude, longitude):
         'longitude': longitude,
         'date_added': firestore.SERVER_TIMESTAMP,
         'date_modified': firestore.SERVER_TIMESTAMP,
+        'location':location,
     }
 
     # Create a reference to the collection

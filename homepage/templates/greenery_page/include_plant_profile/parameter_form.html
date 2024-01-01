@@ -1,158 +1,199 @@
-<div class="">
-    <!-- Max & Min Moisture and Temperature Level -->
-    <div class="flex gap-2 items-center flex-grow max-sm:flex-col">
-      <!-- Max & Min Moisture Level -->
-      <div
-        class="w-[50%] max-[450px]: h-full flex items-center justify-center flex-col max-sm:w-[100%] max-sm:mt-2"
-      >
-        <!-- Max Moisture Level -->
-        <div
-          class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 pb-1 pc:py-8 rounded-2xl"
-        >
-          <h2
-            class="w-full font-normal uppercase max-xl:text-sm text-accent1 tracking-wider mb-2"
-          >
-            Max Moisture Level
-          </h2>
-          <!-- DISPLAY MAX MOISTURE LEVEL -->
-          <p
-            class="w-full text-3xl text-accent2 mb-4 font-extralight"
-            id="max_moisture_level"
-          >
-            0%
-          </p>
+<form action="">
+{% csrf_token %}
+    <div id="parameter_section" class="">
+        <!-- Max & Min Moisture and Temperature Level -->
+        <div class="flex gap-2 items-center flex-grow max-sm:flex-col">
+          <!-- Max & Min Moisture Level -->
           <div
-            class="range-container w-full rounded-full p-1 px-1 flex items-center"
+            class="w-[50%] max-[450px]: h-full flex items-center justify-center flex-col max-sm:w-[100%] max-sm:mt-2"
           >
-            <input
-              title="Moisture Level"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              class="range range-xs"
-              onmousemove="maxMoistureSlider(this.value)"
-            />
-          </div>
-        </div>
-        <!-- End Max Moisture Level -->
+            <!-- Max Moisture Level -->
+            <div
+              class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 pb-1 pc:py-8 rounded-2xl">
+              <h2
+                class="w-full font-normal uppercase max-xl:text-sm text-accent1 tracking-wider mb-2"
+              >
+                Max Moisture Level
+              </h2>
+              <!-- DISPLAY MAX MOISTURE LEVEL -->
+              <p
+                class="w-full text-3xl text-accent2 mb-4 font-extralight"
+                id="max_moisture_level_display">
+                  {% if take_cared %}
 
-        <!-- Min Moisture Level -->
-        <div
-          class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 rounded-2xl"
-        >
-          <h2
-            class="w-full font-normal uppercase max-xl:text-sm text-accent1 text-md tracking-wider mb-2"
-            id="range_value"
-          >
-            Min Moisture Level
-          </h2>
-          <!-- DISPLAY MIN MOISTURE LEVEL -->
-          <p
-            class="w-full text-3xl text-accent2 mb-4 font-extralight"
-            id="min_moisture_level"
-          >
-            0%
-          </p>
-          <div
-            class="range-container w-full rounded-full p-1 px-1 flex items-center"
-          >
-            <input
-              title="Moisture Level"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              class="range range-xs"
-              onmousemove="minMoistureSlider(this.value)"
-            />
-          </div>
-        </div>
-        <!-- End Min Moisture Level -->
-      </div>
-      <!-- End Max & Min Moisture Level -->
+                    {{acc_plant.acc_plant_pref_id.acc_plant_max_moist_lvl}}%
+                  {% else %}
+                    {{plants.plant_pref_id.plant_max_moist_lvl}}%
+                  {% endif %}
 
-      <!-- Max & Min Temperature Level -->
-      <div
-        class="w-[50%] h-full flex items-center justify-center flex-col max-sm:w-[100%]"
-      >
-        <!-- Max Temperature Level -->
-        <div
-          class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 pb-1 pc:py-8 rounded-2xl"
-        >
-          <h2
-            class="w-full font-normal max-xl:text-sm uppercase text-accent1 text-md tracking-wider mb-2"
-          >
-            Max Temperature Level
-          </h2>
-          <!-- DISPLAY MAX TEMPERATURE LEVEL -->
-          <p
-            class="w-full text-3xl text-accent2 mb-4 font-extralight"
-            id="max_temperature_level"
-          >
-            0%
-          </p>
-          <div
-            class="range-container w-full rounded-full p-1 px-1 flex items-center"
-          >
-            <input
-              title="Moisture Level"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              class="range range-xs"
-              onmousemove="maxTemperatureSlider(this.value)"
-            />
-          </div>
-        </div>
-        <!-- End Max Temperature Level -->
+              </p>
+              <div class="range-container w-full rounded-full p-1 px-1 flex items-center">
+                <input
+                 id="plant_max_mois_radio"
+                  title="Moisture Level"
+                  type="range"
+                  min="0"
+                  max="100"
+                  {% if take_cared %}
+                    value="{{acc_plant.acc_plant_pref_id.acc_plant_max_moist_lvl}}"
+                  {% else %}
+                    value="{{plants.plant_pref_id.plant_max_moist_lvl}}"
+                  {% endif %}
+                  class="range range-xs"
+                />
+              </div>
+            </div>
+            <!-- End Max Moisture Level -->
 
-        <!-- Min Temperature Level -->
-        <div
-          class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 rounded-2xl"
-        >
-          <h2
-            class="w-full font-normal max-xl:text-sm uppercase text-accent1 text-md tracking-wider mb-2"
-            id="range_value"
-          >
-            Min Temperature Level
-          </h2>
-          <!-- DISPLAY MIN TEMPERATURE LEVEL -->
-          <p
-            class="w-full text-3xl text-accent2 mb-4 font-extralight"
-            id="min_temperature_level"
-          >
-            0%
-          </p>
-          <div
-            class="range-container w-full rounded-full p-1 px-1 flex items-center"
-          >
-            <input
-              title="Moisture Level"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              class="range range-xs"
-              onmousemove="minTemperatureSlider(this.value)"
-            />
+            <!-- Min Moisture Level -->
+            <div
+              class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 rounded-2xl"
+            >
+              <h2
+                class="w-full font-normal uppercase max-xl:text-sm text-accent1 text-md tracking-wider mb-2"
+                id="range_value"
+              >
+                Min Moisture Level
+              </h2>
+              <!-- DISPLAY MIN MOISTURE LEVEL -->
+              <p
+                class="w-full text-3xl text-accent2 mb-4 font-extralight"
+                id="min_moisture_level"
+              >
+                  {%  if take_cared %}
+                    {{acc_plant.acc_plant_pref_id.acc_plant_min_moist_lvl}}%
+                  {% else %}
+                    {{plants.plant_pref_id.plant_min_moist_lvl}}%
+                  {% endif %}
+
+              </p>
+              <div
+                class="range-container w-full rounded-full p-1 px-1 flex items-center"
+              >
+                <input
+                  id="plant_min_mois_radio"
+
+                  title="Moisture Level"
+                  type="range"
+                  min="0"
+                  max="100"
+                  {%  if take_cared %}
+                   value="{{acc_plant.acc_plant_pref_id.acc_plant_min_moist_lvl}}"
+                  {% else %}
+                   value="{{plants.plant_pref_id.plant_min_moist_lvl}}"
+                  {% endif %}
+                  class="range range-xs"
+                />
+              </div>
+            </div>
+            <!-- End Min Moisture Level -->
           </div>
+          <!-- End Max & Min Moisture Level -->
+
+          <!-- Max & Min Temperature Level -->
+          <div
+            class="w-[50%] h-full flex items-center justify-center flex-col max-sm:w-[100%]"
+          >
+            <!-- Max Temperature Level -->
+            <div
+              class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 pb-1 pc:py-8 rounded-2xl"
+            >
+              <h2
+                class="w-full font-normal max-xl:text-sm uppercase text-accent1 text-md tracking-wider mb-2"
+              >
+                Max Temperature Level
+              </h2>
+              <!-- DISPLAY MAX TEMPERATURE LEVEL -->
+              <p
+                class="w-full text-3xl text-accent2 mb-4 font-extralight"
+                id="max_temperature_level"
+              >
+                  {% if take_cared %}
+                    {{acc_plant.acc_plant_pref_id.acc_plant_max_temp}}%
+                  {% else %}
+                    {{plants.plant_pref_id.plant_max_temp}}%
+                  {% endif %}
+              </p>
+              <div
+                class="range-container w-full rounded-full p-1 px-1 flex items-center"
+              >
+                <input
+                  id="plant_max_temp_radio"
+
+                  title="Moisture Level"
+                  type="range"
+                  min="0"
+                  max="100"
+                  {% if take_cared %}
+                  value="{{acc_plant.acc_plant_pref_id.acc_plant_max_temp}}"
+                  {% else %}
+                  value="{{plants.plant_pref_id.plant_max_temp}}"
+                  {% endif %}
+                  class="range range-xs"
+                />
+              </div>
+            </div>
+            <!-- End Max Temperature Level -->
+
+            <!-- Min Temperature Level -->
+            <div
+              class="w-[85%] max-[450px]:w-[100%] flex items-center flex-col p-4 rounded-2xl"
+            >
+              <h2
+                class="w-full font-normal max-xl:text-sm uppercase text-accent1 text-md tracking-wider mb-2"
+                id="range_value"
+              >
+                Min Temperature Level
+              </h2>
+              <!-- DISPLAY MIN TEMPERATURE LEVEL -->
+              <p
+                class="w-full text-3xl text-accent2 mb-4 font-extralight"
+                id="min_temperature_level"
+              >
+                  {% if take_cared %}
+                    {{acc_plant.acc_plant_pref_id.acc_plant_min_temp}}%
+                  {% else %}
+                    {{plants.plant_pref_id.plant_min_temp}}%
+                  {% endif %}
+              </p>
+              <div
+                class="range-container w-full rounded-full p-1 px-1 flex items-center"
+              >
+             <input
+                    id="plant_min_temp_radio"
+                    title="Moisture Level"
+                    type="range"
+                    min="0"
+                    max="100"
+                    {% if take_cared %}
+                        value="{{acc_plant.acc_plant_pref_id.acc_plant_min_temp}}"
+                    {% else %}
+                        value="{{plants.plant_pref_id.plant_min_temp}}"
+                    {% endif %}
+                    class="range range-xs"
+                />
+              </div>
+            </div>
+            <!-- End Min Temperature Level -->
+          </div>
+          <!-- End Max & Min Moisture Level -->
         </div>
-        <!-- End Min Temperature Level -->
-      </div>
-      <!-- End Max & Min Moisture Level -->
+        <!-- End Max & Min Moisture and Temperature Level -->
+
+        <!-- Save Changes Button -->
+        {% if take_cared %}
+            <div class="w-[90%] m-auto mt-3 flex justify-end">
+              <button
+                data-package_key = "{{package_key}}"
+                data-plant_id = "{{plants.plant_id}}"
+                id="parameter_save"
+                class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
+              >
+                SAVE CHANGES
+              </button>
+              <!-- End Save Changes Button -->
+            </div>
+        {% endif %}
+        <!-- End Save Changes Button -->
     </div>
-    <!-- End Max & Min Moisture and Temperature Level -->
-
-    <!-- Save Changes Button -->
-    <div class="w-[90%] m-auto mt-3 flex justify-end">
-      <button
-        class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
-      >
-        SAVE CHANGES
-      </button>
-      <!-- End Save Changes Button -->
-    </div>
-    <!-- End Save Changes Button -->
-</div>
+</form>

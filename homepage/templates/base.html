@@ -86,22 +86,18 @@
                     class="menu-sm dropdown-content text-accent1 mt-3 z-[1] p-2 bg-background shadow rounded-box w-52"
             >
                 <li class="active:bg-secondary rounded-lg">
-                    <a href="{% url 'homepage' %}"
-                    >
+                    <a href="{% url 'homepage' %}">
                         <button class="p-0 w-full h-full text-left">
                             Dashboard
                         </button>
-                    </a
-                    >
+                    </a>
                 </li>
                 <li class="active:bg-secondary rounded-lg">
-                    <a href="{% url 'greenery' %}"
-                    >
+                    <a href="{% url 'greenery' %}">
                         <button class="p-0 w-full h-full text-left">
                             Greenery
                         </button>
-                    </a
-                    >
+                    </a>
                 </li>
                 <li class="active:bg-secondary rounded-lg">
                     <a href="{% url 'profile' %}"
@@ -180,7 +176,7 @@
                         class="hover:bg-secondary p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
                 >
             {% endblock %}
-            <a href="">
+            <a href="{% url 'greenery' %}">
                 <svg
                         width="24"
                         height="24"
@@ -195,7 +191,7 @@
                 </svg>
             </a>
             <!-- Greenery Icon Link -->
-            <a href="" class="ml-[5px] max-xl:hidden max-xl:ml-0"
+            <a href="{% url 'greenery' %}" class="ml-[5px] max-xl:hidden max-xl:ml-0"
             >GREENERY</a
             >
             </li>

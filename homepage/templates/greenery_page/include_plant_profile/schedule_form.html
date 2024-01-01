@@ -1,5 +1,5 @@
 <!-- Water & Pesticide Schedule -->
-<div class="flex flex-grow flex-wrap">
+<div id="schedule_section" class="flex flex-grow hidden flex-wrap">
     <!-- Water Schedule -->
     <div class="flex flex-1 flex-col px-3">
       <!-- Heading -->
@@ -29,14 +29,11 @@
 
       <!-- Set Schedule -->
       <div
-        class="set_schedule flex justify-center flex-col flex-1 flex-grow gap-4 items-center"
-      >
+        class="set_schedule flex justify-center flex-col flex-1 flex-grow gap-4 items-center">
         <div
-          class="cont flex flex-col mt-8 p-4 w-[100%] h-[190px] max-md:h-full justify-center rounded-xl"
-        >
+          class="cont flex flex-col mt-8 p-4 w-[100%] h-[190px] max-md:h-full justify-center rounded-xl">
           <div
-            class="w-full flex gap-5 items-center ml-3 max-sm:ml-0 max-sm:gap-2 max-sm:flex-col max-pc:justify-center"
-          >
+            class="w-full flex gap-5 items-center ml-3 max-sm:ml-0 max-sm:gap-2 max-sm:flex-col max-pc:justify-center">
             <div class="flex gap-5 items-center">
               <input
                 title="Hours"
@@ -326,15 +323,17 @@
         </div>
         <!-- End Pesticide Schedule -->
 
-    <!-- Save Changes Button -->
-    <div class="w-[90%] m-auto mt-8 flex justify-end">
-      <!-- Save Changes Button -->
-      <button
-        class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
-      >
-        SAVE CHANGES
-      </button>
-    </div>
+        <!-- Save Changes Button -->
+        <div class="w-[90%] m-auto mt-8 flex justify-end">
+          <!-- Save Changes Button -->
+          <button
+            id ="scedule_save"
+            class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
+          >
+            SAVE CHANGES
+          </button>
+        </div>
+
     <!-- End Save Changes Button -->
 </div>
 <!-- End Water & Pesticide Schedule -->

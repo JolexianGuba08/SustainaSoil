@@ -13,6 +13,7 @@
 {% block content %}
     <!-- Main -->
     <main
+
       class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
     >
       <!-- Header -->
@@ -23,7 +24,7 @@
         <h1
           class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
         >
-          <a href="{% url 'presets' %}" class="flex">
+            <a href="{% url 'presets' package_key %}" class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -48,6 +49,8 @@
       </header>
       <!-- End Header -->
 
+
+
       <!-- Plant Profile Section -->
       <section class="plant_profile w-[80%] max-lg:w-[90%] max-lg:mb-8">
         {% include 'greenery_page/include_plant_profile/plant_profile_section.html' %}
@@ -55,6 +58,7 @@
 
       <!-- Preference Section -->
       <section
+
         class="w-[80%] h-full mb-[2%] flex max-lg:flex-col max-sm:mb-10 max-pc:mt-10"
       >
         <!-- Set Preference -->
@@ -86,21 +90,21 @@
 
           <div class="w-full flex items-center mt-8 max-lg:mb-8">
             <ul
-              class="font-extralight tracking-widest ml-7 max-[450px]:ml-0 text-accent2 max-lg:flex max-lg:justify-center max-lg:items-center"
-            >
+              class="font-extralight tracking-widest ml-7 max-[450px]:ml-0 text-accent2 max-lg:flex max-lg:justify-center max-lg:items-center">
               <li class="w-full rounded-lg cursor-pointer max-xl:mr-5">
                 <button
-                  class="pref_active tracking-wide w-full p-2 px-5 rounded-lg"
-                >
+                  id = "parameter_button"
+                  class="pref_active tracking-wide w-full p-2 px-5 rounded-lg">
                   PARAMETER
                 </button>
               </li>
               <li
-                class="mt-3 max-lg:mt-0 hover:bg-secondary rounded-lg transition-colors ease-in-out duration-500 cursor-pointer"
-              >
-                <button class="w-full p-2 px-5 tracking-wide rounded-lg">
-                  SCHEDULE
-                </button>
+                class="mt-3 max-lg:mt-0 hover:bg-secondary rounded-lg transition-colors ease-in-out duration-500 cursor-pointer">
+                {% if take_cared %}
+                    <button id="schedule_button" class="w-full p-2 px-5 tracking-wide rounded-lg">
+                      SCHEDULE
+                    </button>
+                {% endif %}
               </li>
             </ul>
           </div>
@@ -134,16 +138,14 @@
             <!-- End Heading -->
 
             <!-- Parameter Form -->
-            <form action="">
-              {% include 'greenery_page/include_plant_profile/parameter_form.html' %}
-            </form>
+            {% include 'greenery_page/include_plant_profile/parameter_form.html' %}
             <!-- End Parameter Form -->
 
-           <!-- Schedule form -->
-            <form action="">
+            <!-- Schedule form -->
+            {% if take_cared %}
               {% include 'greenery_page/include_plant_profile/schedule_form.html' %}
-            </form>
-           <!-- End Schedule form -->
+            {% endif %}
+            <!-- End Schedule form -->
 
           </div>
         </div>
@@ -152,27 +154,140 @@
       <!-- End Preference Section -->
     </main>
     <!-- End Main -->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-      let max_moisture = document.getElementById("max_moisture_level");
-      let min_moisture = document.getElementById("min_moisture_level");
-      let max_temperature = document.getElementById("max_temperature_level");
-      let min_temperature = document.getElementById("min_temperature_level");
+      // Function to update the range input based on the selected radio button
+      function minTemp(value) {
+            $("#min_temperature_level").text(value + "%");
+          }
+          // Event listener for radio buttons
+          $("#plant_min_temp_radio").on("change", function () {
+            var selectedValue = $("#plant_min_temp_radio").val();
+            if (selectedValue !== undefined) {
+              $("#min_temperature_level").text(selectedValue + "%");
+            }
+      });
 
-      function maxMoistureSlider(value) {
-        max_moisture.innerHTML = value + "%";
-      }
+      function maxTemp(value) {
+            $("#max_temperature_level").text(value + "%");
+          }
+          // Event listener for radio buttons
+          $("#plant_max_temp_radio").on("change", function () {
+            var selectedValue = $("#plant_max_temp_radio").val();
+            if (selectedValue !== undefined) {
+              $("#max_temperature_level").text(selectedValue + "%");
+            }
+      });
 
-      function minMoistureSlider(value) {
-        min_moisture.innerHTML = value + "%";
-      }
 
-      function maxTemperatureSlider(value) {
-        max_temperature.innerHTML = value + "%";
+      function minMoisture(value) {
+        $("#min_moisture_level").text(value + "%");
       }
+      // Event listener for radio buttons
+      $("#plant_min_mois_radio").on("change", function () {
+        var selectedValue = $("#plant_min_mois_radio").val();
+        if (selectedValue !== undefined) {
+          $("#min_moisture_level").text(selectedValue + "%");
+        }
+      });
 
-      function minTemperatureSlider(value) {
-        min_temperature.innerHTML = value + "%";
+
+      function maxMoisture(value) {
+        $("#max_moisture_level_display").text(value + "%");
       }
+      // Event listener for radio buttons
+      $("#plant_max_mois_radio").on("change", function () {
+        var selectedValue = $("#plant_max_mois_radio").val();
+        if (selectedValue !== undefined) {
+          $("#max_moisture_level_display").text(selectedValue + "%");
+        }
+      });
+
+
+      $("#parameter_button").on("click", function () {
+        $("#schedule_button").removeClass("pref_active");;
+        $("#parameter_button").addClass("pref_active");
+        $("#parameter_section").removeClass("hidden");
+        $("#schedule_section").addClass("hidden");
+      });
+
+      $("#schedule_button").on("click", function () {
+        $("#schedule_button").addClass("pref_active");
+        $("#parameter_button").removeClass("pref_active");
+        $("#schedule_section").removeClass("hidden");
+        $("#parameter_section").addClass("hidden");
+      });
+
+      $('#takeCareBttn').on('click', function (event) {
+            event.preventDefault();
+            $(this).prop('disabled', true);
+            const package_key = $(this).data('package_key');
+            const plant_id = $(this).data('plant_id');
+            console.log(package_key, plant_id)
+            var data = {
+                'package_key': package_key,
+                'plant_id': plant_id,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),  // Include the CSRF token
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'take_care_plant' %}',
+                headers: {'X-CSRFToken': data.csrfmiddlewaretoken},  // Set the CSRF token in headers
+                data: data,
+                success: function (data) {
+                    var message = data.message
+                    alert(message)
+                    window.location.href = '/add_plant/' + package_key;
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                },
+                complete: function () {
+                // Re-enable the button after the AJAX request is completed
+                $('#takeCareBttn').prop('disabled', false);
+                 }
+            });
+      });
+
+      $('#parameter_save').on('click',function (event) {
+            event.preventDefault();
+            $(this).prop('disabled', true);
+            const package_key = $(this).data('package_key');
+            const plant_id = $(this).data('plant_id');
+            const min_temp = $("#plant_min_temp_radio").val();
+            const max_temp = $("#plant_max_temp_radio").val();
+            const min_mois = $("#plant_min_mois_radio").val();
+            const max_mois = $("#plant_max_mois_radio").val();
+            console.log(package_key, plant_id, min_temp, max_temp, min_mois, max_mois)
+            var data = {
+                'package_key': package_key,
+                'plant_id': plant_id,
+                'min_temp': min_temp,
+                'max_temp': max_temp,
+                'min_moist': min_mois,
+                'max_moist': max_mois,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'update_acc_preferences' %}',
+                headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                data: data,
+                success: function (data) {
+                    var message = data.message
+                    alert(message)
+                    window.location.href = '/plant_profile/' + package_key + '/' + plant_id
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                },
+                complete: function () {
+                // Re-enable the button after the AJAX request is completed
+                $('#parameter_save').prop('disabled', false);
+                 }
+            });
+      });
     </script>
+
 {% endblock %}

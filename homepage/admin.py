@@ -4,6 +4,7 @@ from .models import *
 # Register your models here.
 admin.site.register(Account)
 admin.site.register(Plant_Preferences)
+admin.site.register(Account_Plant_Preferences)
 admin.site.register(Plants)
 admin.site.register(Packages)
 admin.site.register(Account_Package)
