@@ -1,4 +1,4 @@
-from homepage.models import Account
+from homepage.models import Account, Account_Plants
 
 
 def user_context(request):
@@ -32,3 +32,19 @@ def user_context(request):
     else:
         context = {}
         return context
+
+
+def get_greenery_count(request):
+    if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
+        context = {
+            'data': 'No data'
+        }
+        return context
+
+    user_id = request.session.get('session_user_id')
+    # check the greenery count with this email in the account_plant table
+    greenery_count = Account_Plants.objects.filter(user_id=user_id).count()
+    context = {
+        'greenery_count': greenery_count
+    }
+    return context

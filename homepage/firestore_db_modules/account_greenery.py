@@ -14,7 +14,7 @@ def add_account_greenery_location(email, latitude, longitude, location):
         'longitude': longitude,
         'date_added': firestore.SERVER_TIMESTAMP,
         'date_modified': firestore.SERVER_TIMESTAMP,
-        'location':location,
+        'location': location,
     }
 
     # Create a reference to the collection
@@ -77,9 +77,10 @@ def read_account_greenery_location(email):
 
     # Get the documents in the collection that matches the query
     docs = query_ref.get()
-
+    if not docs:
+        return None
     # For debugging purposes only! removed later for deployment
-    print('Account Greenery Location read successfully')
+    print(f'Account Greenery Location for {email} retrieved successfully')
     # It returns a document so all you need to do is to get the data by calling to_dict() in other parts of the code
     return docs
 

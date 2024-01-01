@@ -30,6 +30,12 @@ def get_weather_data_context(request):
 
     email = request.session.get('session_email')
     acc_greenery_query = read_account_greenery_location(email)
+    if acc_greenery_query is None:
+        context = {
+            'data': 'No data'
+        }
+        return context
+
     latitude, longitude = '', ''
     for doc in acc_greenery_query:
         latitude = doc.to_dict()['latitude']

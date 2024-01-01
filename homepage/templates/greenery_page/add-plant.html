@@ -2,153 +2,156 @@
 {% load static %}
 {% block title %} Take Care | SustainAsoil {% endblock %}
 {% block greenery %}
-<li
-   class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
-   >
-   {% endblock %}
-   {% block content %}
-   <!-- Main -->
-   <main
-      class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
-      >
-      <!-- Header -->
-      <header
-         class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
-         >
-         <!-- Back Redirect to Greenery & DISPLAY PLANT NAME -->
-         <h1
-            class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+    <li
+            class="bg-secondary text-accent1 p-3 rounded-lg text-center max-xl:flex max-xl:justify-center"
+    >
+{% endblock %}
+{% block content %}
+    <!-- Main -->
+    <main
+            class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-30 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    >
+        <!-- Header -->
+        <header
+                class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+        >
+            <!-- Back Redirect to Greenery & DISPLAY PLANT NAME -->
+            <h1
+                    class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
             >
-            <a href="{% url 'greenery' %}" class="flex">
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
-                  >
-                  <path
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     d="M15.75 19.5 8.25 12l7.5-7.5"
-                     />
-               </svg>
-               &nbsp;PACKAGE NAME
-            </a>
-         </h1>
-         <!-- End Back Redirect to Greenery & DISPLAY PLANT NAME -->
-         <!-- Include Notification -->
-         {% include 'web_notification.html' %}
-      </header>
-      <!-- End Header -->
-      <!-- Greenery Section -->
-      <section class="greenery-section flex w-[90%] h-full mb-[2%]">
-         <!-- Greenery Container -->
-         <div class="greneery w-full h-full flex max-sm:justify-center">
-            {% if not account_plants %}
-            <!-- Add Plant UI -->
-            <button
-               data-packagekey = "{{ package_key }}"
-               id = "selectPlant"
-               class="group hover:bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[300px] w-[250px] rounded-3xl max-sm:w-full"
-               >
-               <div class="flex flex-col items-center">
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.5"
-                     stroke="currentColor"
-                     class="w-16 h-16 text-accent1 group-hover:w-14 group-hover:h-14 transition ease-in-out duration-500"
-                     >
-                     <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                        />
-                  </svg>
-                  <p
-                     class="tracking-wider text-accent1 font-bold text-2xl group-hover:hidden mt-5"
-                     >
-                     ADD PLANT
-                  </p>
-                  <svg
-                     width="130"
-                     height="130"
-                     fill="currentColor"
-                     viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg"
-                     class="flex-shrink-0 text-accent1 opacity-0 absolute group-hover:static group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-500"
-                     >
-                     <path
-                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-                        ></path>
-                  </svg>
-               </div>
-            </button>
-            {% endif %}
-            <!-- End Add Plant -->
-            <!-- Added Plant -->
-            {% if account_plants %}
-            {% for plant in account_plants %}
-            <button
-              onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id.pk%}"
-               title="card"
-               class="group  hover:bg-secondary hover:shadow-2xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[250px] rounded-3xl max-md:w-full"
-               >
-               <!-- DISPLAY IMAGE -->
-               <div class="bg-accent1 w-full h-[150px] rounded-2xl"></div>
-               <!-- END DISPLAY IMAGE -->
-               <!-- DISPLAY NAME -->
-               <div class="w-full mt-3">
-                  <h2
-                     class="w-full text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
-                        {{ plant.plant_id }}
-                  </h2>
-                  <!-- END DISPLAY NAME -->
-                  <!-- DISPLAY DESCRIPTION -->
-                  <p
-                     class="flex w-full mt-1 indent-1 items-center tracking-wide pl-2 pr-2"
-                     >
-                     <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                        >
+                <a href="{% url 'greenery' %}" class="flex">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
+                    >
                         <path
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
-                           />
-                     </svg>
-                      {{ plant.date_added }}
-                  </p>
-               </div>
-               <!-- END DISPLAY DESCRIPTION -->
-            </button>
-            {% endfor %}
-            {% endif %}
-            <!-- End Added Plant -->
-         </div>
-         <!-- End Greenery Container -->
-      </section>
-      <!-- End Greenery Section -->
-   </main>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   <script>
-       $('#selectPlant').on('click', function (event) {
-                event.preventDefault();
-                var package_key = $(this).data('packagekey');
-                console.log("clicked",package_key);
-                window.location.href = "/presets/" + package_key
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
+                    </svg>
+                    &nbsp;{{ package_name }}
+                </a>
+            </h1>
+            <!-- End Back Redirect to Greenery & DISPLAY PLANT NAME -->
+            <!-- Include Notification -->
+            {% include 'web_notification.html' %}
+        </header>
+        <!-- End Header -->
+        <!-- Greenery Section -->
+        <section class="greenery-section flex w-[90%] h-full mb-[2%]">
+            <!-- Greenery Container -->
+            <div class="greneery w-full h-full flex max-sm:justify-center">
+                {% if not account_plants %}
+                    <!-- Add Plant UI -->
+                    <button
+                            data-packagekey="{{ package_key }}"
+                            id="selectPlant"
+                            class="group hover:bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[300px] w-[250px] rounded-3xl max-sm:w-full"
+                    >
+                        <div class="flex flex-col items-center">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-16 h-16 text-accent1 group-hover:w-14 group-hover:h-14 transition ease-in-out duration-500"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                />
+                            </svg>
+                            <p
+                                    class="tracking-wider text-accent1 font-bold text-2xl group-hover:hidden mt-5"
+                            >
+                                ADD PLANT
+                            </p>
+                            <svg
+                                    width="130"
+                                    height="130"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="flex-shrink-0 text-accent1 opacity-0 absolute group-hover:static group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-500"
+                            >
+                                <path
+                                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </button>
+                {% endif %}
+                <!-- End Add Plant -->
+                <!-- Added Plant -->
+                {% if account_plants %}
+                    {% for plant in account_plants %}
+                        <button
+                                onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id.pk %}"
+                                title="card"
+                                class="group  hover:bg-secondary hover:shadow-2xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[250px] rounded-3xl max-md:w-full"
+                        >
+                            <!-- DISPLAY IMAGE -->
+                            <div class="bg-accent1 w-full h-[150px] rounded-2xl"
+                                 style="background-image: url('{{ plant_img }}'); background-size: cover; background-position: center;">
+                            </div>
+
+                            <!-- END DISPLAY IMAGE -->
+                            <!-- DISPLAY NAME -->
+                            <div class="w-full mt-3">
+                                <h2
+                                        class="w-full text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
+                                    {{ plant.plant_id }}
+                                </h2>
+                                <!-- END DISPLAY NAME -->
+                                <!-- DISPLAY DESCRIPTION -->
+                                <p
+                                        class="flex w-full mt-1 indent-1 items-center tracking-wide pl-2 pr-2"
+                                >
+                                    <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="w-6 h-6"
+                                    >
+                                        <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                                        />
+                                    </svg>
+                                    {{ plant.date_added }}
+                                </p>
+                            </div>
+                            <!-- END DISPLAY DESCRIPTION -->
+                        </button>
+                    {% endfor %}
+                {% endif %}
+                <!-- End Added Plant -->
+            </div>
+            <!-- End Greenery Container -->
+        </section>
+        <!-- End Greenery Section -->
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $('#selectPlant').on('click', function (event) {
+            event.preventDefault();
+            var package_key = $(this).data('packagekey');
+            console.log("clicked", package_key);
+            window.location.href = "/presets/" + package_key
 
         });
 
-   </script>
-   <!-- End Main -->
-   {% endblock %}
+    </script>
+    <!-- End Main -->
+{% endblock %}

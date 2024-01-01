@@ -143,11 +143,16 @@ def add_package(request):
 
 
 def add_plant(request, package_key):
+    global plant_img, package_name
     try:
         account_plant = Account_Plants.objects.filter(
             package_key=package_key,
             user_id=request.session.get('session_user_id')
         )
+
+        account_plants = Account_Plants.objects.get(user_id=request.session.get('session_user_id'))
+        plant_img = cloud_storage.get_file_url_from_firebase(account_plants.plant_id.plant_image)
+        package_name = Account_Package.objects.get(package_key=package_key)
 
     except Account_Plants.DoesNotExist:
         # Handle the case where the object is not found
@@ -155,7 +160,9 @@ def add_plant(request, package_key):
 
     return render(request, 'greenery_page/add-plant.html', {
         'account_plants': account_plant,  # Use account_plant instead of account_plants
-        'package_key': package_key
+        'package_key': package_key,
+        'plant_img': plant_img,
+        'package_name': package_name.acc_package_name
     })
 
 
