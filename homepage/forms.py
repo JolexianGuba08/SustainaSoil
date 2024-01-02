@@ -11,6 +11,7 @@ class EditProfileForm(forms.Form):
             'type': 'text',
             'placeholder': 'Firstname',
             'required': True,
+            'id': 'firstname',
             'class': 'input input-bordered input-md w-[98%] mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
         })
     )
@@ -21,6 +22,7 @@ class EditProfileForm(forms.Form):
             'type': 'text',
             'placeholder': 'Lastname',
             'required': True,
+            'id': 'lastname',
             'class': 'input input-bordered input-md w-[98%] mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
         })
     )
@@ -54,3 +56,44 @@ class EditProfileForm(forms.Form):
         fields = ['acc_first_name', 'acc_last_name', 'acc_phone']
         exclude = ['acc_email', 'acc_password', 'acc_profile_img', 'acc_background_img', 'acc_date_added',
                    'acc_date_last_updated', 'acc_status']
+
+
+class ChangePasswordForm(forms.Form):
+    acc_password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'placeholder': 'Old Password',
+            'required': True,
+            'id': 'old_password',
+            'class': 'input input-bordered input-md w-[98%] mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
+        })
+    )
+
+    acc_new_password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'placeholder': 'New Password',
+            'required': True,
+            'id': 'new_password',
+            'class': 'input input-bordered input-md w-full mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
+        })
+    )
+
+    acc_confirm_password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'placeholder': 'Confirm Password',
+            'required': True,
+            'id': 'confirm_password',
+            'class': 'input input-bordered input-md w-full mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
+        })
+    )
+
+    class Meta:
+        model = Account
+        fields = ['acc_password', 'acc_new_password', 'acc_confirm_password']
+        exclude = ['acc_email', 'acc_first_name', 'acc_last_name', 'acc_phone', 'acc_profile_img', 'acc_background_img',
+                   'acc_date_added', 'acc_date_last_updated', 'acc_status']

@@ -11,6 +11,8 @@
 
 
 {% block content %}
+    <!-- Include Preloader-->
+    {% include 'preloader.html' %}
     <!-- Main -->
     <main
             class="flex flex-grow flex-col items-center max-[450px]:mt-10 z-50 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
@@ -40,6 +42,7 @@
                     id="cover"
                     style="background: url('{{ background_img }}') no-repeat center center"
             >
+
                 <!-- Profile Container -->
                 <div
                         class="w-[310px] z-50 h-full flex-shrink-0 flex justify-center items-end relative max-lg:w-[230px]"
@@ -50,6 +53,7 @@
                             id="profile"
                             style="background: url({{ user_profile_pic }}) no-repeat center center"
                     >
+
                         <!-- File Input -->
                         <input title="Upload File" type="file" id="file" class="hidden"/>
                         <!-- End File Input -->
@@ -168,6 +172,91 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
+        window.addEventListener('load', function () {
+            console.log('Page is loaded');
+            // Hide the preloader
+            document.getElementById('preloader').style.display = 'none';
+        });
+
+        function savechangesHandler() {
+            // Handle the save changes button
+            const saveChangesBtn = $('#savechangesbtn');
+            // set the save changes button hidden
+            saveChangesBtn.prop('disabled', true).hide();
+
+            // Handle the input fields
+            const first_name = $('#firstname');
+            const last_name = $('#lastname');
+            const contact = $('#contact');
+            const fileInput = $('#file');
+            const cover_file = $('#cover_file');
+
+            // Function to enable/disable the save changes button
+            function enableSaveChanges() {
+                saveChangesBtn.prop('disabled', false).show();
+            }
+
+            function disableSaveChanges() {
+                saveChangesBtn.prop('disabled', true).hide();
+            }
+
+            // Event listener for input fields and file inputs
+            $('.edit input, #file, #cover_file').on('input change', function () {
+                if (
+                    first_name.val().trim() !== '{{ user.first_name }}' ||
+                    last_name.val().trim() !== '{{ user.last_name }}' ||
+                    contact.val().trim() !== '{{ user.contact_number }}' ||
+                    fileInput[0].files.length > 0 ||
+                    cover_file[0].files.length > 0
+                ) {
+                    enableSaveChanges();
+                } else {
+                    disableSaveChanges();
+                }
+            });
+        }
+
+        savechangesHandler();
+
+        function savepassHandler() {
+            // Handle the save changes button
+            const saveChangesBtn = $('#savepassbtn');
+            // set the save changes button hidden
+            saveChangesBtn.prop('disabled', true).hide();
+
+            // Handle the input fields
+            const oldPassword = $('#old_password');
+            const newPassword = $('#new_password');
+            const confirmPassword = $('#confirm_password');
+
+            // Function to check if all password fields have values
+            function allFieldsFilled() {
+                return oldPassword.val().trim() !== '' &&
+                    newPassword.val().trim() !== '' &&
+                    confirmPassword.val().trim() !== '';
+            }
+
+            // Function to enable/disable the save changes button
+            function updateSaveChanges() {
+                if (allFieldsFilled()) {
+                    saveChangesBtn.prop('disabled', false).show();
+                } else {
+                    saveChangesBtn.prop('disabled', true).hide();
+                }
+            }
+
+            // Event listener for password fields
+            oldPassword.add(newPassword).add(confirmPassword).on('input', function () {
+                updateSaveChanges();
+            });
+        }
+
+        savepassHandler();
+
+        // Rest of your existing code for file inputs...
+        // ...
+
+
         // Accept Only Numeric Contact No. Field
         const form = document.getElementById("contact");
 
@@ -222,6 +311,26 @@
             overview_btn.classList.remove("active");
             edit_btn.classList.add("active");
             password_btn.classList.remove("active");
+
+            const first_name = document.getElementById('firstname');
+            const last_name = document.getElementById('lastname');
+            const contact = document.getElementById('contact');
+
+            $.ajax({
+                url: "{% url 'get_profile_value' %}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    first_name.value = data.first_name;
+                    last_name.value = data.last_name;
+                    contact.value = data.contact_number;
+
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
         }
 
         //Display Change Password Function
@@ -244,6 +353,8 @@
             overview_btn.classList.remove("active");
             edit_btn.classList.remove("active");
             password_btn.classList.add("active");
+
+
         }
 
         // Display Profile Image
@@ -266,6 +377,7 @@
                     );
                 });
                 reader.readAsDataURL(chosed_file);
+                console.log(reader);
             }
         });
 
@@ -290,5 +402,114 @@
                 reader.readAsDataURL(chosed_file);
             }
         });
+
+        $(document).ready(function () {
+            $('#edit-profile-form').on('submit', function (event) {
+                event.preventDefault();
+
+                let formData = new FormData(this);
+                let fileInput = document.getElementById('file');
+                let file = fileInput.files[0]; // Get the selected file
+
+                formData.append('profile_pic', file); // Append the file to the formData object
+
+                // background image
+                let cover_file = document.getElementById('cover_file');
+                let cover = cover_file.files[0]; // Get the selected file
+
+                formData.append('background_img', cover); // Append the file to the formData object
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/update_profile/',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Profile updated successfully');
+                            window.location.reload();
+                        } else {
+                            console.log('Profile update failed');
+                            // Handle errors
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log('Error:', xhr.status + ": " + xhr.responseText);
+                        // Handle errors
+                    }
+                });
+            });
+        });
+
+
+        $('#change-password-form').on('submit', function (event) {
+            event.preventDefault();
+
+            const new_password = $('#new_password').val();
+            const confirm_password = $('#confirm_password').val();
+            const old_password = $('#old_password').val();
+            console.log(old_password);
+
+            if (new_password !== confirm_password) {
+                alert('New password and confirm password do not match');
+                return;
+            }
+
+            if (old_password === new_password) {
+                alert('New password and old password are the same');
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/check_old_password/',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                data: {
+                    'old_password': old_password
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Old password is correct');
+
+                        // Proceed to change the password
+                        const formData = new FormData($('#change-password-form')[0]);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/change_password/',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                if (response.success) {
+                                    console.log('Password changed successfully');
+                                    window.location.reload();
+                                } else {
+                                    console.log('Password change failed');
+                                    // Handle errors
+                                }
+                            },
+                            error: function (xhr, errmsg, err) {
+                                console.log('Error:', xhr.status + ": " + xhr.responseText);
+                                // Handle errors
+                            }
+                        });
+                    } else {
+                        console.log('Old password is incorrect');
+                        alert('Old password is incorrect');
+                    }
+                },
+                error: function (xhr, errmsg, err) {
+                    console.log('Error:', xhr.status + ": " + xhr.responseText);
+                    // Handle errors
+                }
+            });
+        });
+
+
     </script>
+    </li>
 {% endblock %}

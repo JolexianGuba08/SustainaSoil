@@ -11,6 +11,10 @@ urlpatterns = [
 
     # Profile Urls
     path('profile/', views.profile, name='profile'),
+    path('get_profile/', views.get_profile_value, name='get_profile_value'),
+    path('update_profile/', views.update_profile, name='update_profile'),
+    path('check_old_password/', views.check_password, name='check_password'),
+    path('change_password/', views.change_password, name='change_password'),
     # path('profile_overview/', views.overview, name='overview'),
     # path('profile_edit_profile/', views.edit_profile, name='edit_profile'),
     # path('profile_change_password/', views.change_password, name='change_password'),

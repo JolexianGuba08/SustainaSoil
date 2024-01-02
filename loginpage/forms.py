@@ -185,3 +185,36 @@ class OTPVerificationForm(forms.Form):
             'id': 'otp6'
         })
     )
+
+
+class ForgotPasswordForm(forms.Form):
+    acc_email = forms.EmailField(
+        label='',
+        widget=forms.EmailInput(attrs={
+            'class': 'input input-bordered input-md w-full bg-transparent rounded-lg pl-40 '
+                     'placeholder:tracking-wide text-accent1 border-accent1',
+            'placeholder': 'Email Address',
+            'autocomplete': 'off',
+            'onpaste': 'return false'})
+    )
+
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'input input-bordered input-md w-full bg-transparent pl-40 rounded-lg '
+                     'placeholder:tracking-wide text-accent1 border-accent1 ',
+            'placeholder': 'New Password',
+            'autocomplete': 'off',
+            'onpaste': 'return false'})
+    )
+    confirm_password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'input input-bordered input-md w-full bg-transparent pl-40 rounded-lg '
+                     'placeholder:tracking-wide text-accent1 border-accent1 ',
+            'placeholder': 'Confirm Password',
+            'autocomplete': 'off',
+            'onpaste': 'return false'})
+    )

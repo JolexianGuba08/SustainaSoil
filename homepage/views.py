@@ -1,17 +1,24 @@
 import json
+import uuid
 
+import bcrypt
 from django.contrib.sites import requests
+from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import requests
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 # Other imports...
-from homepage.forms import EditProfileForm
+from homepage.forms import EditProfileForm, ChangePasswordForm
 from homepage.models import Packages, Account_Package, Account, Account_Plants, Plants, Account_Plant_Preferences
 from homepage.user_context.context_processor import user_context
 import homepage.firestore_db_modules.cloud_storage as cloud_storage
 import homepage.firestore_db_modules.account_greenery as account_greenery
+
 
 # Create your views here.
 def homepage(request):
@@ -52,38 +59,38 @@ def mobile_notif(request):
 
 # Profile Views
 def profile(request):
-    # get file url from firebase
-    file_url = cloud_storage.get_file_url_from_firebase('profile_images/default_back_img.png')
-
-    print(file_url)
-    # Fetch the context data using your user_context function
     context_data = user_context(request)
 
     # Pass the context data when initializing the form
     form = EditProfileForm(request=request, initial=context_data)
-    return render(request, 'profile_page/user-profile.html', {'form': form})
+    forms = ChangePasswordForm()
+    return render(request, 'profile_page/user-profile.html', {'form': form, 'forms': forms})
 
 
 def overview(request):
     return render(request, 'profile_page/include_overview.html')
 
 
-def edit_profile(request):
-    if request.method == 'POST':
+def get_profile_value(request):
+    user_id = request.session.get('session_user_id')
 
-        form = EditProfileForm(request.POST)
-        if form.is_valid():
-            print('Form is valid')
-            return redirect('profile')
-        else:
-            print('Form is not valid')
-            return redirect('edit_profile')
-    else:
-        return render(request, 'profile_page/include_edit_profile.html', {'form': EditProfileForm()})
+    try:
+        user = Account.objects.get(acc_id=user_id)
 
+        # Serialize the user data into a dictionary
+        serialized_user = serializers.serialize('python', [user])
+        user_data = serialized_user[0]['fields']
 
-def change_password(request):
-    return render(request, 'profile_page/include_change_password.html')
+        # Extract required fields
+        context = {
+            'first_name': user_data['acc_first_name'],
+            'last_name': user_data['acc_last_name'],
+            'contact_number': user_data['acc_phone'] if user_data['acc_phone'] else '',
+        }
+
+        return JsonResponse(context)
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'Account not found'}, status=404)
 
 
 # Greenery Views
@@ -96,22 +103,24 @@ def greenery(request):
     except Account_Package.DoesNotExist:
         return render(request, 'greenery_page/user-greenery.html')
 
+
 def check_package_id(request):
     if request.method == 'POST':
         package_id = request.POST.get('package_id')
         print(package_id)
         try:
-            package_id = Packages.objects.get(package_key = package_id).pk
+            package_id = Packages.objects.get(package_key=package_id).pk
             if package_id:
-                package_id_exist = Account_Package.objects.filter(package_key = package_id).first()
+                package_id_exist = Account_Package.objects.filter(package_key=package_id).first()
                 if not package_id_exist:
-                    return JsonResponse({'status':'True','message':'Package successfully registered. Thank you!'})
+                    return JsonResponse({'status': 'True', 'message': 'Package successfully registered. Thank you!'})
                 else:
-                    return JsonResponse({'status':'False','message':'Package is already registered.'})
+                    return JsonResponse({'status': 'False', 'message': 'Package is already registered.'})
         except Packages.DoesNotExist:
-            return JsonResponse({'status':"Error",'message':'Package does not exist'})
+            return JsonResponse({'status': "Error", 'message': 'Package does not exist'})
 
     return render(request, 'greenery_page/add-plant.html')
+
 
 def add_package(request):
     if request.method == 'POST':
@@ -131,9 +140,10 @@ def add_package(request):
                     Account_Package.objects.create(acc_package_name=package_name, package_key=package_key,
                                                    user_id=email)
                     add_plant_url = reverse("add_plant", kwargs={'package_key': package_key})
-                    return JsonResponse({'status':'True','message': 'Package added successfully','redirect_to': add_plant_url})
+                    return JsonResponse(
+                        {'status': 'True', 'message': 'Package added successfully', 'redirect_to': add_plant_url})
                 else:
-                    return JsonResponse({'status':'False','message': 'Package is already registered.'})
+                    return JsonResponse({'status': 'False', 'message': 'Package is already registered.'})
         except Packages.DoesNotExist:
             return JsonResponse({'error': 'Package does not exist'})
         except Exception as e:
@@ -308,9 +318,121 @@ def plant_profile_section(request):
 
 # Includes Plant Profile Views
 def parameter_form(request):
-
     return render(request, 'greenery_page/include_plant_profile/parameter_form.html')
 
 
 def schedule_form(request):
     return render(request, 'greenery_page/include_plant_profile/schedule_form.html')
+
+
+@require_POST
+def update_profile(request):
+    try:
+        account = Account.objects.get(acc_id=request.session.get('session_user_id'))
+
+        # Get form data
+        first_name = request.POST.get('acc_first_name')
+        last_name = request.POST.get('acc_last_name')
+        contact = request.POST.get('acc_phone')
+        profile_pic = request.FILES.get('profile_pic')
+        background_img = request.FILES.get('background_img')
+        print(first_name, last_name, contact, profile_pic, background_img)
+
+        # Update account fields if form data is present
+        if first_name:
+            account.acc_first_name = first_name
+        if last_name:
+            account.acc_last_name = last_name
+        if contact:
+            account.acc_phone = contact
+
+        # Process and save profile pic if available
+        if profile_pic:
+            fs = FileSystemStorage(location='homepage/temp/profile/')
+            filename = fs.save(profile_pic.name, profile_pic)
+
+            # Get the complete storage path of the saved file
+            file_path = fs.path(filename)
+            # create a random file name
+
+            upload_image = cloud_storage.upload_file_to_firebase(file_path,
+                                                                 f'profile_images/{generate_filename(account.acc_id)}')
+
+            account.acc_profile_img = upload_image
+
+            # Delete the temporary file after successful upload
+            fs.delete(filename)
+
+        # Process and save background image if available
+        if background_img:
+            fs = FileSystemStorage(location='homepage/temp/background/')
+            filename = fs.save(background_img.name, background_img)
+
+            # Get the complete storage path of the saved file
+            file_path = fs.path(filename)
+            # create a random file name
+
+            upload_image_back = cloud_storage.upload_file_to_firebase(file_path,
+                                                                      f'background_images/{generate_filename(account.acc_id)}')
+
+            account.acc_background_img = upload_image_back
+
+            # Delete the temporary file after successful upload
+            fs.delete(filename)
+
+        account.save()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'success': False, 'errors': 'User profile not found or error occurred'})
+
+
+def generate_filename(user_id):
+    # Generate a random UUID (Universally Unique Identifier)
+    unique_id = uuid.uuid4().hex
+
+    # Combine the random UUID with the user ID
+    filename = f"{user_id}_{unique_id}"
+
+    return filename
+
+
+@require_POST
+def check_password(request):
+    try:
+        if request.method == 'POST':
+            user_id = request.session.get('session_user_id')
+            password = request.POST.get('old_password')
+            account = Account.objects.get(acc_id=user_id)
+            if bcrypt.checkpw(password.encode('utf8'), account.acc_password.encode('utf8')):
+                return JsonResponse({'success': True, 'message': 'Password matched successfully'})
+            else:
+                return JsonResponse({'success': False, 'error': 'Password does not match'})
+    except Account.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User account not found'})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
+
+
+@require_POST
+def change_password(request):
+    try:
+        if request.method == 'POST':
+            new_password = request.POST.get('acc_new_password')
+            confirm_password = request.POST.get('acc_confirm_password')
+            print(new_password, confirm_password)
+            password = str(new_password)
+            if new_password != confirm_password:
+                return JsonResponse({'success': False, 'errors': 'Password does not match'})
+
+            account = Account.objects.get(acc_id=request.session.get('session_user_id'))
+            account.acc_password = password
+            account.save()
+
+            return JsonResponse({'success': True})
+    except Account.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User account not found'})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': 'Invalid request'})

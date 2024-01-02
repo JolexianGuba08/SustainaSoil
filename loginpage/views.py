@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.template.loader import render_to_string
 from google.cloud.firestore_v1 import FieldFilter
 
-from loginpage.forms import LoginForm, SignUpPageForm, OTPVerificationForm
+from loginpage.forms import LoginForm, SignUpPageForm, OTPVerificationForm, ForgotPasswordForm, ChangePasswordForm
 from homepage.models import Account
 from loginpage.otp_verification import *
 
@@ -49,7 +49,7 @@ def login_page(request):
                                 return JsonResponse({'success': True, 'dashboard_html': dashboard_html})
                         elif account.acc_status == 2:
                             print('Error: This account has been removed and is no longer accessible.')
-                            errors = form.errors.as_json()
+                            errors = 'Error: This account has been removed and is no longer accessible.'
                             return JsonResponse({'success': False, 'errors': errors})
                         else:
                             print('Incorrect Email or Password: Please verify and try again.')
@@ -219,8 +219,21 @@ def resend_otp(request):
 
 # Logout page
 def logout_page(request):
+    if not request.session.get('session_email'):
+        return redirect('login_page')
     del request.session['session_email']
     del request.session['session_user_id']
     del request.session['session_user_type']
 
     return redirect('login_page')
+
+
+def forgot_password_page(request):
+    form = ForgotPasswordForm(request.POST)
+    return render(request, 'forgot_password.html', {'form': form})
+
+
+# Change Password Page
+def change_password_page(request):
+    form = ChangePasswordForm(request.POST)
+    return render(request, 'change_password.html', {'form': form})

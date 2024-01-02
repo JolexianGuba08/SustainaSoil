@@ -74,6 +74,35 @@
     padding-left: 36px;
 }
 
+.forgot_password {
+    transition: ease-in-out .3s !important;
+}
+
+.forgot_password:hover {
+    color: var(--accent2) !important;
+    transition: ease-in-out .3s !important;
+}
+
+.error-color {
+    border: 1px solid #b91c1c !important;
+    color: #b91c1c !important;
+}
+
+.error-icon {
+    color: #b91c1c !important;
+}
+
+.loginBTN, .openGMAIL {
+    transition: .3s ease-in-out !important;
+}
+
+.loginBTN:hover, .openGMAIL:hover {
+    background: #32281b !important;
+    border: 1px solid #32281b !important;
+    color: white !important;
+    transition: .3s ease-in-out !important;
+}
+
 /* ----------------------------------- */
 /* sign-up */
 /* ----------------------------------- */
@@ -101,6 +130,25 @@
     color: #a6adc0 !important;
     text-decoration: none;
 }
+
+.createBTN {
+    transition: .3s ease-in-out !important;
+}
+
+.createBTN:hover {
+    background: #32281b !important;
+    border: 1px solid #32281b !important;
+    color: white !important;
+    transition: .3s ease-in-out !important;
+}
+
+
+@media (max-width: 1600px) and (max-height: 800px) {
+    .sign-up {
+        margin-top: 0 !important;
+    }
+}
+
 
 /* ----------------------------------- */
 /*  navbar */
@@ -391,7 +439,7 @@
 
 .overview {
     /* display: none; */
-    background: url(../images/background-image-2.png) no-repeat bottom right fixed !important;
+    
 }
 
 @media (max-width: 1527px) {
@@ -409,12 +457,13 @@
 }
 
 .cover {
-    background: url(..) no-repeat center center !important;
+
     background-size: cover !important;
     background-color: var(--secondary) !important;
 }
 
 .profile {
+
     background-size: cover !important;
     background-color: var(--secondary) !important;
 }
@@ -425,7 +474,7 @@
 
 /* SECTION */
 .plant_profile .profile {
-    /*background: url(../images/plant-profile.png) no-repeat center center !important;*/
+
     background-size: cover !important;
 }
 

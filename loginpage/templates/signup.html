@@ -44,10 +44,12 @@
                         {% endfor %}
                     {% endfor %}
                 </ul>
-            {% endif %}S
+            {% endif %}
+
             <h1 class="font-bold text-4xl tracking-wide mb-8 text-accent1">
                 SIGN UP
             </h1>
+
             <!-- Sign In Form Container -->
             <div class="flex flex-col items-center w-full">
                 <!-- Firstname -->
@@ -59,7 +61,6 @@
                     </svg>
 
                     <!-- Firtname Form -->
-                    {#                            <input type="text" placeholder="Firstname" required class="input input-bordered input-md w-full bg-transparent border-secondary rounded-lg pl-40 placeholder:tracking-wide" />#}
                     {{ form.acc_first_name }}
                 </div>
 
@@ -73,8 +74,6 @@
                     </svg>
 
                     <!-- Lastname Form -->
-                    {#                    <input type="text" placeholder="Lastname" required#}
-                    {#                           class="input input-bordered input-md w-full bg-transparent border-secondary rounded-lg pl-40 placeholder:tracking-wide"/>#}
                     {{ form.acc_last_name }}
                 </div>
 
@@ -93,8 +92,6 @@
 
                     <!-- Email Form -->
                     {{ form.acc_email }}
-                    {#                    <input type="email" placeholder="Email Address" required#}
-                    {#                           class="input input-bordered input-md w-full bg-transparent border-secondary pl-40 rounded-lg placeholder:tracking-wide"/>#}
                 </div>
 
                 <!-- Password -->
@@ -109,12 +106,10 @@
                     </svg>
                     {{ form.acc_password }}
                     <!-- Password Form -->
-                    {#                    <input type="password" placeholder="Password" required autocomplete="current-password"#}
-                    {#                           class="input input-bordered input-md w-full bg-transparent border-secondary pl-40 rounded-lg placeholder:tracking-wide"/>#}
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="w-[300px] flex items-center max-xl:w-[300px] mb-8 relative focus-within:text-accent1 tracking-wider">
+                <div class="w-[300px] flex items-center max-xl:w-[300px] mb-5 relative focus-within:text-accent1 tracking-wider">
                     <!-- Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-5 h-5 absolute ml-3 mt-1 text-accent1">
@@ -125,19 +120,17 @@
                     </svg>
 
                     <!-- Confirm Password Form -->
-                    {#                    <input#}
-                    {#                            type="password"#}
-                    {#                            placeholder="ConfirmPassword"#}
-                    {#                            required#}
-                    {#                            autocomplete="current-password"#}
-                    {#                            class="input input-bordered input-md w-full bg-transparent border-secondary pl-40 rounded-lg placeholder:tracking-wide"#}
-                    {#                    />#}
                     {{ form.confirm_password }}
+                </div>
+
+                <div class="w-[300px] flex items-center mb-5 justify-center  ">
+                    <input type="checkbox" name="agree" class="">
+                    <label for="agree" class="text-sm ml-1 text-accent1">I have agreed to the terms and conditions.</label>
                 </div>
             </div>
             <button
                     type="submit"
-                    class="border p-2 w-[300px] bg-accent1 text-sm tracking-widest text-background rounded-lg border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent hover:text-accent1 font-bold"
+                    class="createBTN border p-2 w-[300px] bg-accent1 text-sm tracking-widest text-background rounded-lg border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent hover:text-accent1 font-bold"
             >
                 CREATE ACCOUNT
             </button>
