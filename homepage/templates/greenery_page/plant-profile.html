@@ -59,7 +59,7 @@
         </header>
         <!-- End Header -->
 
-
+        <div class="hidden" id="websocketData" data-packagekey="{{ package_key }}"></div>
         <!-- Plant Profile Section -->
         <section class="plant_profile w-[80%] max-lg:w-[90%] max-lg:mb-8">
             {% include 'greenery_page/include_plant_profile/plant_profile_section.html' %}
@@ -165,6 +165,39 @@
     <!-- End Main -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/real_time_data/');
+        const package_key = $("#websocketData").data("packagekey");
+        // Connection opened event handler
+        socket.addEventListener('open', (event) => {
+            console.log('WebSocket connection opened:', event);
+
+            // Send a message to the server (replace 'your_package_key' with the actual package key)
+            socket.send(JSON.stringify({ package_key: package_key }));
+        });
+
+        // Message received event handler
+        socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+
+            $("#displayMoisture").text(data.message.soil_moist_sensor + "%");
+            $("#displayTemperature").text(data.message.temperature_sensor + "°C");
+            $("#displayHumidity").text(data.message.humidity_sensor + "%");
+        });
+
+        // Connection closed event handler
+        socket.addEventListener('close', (event) => {
+            console.log('WebSocket connection closed:', event);
+        });
+
+        // Error event handler
+        socket.addEventListener('error', (event) => {
+            console.error('WebSocket error:', event);
+        });
+    </script>
+
     <script>
         // Function to update the range input based on the selected radio button
         function minTemp(value) {

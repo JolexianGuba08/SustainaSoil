@@ -17,7 +17,14 @@ import homepage.firestore_db_modules.account_greenery as account_greenery
 def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
-    return render(request, 'dashboard_page/user-dashboard.html')
+    acc_package = Account_Package.objects.get(user_id=request.session.get('session_user_id'))
+    package_key = acc_package.package_key
+    if package_key:
+        return render(request, 'dashboard_page/user-dashboard.html', {'package_key': package_key})
+    else:
+        return render(request, 'dashboard_page/user-dashboard.html')
+
+
 
 
 def process_location(request):
