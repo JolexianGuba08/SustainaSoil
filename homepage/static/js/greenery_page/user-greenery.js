@@ -14,18 +14,28 @@
 
         }
 
+        function hasPackageRegistrationModal() {
+            my_modal_5.close();
+            my_modal_6.showModal();
+            $('#autocomplete-input').hide()
+
+        }
+
         function validateForm() {
             $('#registerGreeneryBttn').prop('disabled', true)
             .css('color', 'black');
             // Validate the inputs as needed
+            const has_package = $('#addGreeneryButton').data("packageacc");
             const package_id = $('#package_id').val().trim();
             const packageName = $('#package_name').val().trim();
-            const location = $('#autocomplete-input').val().trim();
+            var location = $('#autocomplete-input').val().trim();
             console.log(package_id, packageName, location)
+            if (has_package === 'True'){
+                location = "None";
+            }
             if (package_id.trim() === '' || packageName.trim() === '' || location.trim() === '') {
                 alert('All fields must be filled out');
                 $('#registerGreeneryBttn').prop('disabled', false)
-
             }
             else{
                 const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
@@ -110,13 +120,27 @@
 
         function postGreeneryData(){
             const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-            const coordinates = $('#autocomplete-wrapper').data('data-coordinates')
+            const has_package = $(this).data("packageacc");
+            try {
+                 var coordinates = $('#autocomplete-wrapper').data('data-coordinates')
+                 var long = coordinates.longitude;
+                 var lat = coordinates.latitude;
+            }
+            catch(err) {
+                long = "None";
+                lat = "None";
+            }
+
+            if (has_package === 'True'){
+                long = "None";
+                lat = "None";
+            }
             var data = {
                 'package_id': $('#package_id').val(),
                 'package_name': $('#package_name').val(),
                 'location': $('#autocomplete-input').val(),
-                'long': coordinates.longitude,
-                'lat': coordinates.latitude,
+                'long':long,
+                'lat': lat,
             }
 
             $.ajax({
@@ -220,13 +244,20 @@
        }
 
    $(document).ready(function() {
-
        // Event handler for the "ADD GREENERY" button
         $('#addGreeneryButton').on('click', function(event) {
-            // Prevent the default button click behavior
             event.preventDefault();
-            showLocationModal();
+            const has_package = $(this).data("packageacc");
+            console.log(has_package);
+            if (has_package === 'True'){
+                hasPackageRegistrationModal();
+            }
+            else{
+                showLocationModal();
+            }
+
         });
+
         // Add location modal
         $('#cancelLocationBttn').on('click', function(event) {
             event.preventDefault();
@@ -256,7 +287,6 @@
         $('#cancelGreeneryBttn').on('click', function(event) {
             event.preventDefault();
             my_modal_6.close();
-            window.location.reload();
        });
 
 

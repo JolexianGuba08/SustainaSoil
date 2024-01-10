@@ -45,8 +45,9 @@
         <!-- Greenery Section -->
         <section class="greenery-section flex w-[90%] h-full mb-[2%]">
             <!-- Greenery Container -->
+            <div class="hidden" id="acc_count" data-count="{{ hasSlot }}"></div>
             <div class="greneery w-full h-full flex max-sm:justify-center">
-                {% if not account_plants %}
+
                     <!-- Add Plant UI -->
                     <button
                             data-packagekey="{{ package_key }}"
@@ -87,7 +88,7 @@
                             </svg>
                         </div>
                     </button>
-                {% endif %}
+
                 <!-- End Add Plant -->
                 <!-- Added Plant -->
                 {% if account_plants and plant_img %}
@@ -146,6 +147,11 @@
     <script>
         $('#selectPlant').on('click', function (event) {
             event.preventDefault();
+            var hasSlot = $('#acc_count').data('count');
+            if(hasSlot !== "True"){
+                alert("You have reached the maximum number of plants for this package.");
+                return;
+            }
             var package_key = $(this).data('packagekey');
             console.log("clicked", package_key);
             window.location.href = "/presets/" + package_key

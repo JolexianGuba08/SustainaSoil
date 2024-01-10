@@ -10,7 +10,6 @@
     >
 {% endblock %}
 
-
 {% block content %}
     <!-- Include Preloader-->
     {% include 'preloader.html' %}
@@ -93,7 +92,7 @@
                     <div
                             class="w-full h-[100%] rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
                     >
-                        <div class="water_level absolute h-[100vh] z-50"></div>
+                        <div class="water_level absolute h-[100vh] z-50" id="waterLevel"></div>
                     </div>
                 </div>
                 <!-- End Water Level Container -->
@@ -109,7 +108,7 @@
                     <div
                             class="w-full h-full rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
                     >
-                        <div class="pesticide_level absolute h-[100vh] z-50"></div>
+                        <div class="pesticide_level absolute h-[100vh] z-50" id="pesticideLevel"></div>
                     </div>
                 </div>
                 <!-- End Pesticide Level Container -->
@@ -331,15 +330,23 @@
             socket.send(JSON.stringify({ package_key: package_key }));
         });
 
-        // Message received event handler
-        socket.addEventListener('message', (event) => {
-            const data = JSON.parse(event.data);
-            var water_level = data.message.water_level_sensor;
-            var pesticide_level = data.message.water_level_sensor_pesticide;
-            console.log(water_level, pesticide_level);
-            updateWidth('.water_level', water_level + '%');
-            updateWidth('.pesticide_level', pesticide_level + '%');
 
+        socket.addEventListener('message', (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                var water_level = data.message.water_level_sensor;
+                var pesticide_level = data.message.water_level_sensor_pesticide;
+                console.log(water_level, pesticide_level);
+
+                const waterLevelElement = document.getElementById('waterLevel');
+                const pestLevelElement = document.getElementById('pesticideLevel');
+                waterLevelElement.style.width = `${water_level}% `;
+                pestLevelElement.style.width = `${pesticide_level}% `;
+
+
+            } catch (error) {
+                console.error("Error handling WebSocket message:", error);
+            }
         });
 
         // Connection closed event handler

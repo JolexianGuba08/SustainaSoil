@@ -25,8 +25,10 @@ urlpatterns = [
     path('add_package/', views.add_package, name='add_package'),
     path('get_location/', views.get_location, name='get_location'),
     path('update_acc_preference/', views.save_acc_preferences, name='update_acc_preferences'),
+    path('set_default_values/', views.set_default_values, name='set_default_values'),
+    path('water_scheduling/<str:package_key>/', views.water_scheduling, name='water_scheduling'),
+    path('schedule_on_off/<str:package_key>/', views.schedule_on_off, name='schedule_on_off'),
+    path('schedule_reset/<str:package_key>/', views.schedule_reset, name='schedule_reset'),
     # Includes for Plant Profile Urls
-    path('plant_profile_section/', views.plant_profile_section, name='plant_profile_section'),
-    path('parameter_form/', views.parameter_form, name='parameter_form'),
-    path('schedule_form/', views.schedule_form, name='schedule_form'),
+
 ]

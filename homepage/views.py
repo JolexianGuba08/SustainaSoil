@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 import requests
 from django.urls import reverse
 
+from homepage.firestore_db_modules.realtime_database_connection import update_water_scheduling, update_parameter, \
+    turning_on_off
 # Other imports...
 from homepage.forms import EditProfileForm
 from homepage.models import Packages, Account_Package, Account, Account_Plants, Plants, Account_Plant_Preferences
@@ -17,10 +19,10 @@ import homepage.firestore_db_modules.account_greenery as account_greenery
 def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
-    acc_package = Account_Package.objects.get(user_id=request.session.get('session_user_id'))
-    package_key = acc_package.package_key
-    if package_key:
-        return render(request, 'dashboard_page/user-dashboard.html', {'package_key': package_key})
+    acc_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id')).first().package_key
+
+    if acc_package:
+        return render(request, 'dashboard_page/user-dashboard.html', {'package_key': acc_package})
     else:
         return render(request, 'dashboard_page/user-dashboard.html')
 
@@ -96,12 +98,20 @@ def change_password(request):
 # Greenery Views
 # Adding location or package
 def greenery(request):
+    hasPackage = False
     try:
-        account_package = Account_Package.objects.get(user_id=request.session.get('session_user_id'))
+
+        account_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id'))
+
+
+
         if account_package:
-            return render(request, 'greenery_page/user-greenery.html', {'account_package': account_package})
+            hasPackage = True
+            return render(request, 'greenery_page/user-greenery.html', {'account_package': account_package,
+                                                                        'package_key': account_package,
+                                                                        'hasPackage': hasPackage})
     except Account_Package.DoesNotExist:
-        return render(request, 'greenery_page/user-greenery.html')
+        return render(request, 'greenery_page/user-greenery.html', {'hasPackage': hasPackage})
 
 def check_package_id(request):
     if request.method == 'POST':
@@ -128,13 +138,16 @@ def add_package(request):
         long = request.POST.get('long')
         lat = request.POST.get('lat')
         user_email = request.session.get('session_email')
+        existing_acc = account_greenery.read_account_greenery_location(user_email)
         try:
             package_key = Packages.objects.get(package_key=package_id)
             email = Account.objects.get(acc_email=user_email)
+
             if package_key:
                 package_id_exist = Account_Package.objects.filter(package_key=package_id).first()
                 if not package_id_exist:
-                    account_greenery.add_account_greenery_location(user_email, lat, long, package_location)
+                    if not package_location == "None" and lat == "None" and long == "None" and not existing_acc:
+                        account_greenery.add_account_greenery_location(user_email, lat, long, package_location)
                     Account_Package.objects.create(acc_package_name=package_name, package_key=package_key,
                                                    user_id=email)
                     add_plant_url = reverse("add_plant", kwargs={'package_key': package_key})
@@ -162,22 +175,37 @@ def add_plant(request, package_key):
         package_name = None
 
     try:
+
         account_plant = Account_Plants.objects.filter(
             package_key=package_key,
             user_id=request.session.get('session_user_id')
         )
 
-        account_plants = Account_Plants.objects.get(user_id=request.session.get('session_user_id'))
+        slot = Account_Plants.objects.get(
+            package_key=package_key,
+            user_id=request.session.get('session_user_id')
+        ).package_key.package_slot
+
+        acc_count = account_plant.count()
+        print(slot, "slot")
+        print(acc_count, "acc_count")
+        account_plants = Account_Plants.objects.filter(user_id=request.session.get('session_user_id'))
         if account_plants:
-            plant_img = cloud_storage.get_file_url_from_firebase(account_plants.plant_id.plant_image)
-            print(plant_img)
+            for account_plants in account_plants:
+                plant_img = cloud_storage.get_file_url_from_firebase(account_plants.plant_id.plant_image)
+            if slot >= acc_count:
+                hasSlot = False
+            else:
+                hasSlot = True
 
     except Account_Plants.DoesNotExist:
         # Handle the case where the object is not found
+        hasSlot = True
         account_plant = None
 
     return render(request, 'greenery_page/add-plant.html', {
-        'account_plants': account_plant,  # Use account_plant instead of account_plants
+        'hasSlot': hasSlot,
+        'account_plants': account_plant,
         'package_key': package_key,
         'plant_img': plant_img,
         'package_name': package_name
@@ -221,11 +249,34 @@ def presets(request, package_key):
 
     return render(request, 'greenery_page/user-presets.html', {'package_key': package_key})
 
+def get_sensor_data(collection_name, package_keys):
+    try:
+        firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com"
+
+        results = {}
+
+        for package_key in package_keys:
+            # Construct the URL for the Realtime Database
+            package_key = package_key.strip()
+            url = f"{firebase_url}/{collection_name}/{package_key}/.json"
+
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                results = data
+            else:
+                results = None
+
+        return results
+
+    except Exception as e:
+        print(f"Error getting data from RTDB: {e}")
+        return False
 
 def plant_profile(request, package_key, plant_id):
     user_id = request.session.get('session_user_id')
-    print(user_id, plant_id, package_key)
-
     # Check if Account_Plants object exists
     exist = Account_Plants.objects.filter(
         plant_id=plant_id,
@@ -246,6 +297,47 @@ def plant_profile(request, package_key, plant_id):
     except Account_Plants.DoesNotExist:
         # Handle the case where the object is not found
         acc_plant = None
+
+    try:
+        water_schedule_data = get_sensor_data('schedule_water', [package_key])
+        pesc_schedule_data = get_sensor_data('schedule_pesticide', [package_key])
+
+
+
+        water_data = {
+            'am_pm_value': water_schedule_data.get('am_pm', ""),
+            'hours_value': (int(water_schedule_data.get('hours')) + 12) % 24 if water_schedule_data.get(
+                'am_pm') == 'pm' else str(water_schedule_data.get('hours')),
+            'minutes_value': int(water_schedule_data.get('minutes')) if water_schedule_data.get('minutes') else "",
+            'mon': 'true' if water_schedule_data.get('mon') else 'false',
+            'tue': 'true' if water_schedule_data.get('tue') else 'false',
+            'wed': 'true' if water_schedule_data.get('wed') else 'false',
+            'thu': 'true' if water_schedule_data.get('thu') else 'false',
+            'fri': 'true' if water_schedule_data.get('fri') else 'false',
+            'sat': 'true' if water_schedule_data.get('sat') else 'false',
+            'sun': 'true' if water_schedule_data.get('sun') else 'false',
+            'isSchedule': 'true' if water_schedule_data.get('isSchedule') else 'false',
+        }
+
+        pesc_data = {
+            'am_pm_value': pesc_schedule_data.get('am_pm', ""),
+            'hours_value': (int(pesc_schedule_data.get('hours')) + 12) % 24 if pesc_schedule_data.get(
+                'am_pm') == 'pm' else str(pesc_schedule_data.get('hours')),
+            'minutes_value': int(pesc_schedule_data.get('minutes')) if pesc_schedule_data.get('minutes') else "",
+            'mon': 'true' if pesc_schedule_data.get('mon') else 'false',
+            'tue': 'true' if pesc_schedule_data.get('tue') else 'false',
+            'wed': 'true' if pesc_schedule_data.get('wed') else 'false',
+            'thu': 'true' if pesc_schedule_data.get('thu') else 'false',
+            'fri': 'true' if pesc_schedule_data.get('fri') else 'false',
+            'sat': 'true' if pesc_schedule_data.get('sat') else 'false',
+            'sun': 'true' if pesc_schedule_data.get('sun') else 'false',
+            'isSchedule': 'true' if pesc_schedule_data.get('isSchedule') else 'false',
+        }
+
+    except Exception as e:
+        print(e)
+        water_data = None
+        pesc_data = None
     return render(
         request,
         'greenery_page/plant-profile.html',
@@ -254,10 +346,11 @@ def plant_profile(request, package_key, plant_id):
             'package_key': package_key,
             'take_cared': take_cared,
             'acc_plant': acc_plant,
-            'plant_image_url': plant_image_url
+            'plant_image_url': plant_image_url,
+            'water_data': water_data,
+            'pesc_data': pesc_data
         }
     )
-
 
 def take_care_plant(request):
     if request.method == 'POST':
@@ -283,7 +376,6 @@ def take_care_plant(request):
             print(e)
             return JsonResponse({'error': f'{e}'})
 
-
 def save_acc_preferences(request):
     if request.method == 'POST':
         user_id = request.session.get('session_user_id')
@@ -303,21 +395,170 @@ def save_acc_preferences(request):
             acc_package.acc_plant_pref_id.acc_plant_min_moist_lvl = min_moist
             acc_package.acc_plant_pref_id.acc_plant_max_moist_lvl = max_moist
             acc_package.acc_plant_pref_id.save()
+            update_parameter('parameters', package_key, max_moist, max_temp, min_moist, min_temp)
+
             return JsonResponse({'message': 'User preferences updated successfully'})
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'{e}'})
 
+def set_default_values(request):
+    print("setting to default values")
+    if request.method == 'POST':
+        user_id = request.session.get('session_user_id')
+        package_key = request.POST.get('package_key')
+        plant_id = request.POST.get('plant_id')
+        try:
+            plant = Plants.objects.get(pk=plant_id)
+            user_id = Account.objects.get(pk=user_id)
+            acc_package = Account_Plants.objects.get(package_key=package_key, user_id=user_id, plant_id=plant)
+            acc_package.acc_plant_pref_id.acc_plant_min_temp = plant.plant_pref_id.plant_min_temp
+            acc_package.acc_plant_pref_id.acc_plant_max_temp = plant.plant_pref_id.plant_max_temp
+            acc_package.acc_plant_pref_id.acc_plant_min_moist_lvl = plant.plant_pref_id.plant_min_moist_lvl
+            acc_package.acc_plant_pref_id.acc_plant_max_moist_lvl = plant.plant_pref_id.plant_max_moist_lvl
+            acc_package.acc_plant_pref_id.save()
+            update_parameter('parameters', package_key, plant.plant_pref_id.plant_max_moist_lvl, plant.plant_pref_id.plant_max_temp, plant.plant_pref_id.plant_min_moist_lvl, plant.plant_pref_id.plant_min_temp)
 
-def plant_profile_section(request):
-    return render(request, 'greenery_page/plant-profile.html')
+            return JsonResponse({'message': 'Set to default values successfully'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'error': f'{e}'})
+
+def water_scheduling(request, package_key):
+    try:
+        am_pm_value = request.POST.get('am_pm_value')
+        selected_days = request.POST.get('selected_days')
+        hour_input = request.POST.get('hour_input')
+        minutes_input = request.POST.get('minutes_input')
+        schedule_type = request.POST.get('schedule_type')
+        isDaily = False
+        if am_pm_value == "pm":
+            hour_input = (int(hour_input) + 12) % 24
+            hour_input = str(hour_input)
+
+        week_days_dict = {
+            "sun": False,
+            "mon": False,
+            "tue": False,
+            "wed": False,
+            "thu": False,
+            "fri": False,
+            "sat": False,
+        }
+        if all(value is False for value in week_days_dict.values()):
+            isDaily = True
+
+        # Set the days to True based on the provided list
+        for day in week_days_dict:
+            week_days_dict[day] = day.lower() in selected_days
+
+        if schedule_type == "watering":
+            schedule_type = "schedule_water"
+            message = "Watering schedule saved successfully"
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input, week_days_dict, schedule_type,isDaily)
+            if return_response["status"] == "success":
+                return JsonResponse({'message':message})
+            elif return_response["status"] == "error":
+                message = "Failed to save watering schedule"
+                return JsonResponse({'status':'error','message': message})
+
+        else:
+
+            schedule_type = "schedule_pesticide"
+            message = "Pestecide schedule saved successfully"
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input, week_days_dict, schedule_type,isDaily)
+            if return_response["status"] == "success":
+                return JsonResponse({'message': message})
+            elif return_response["status"] == "error":
+                message = "Failed to save pestecide schedule"
+                return JsonResponse({'status':'error', 'message': message})
+        return JsonResponse({'message': message})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
+
+def schedule_on_off(request,package_key):
+    try:
+        is_on = request.POST.get('isSchedule')
+        schedule_type = request.POST.get('schedule_type')
+        print(schedule_type)
+        if is_on == "true":
+            is_on = True
+        else:
+            is_on = False
+
+        if schedule_type == "watering":
+            schedule_type = "schedule_water"
+            return_response = turning_on_off(schedule_type,package_key,is_on)
+            if return_response["status"] == "success":
+                message = "Watering "+ return_response["message"]
+                return JsonResponse({'message':message})
+            elif return_response["status"] == "error":
+                message = "Failed to save watering schedule"
+                return JsonResponse({'status':'error','message': message})
+
+        else:
+            schedule_type = "schedule_pesticide"
+            return_response = turning_on_off(schedule_type,package_key, is_on)
+            if return_response["status"] == "success":
+                message = "Pestecide "+ return_response["message"]
+                return JsonResponse({'message': message})
+            elif return_response["status"] == "error":
+                message = "Failed to save pestecide schedule"
+                return JsonResponse({'status':'error', 'message': message})
+
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
 
 
-# Includes Plant Profile Views
-def parameter_form(request):
+def schedule_reset(request,package_key):
+    try:
+        am_pm_value = ""
+        hour_input = ""
+        minutes_input = ""
+        schedule_type = request.POST.get('schedule_type')
+        isDaily = False
 
-    return render(request, 'greenery_page/include_plant_profile/parameter_form.html')
+        week_days_dict = {
+            "sun": False,
+            "mon": False,
+            "tue": False,
+            "wed": False,
+            "thu": False,
+            "fri": False,
+            "sat": False,
+        }
+        is_on = False
+
+        if schedule_type == "watering":
+            schedule_type = "schedule_water"
+            message = "Reset schedule saved successfully"
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input,
+                                                      week_days_dict, schedule_type, isDaily)
+            turnoff = turning_on_off(schedule_type, package_key, is_on)
+            if return_response["status"] == "success":
+                return JsonResponse({'message': message})
+            elif return_response["status"] == "error":
+                message = "Failed to save watering schedule"
+                return JsonResponse({'status': 'error', 'message': message})
+
+        else:
+            schedule_type = "schedule_pesticide"
+            message = "Reset schedule saved successfully"
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input,
+                                                      week_days_dict, schedule_type, isDaily)
+            turnoff = turning_on_off(schedule_type, package_key, is_on)
+
+            if return_response["status"] == "success":
+                return JsonResponse({'message': message})
+            elif return_response["status"] == "error":
+                message = "Failed to save pestecide schedule"
+                return JsonResponse({'status': 'error', 'message': message})
+        return JsonResponse({'message': message})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
 
 
-def schedule_form(request):
-    return render(request, 'greenery_page/include_plant_profile/schedule_form.html')
+

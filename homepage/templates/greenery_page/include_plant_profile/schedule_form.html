@@ -13,16 +13,20 @@
         <div class="flex flex-grow justify-start ml-3 gap-3">
             <!-- Schedule Button -->
           <button
+            data-packageKey="{{ packageKey }}"
+            data-plantId="{{ plantId }}"
+            id="set_water_schedule"
             class="border p-1 px-3 text-sm tracking-widest text-accent1 rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-accent1 hover:text-background font-bold"
           >
-            SCHEDULE
+            SET
           </button>
             <!-- Reset Button -->
           <button
-            class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
+            id="water_reset" class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
           >
             RESET
           </button>
+            <button id="turn_on_water_sched">Turn on Schedule</button>
         </div>
       </div>
       <!-- Heading -->
@@ -30,6 +34,7 @@
       <!-- Set Schedule -->
       <div
         class="set_schedule flex justify-center flex-col flex-1 flex-grow gap-4 items-center">
+
         <div
           class="cont flex flex-col mt-8 p-4 w-[100%] h-[190px] max-md:h-full justify-center rounded-xl">
           <div
@@ -40,8 +45,7 @@
                 type="text"
                 inputmode="numeric"
                 placeholder="00"
-                name=""
-                id=""
+                id="hrs_input_water"
                 maxlength="2"
                 class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
               />
@@ -51,40 +55,31 @@
                 type="text"
                 inputmode="numeric"
                 placeholder="00"
-                name=""
-                id=""
+                id="mins_input_water"
                 maxlength="2"
                 class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
               />
             </div>
             <div
-              class="flex gap-5 max-sm:justify-center max-sm:mt-2"
-            >
+              class="flex gap-5 max-sm:justify-center max-sm:mt-2">
               <label
-                for="am"
-                class="flex items-center text-accent1 font-light text-lg gap-2"
-              >
+                for="am_input"
+                class="flex items-center text-accent1 font-light text-lg gap-2">
                 <input
-                  title="am/pm"
                   type="radio"
-                  name="radio-1"
-                  id="am"
+                  name="am/pm_water"
                   class="radio checked:bg-accent1"
-                />AM</label
-              >
-
+                  value="am"
+                />AM</label>
               <label
-                for="pm"
-                class="flex items-center text-accent1 font-light text-lg gap-2"
-              >
+                for="pm_input"
+                class="flex items-center text-accent1 font-light text-lg gap-2">
                 <input
-                  title="am/pm"
                   type="radio"
-                  name="radio-1"
-                  id="am"
+                  name="am/pm_water"
                   class="radio checked:bg-accent1"
-                />PM</label
-              >
+                  value="pm"
+                />PM</label>
             </div>
           </div>
 
@@ -99,56 +94,70 @@
           >
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="sun"
               />
               <span class="label-text text-accent1 ml-2">Su</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="mon"
               />
               <span class="label-text text-accent1 ml-2">M</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="tue"
               />
               <span class="label-text text-accent1 ml-2">Tu</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="wed"
               />
               <span class="label-text text-accent1 ml-2">We</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="thu"
               />
               <span class="label-text text-accent1 ml-2">Th</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="fri"
               />
               <span class="label-text text-accent1 ml-2">Fri</span>
             </label>
 
             <label class="label cursor-pointer">
               <input
+                name="days_checked"
                 type="checkbox"
                 class="checkbox border-accent1 rounded-md"
+                value="sat"
               />
               <span class="label-text text-accent1 ml-2">Sa</span>
             </label>
@@ -173,16 +182,19 @@
             <div class="flex flex-grow justify-start ml-3 gap-3">
                 <!--Schedule Button -->
               <button
+                id="set_pesticide_schedule"
                 class="border p-1 px-3 text-sm tracking-widest text-accent1 rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 bg-accent1 text-background font-bold"
               >
-                SCHEDULE
+                SET
               </button>
                 <!-- Reset Button -->
               <button
-                class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
+                id="pesc_reset" class="border p-1 px-3 text-sm tracking-widest text-background rounded-full border-solid border-1 border-red transition ease-in-out duration-500 bg-red font-bold"
               >
                 RESET
               </button>
+            <button id="turn_on_pesc_sched">Turn on Schedule</button>
+
             </div>
           </div>
           <!-- Heading -->
@@ -199,55 +211,45 @@
               >
                 <div class="flex gap-5 items-center">
                   <input
-                    title="Hours"
+                    id="hrs_input_pesticide"
                     type="text"
                     inputmode="numeric"
                     placeholder="00"
-                    name=""
-                    id=""
                     maxlength="2"
                     class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
                   />
                   <p class="text-accent1 text-xl font-extrabold">:</p>
                   <input
+                    id="mins_input_pesticide"
                     title="Minutes"
                     type="text"
                     inputmode="numeric"
                     placeholder="00"
-                    name=""
-                    id=""
                     maxlength="2"
                     class="p-2 w-[70px] text-accent2 text-center tracking-wider text-lg bg-transparent border border-accent1 rounded-lg"
                   />
                 </div>
                 <div
-                  class="flex gap-5 max-sm:justify-center max-sm:mt-2"
-                >
+                  class="flex gap-5 max-sm:justify-center max-sm:mt-2">
                   <label
                     for="am"
-                    class="flex items-center text-accent1 font-light text-lg gap-2"
-                  >
+                    class="flex items-center text-accent1 font-light text-lg gap-2">
                     <input
-                      title="am/pm"
                       type="radio"
-                      name="radio-1"
-                      id="am"
+                      name="am_pm_pesc"
+                      value="am"
                       class="radio checked:bg-accent1"
-                    />AM</label
-                  >
+                    />AM</label>
 
                   <label
                     for="pm"
-                    class="flex items-center text-accent1 font-light text-lg gap-2"
-                  >
+                    class="flex items-center text-accent1 font-light text-lg gap-2">
                     <input
-                      title="am/pm"
                       type="radio"
-                      name="radio-1"
-                      id="am"
+                      name="am_pm_pesc"
+                      value="pm"
                       class="radio checked:bg-accent1"
-                    />PM</label
-                  >
+                    />PM</label>
                 </div>
               </div>
 
@@ -262,56 +264,70 @@
               >
                 <label class="label cursor-pointer">
                   <input
+                    name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                    value="sun"
                   />
                   <span class="label-text text-accent1 ml-2">Su</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                          value="mon"
                   />
                   <span class="label-text text-accent1 ml-2">M</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                          value="tue"
                   />
                   <span class="label-text text-accent1 ml-2">Tu</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                          value="wed"
                   />
                   <span class="label-text text-accent1 ml-2">We</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                            value="thu"
                   />
                   <span class="label-text text-accent1 ml-2">Th</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                          value="fri"
                   />
                   <span class="label-text text-accent1 ml-2">Fri</span>
                 </label>
 
                 <label class="label cursor-pointer">
                   <input
+                          name="days_checked_pesc"
                     type="checkbox"
                     class="checkbox border-accent1 rounded-md"
+                            value="sat"
                   />
                   <span class="label-text text-accent1 ml-2">Sa</span>
                 </label>
@@ -322,18 +338,6 @@
           <!-- End Set Schedule -->
         </div>
         <!-- End Pesticide Schedule -->
-
-        <!-- Save Changes Button -->
-        <div class="w-[90%] m-auto mt-8 flex justify-end">
-          <!-- Save Changes Button -->
-          <button
-            id ="scedule_save"
-            class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
-          >
-            SAVE CHANGES
-          </button>
-        </div>
-
     <!-- End Save Changes Button -->
 </div>
 <!-- End Water & Pesticide Schedule -->
