@@ -229,12 +229,23 @@
             >
 
                 <!-- Profile Link -->
+                {% block profile %}
                 <li class="mt-0">
                     <a
                             href="{% url 'profile' %}"
                             class="w-full tracking-normal focus:bg-secondary hover:bg-secondary"
-                    >MY PROFILE</a
-                    >
+                    >MY PROFILE</a>
+                </li>
+                {% endblock %}
+
+                <!-- Vist Forum Link -->
+                <li class="mt-0">
+                    {% block forum %}
+                    <a
+                            href="{% url 'forums' %}"
+                            class="w-full tracking-normal focus:bg-secondary hover:bg-secondary"
+                    >FORUM</a>
+                    {% endblock %}
                 </li>
 
                 <!--Log Out Link -->

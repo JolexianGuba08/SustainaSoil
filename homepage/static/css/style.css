@@ -143,11 +143,25 @@
 }
 
 
+.otpBTN {
+    transition: .3s ease-in-out !important;
+}
+
+.otpBTN:hover {
+    background: #32281b !important;
+    border: 1px solid #32281b !important;
+    color: white !important;
+    transition: .3s ease-in-out !important;
+}
+
+
 @media (max-width: 1600px) and (max-height: 800px) {
     .sign-up {
         margin-top: 0 !important;
     }
 }
+
+
 
 
 /* ----------------------------------- */
@@ -439,12 +453,19 @@
 
 .overview {
     /* display: none; */
-    
+    background: url(../images/background-image-2.png) no-repeat bottom right !important;
 }
 
-@media (max-width: 1527px) {
+@media (max-width: 1600px) {
     .overview {
-        background: none !important;
+        /*background: none !important;*/
+        background-size: 60% !important;
+    }
+}
+
+@media (max-width: 737px) {
+    .overview {
+        background: no-repeat !important;
     }
 }
 
@@ -457,7 +478,6 @@
 }
 
 .cover {
-
     background-size: cover !important;
     background-color: var(--secondary) !important;
 }
@@ -466,6 +486,15 @@
 
     background-size: cover !important;
     background-color: var(--secondary) !important;
+}
+
+.drpBTN {
+    background-color: var(--secondary) !important;
+    color: var(--accent1);
+}
+
+.drpBTN:active {
+    color: var(--accent1) !important;
 }
 
 /* ----------------------------------- */
@@ -477,7 +506,6 @@
 
     background-size: cover !important;
 }
-
 
 .range {
     appearance: none !important;
@@ -566,3 +594,118 @@
 .pref_active {
     background-color: var(--secondary) !important;
 }
+
+#autocomplete-input:disabled {
+    background-color: transparent !important;
+    color: var(--accent1) !important;
+    border: 1px solid var(--secondary);
+}
+
+/* Forums Page */
+
+/* CREATE SECTION */
+.forums-container {
+    margin-bottom: 2% !important;
+    height: 100% !important;
+}
+
+.forums-container .create {
+    /*border: 1px solid red !important;*/
+
+    width: 60% !important;
+    height: 100% !important;
+}
+
+.forums-container .create .cont {
+    padding: 20px !important;
+    padding-left: 0 !important;
+    display: flex;
+    /*align-items: center !important;*/
+}
+
+.forums-container .cont .profile {
+    width: 70px !important;
+    height: 70px !important;
+    background: url(../images/default-profile.png) no-repeat center center !important;
+    background-size: cover !important;
+}
+
+.forums-container .cont textarea {
+    color: var(--accent1);
+    width: 85% !important;
+    padding: 10px !important;
+    background-color: transparent !important;
+    border: none !important;
+    resize: none !important;
+    height: 10px;
+    overflow: auto;
+    border-radius: 0 !important;
+    /*transition: height 0.3s ease-in-out;*/
+}
+
+.forums-container .cont textarea:focus {
+    outline: none !important;
+}
+
+.forums-container .cont textarea::-webkit-scrollbar {
+    display: none !important;
+}
+
+.forums-container .create .cont button {
+    transition: .3s ease-in-out;
+}
+
+.forums-container .create .cont button:hover {
+    background-color: var(--accent2);
+    transition: .3s ease-in-out;
+}
+
+.forums-container .create .cont .btn-cont {
+    border-top: 1px solid var(--accent1) !important;
+    padding-top: 10px;
+}
+
+.forums-container .create .cont .prev_image {
+    width: 85% !important;
+    height: 500px !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center;
+    margin-bottom: 10px;
+    display: none;
+    border-radius: 20px !important;
+}
+
+.forums-container .create .cont .prev_image button {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    /*background-color: white;*/
+    border-radius: 50%;
+    color: black;
+    left: 90% !important;
+    top: 10px;
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.46) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(9.3px) !important;
+    -webkit-backdrop-filter: blur(9.3px) !important;
+}
+
+/* POST SECTION */
+.forums-container .post {
+    border: 1px solid blue !important;
+}
+
+.forums-container .post .cont {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.forums-container .post .users-profile {
+    width: 60px !important;
+    height: 60px !important;
+    background: url(../images/default-profile.png) no-repeat center center !important;
+    background-size: cover !important;
+}
+

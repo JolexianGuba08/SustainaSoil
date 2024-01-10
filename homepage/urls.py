@@ -33,4 +33,8 @@ urlpatterns = [
     path('plant_profile_section/', views.plant_profile_section, name='plant_profile_section'),
     path('parameter_form/', views.parameter_form, name='parameter_form'),
     path('schedule_form/', views.schedule_form, name='schedule_form'),
+
+    # Forums Urls
+    path('forums/', views.forums, name='forums'),
+
 ]
