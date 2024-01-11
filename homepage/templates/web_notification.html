@@ -121,12 +121,13 @@
                         </svg>
                         Irrigate Now`;
 
-                    {#var irrigateNowButton = document.getElementById('irrigate-now-button');#}
-                    {#// Add the data-id attribute with a value#}
+
 
 
                     // Create "Decline" button
                     const declineButton = document.createElement('button');
+                    irrigateButton.id = 'decline-now-button';
+                    irrigateButton.setAttribute('data-id', item_id);
                     declineButton.className = 'decline_bttn';
                     declineButton.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
