@@ -501,10 +501,23 @@
 /* ----------------------------------- */
 
 /* SECTION */
-.plant_profile .profile {
+.alert {
+    /*height: 100% !important;*/
+}
+.alert span {
+    text-align: center !important;
+}
 
+
+.alert p {
+    letter-spacing: 1px !important;
+    font-size: 20px;
+}
+
+.plant_profile .profile {
     background-size: cover !important;
 }
+
 
 .range {
     appearance: none !important;
@@ -600,6 +613,29 @@
     border: 1px solid var(--secondary);
 }
 
+#parameter_button {
+    transition: .3s ease-in-out;
+}
+#parameter_button:hover {
+    transition: .3s ease-in-out;
+    background-color: var(--secondary) !important;
+}
+
+@media (max-width: 735px) {
+    #para_buttons {
+        flex-direction: column;
+    }
+
+    #para_buttons button{
+        width: 100%;
+    }
+
+    #set_default_parameter {
+        margin-bottom: 10px;
+    }
+}
+
+
 /* Forums Page */
 
 /* CREATE SECTION */
@@ -670,14 +706,14 @@
 
 .forums-container .create .cont .prev_image {
     width: 85% !important;
-    height: 500px !important;
+    height: 400px !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center center;
     margin-bottom: 10px;
     display: none;
     border-radius: 20px !important;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 .forums-container .create .cont .prev_image button {

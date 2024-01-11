@@ -34,9 +34,17 @@
                 location = "None";
             }
             if (package_id.trim() === '' || packageName.trim() === '' || location.trim() === '') {
-                alert('All fields must be filled out');
+                // alert('All fields must be filled out');
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please fill out all the fields.</span>' +
+                    '</div>').appendTo('body');
                 $('#registerGreeneryBttn').prop('disabled', false)
-            }
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
+                }
             else{
                 const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
                $.ajax({
@@ -51,16 +59,32 @@
                 dataType: 'json',
                 success: function(response) {
                    const message = response.message;
-                   console.log(message)
                    if (response.status === 'True'){
                         postGreeneryData();
                    }
                    else if (response.status === 'False') {
-                        alert(message);
+                        // alert(message);
+                       $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                            '<span> <p class="font-extrabold">WARNING</p>This package is already registered.</span>' +
+                            '</div>').appendTo('body');
+
+                        setTimeout(function () {
+                            $('.alert').remove();
+                        }, 3000);
                         $('#registerGreeneryBttn').prop('disabled', false)
                    }
                    else{
-                        alert(message);
+                        // alert(message);
+
+                       $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                            '<span> <p class="font-extrabold">WARNING</p>The package does not exist. Please enter a valid product ID.</span>' +
+                            '</div>').appendTo('body');
+
+                        setTimeout(function () {
+                            $('.alert').remove();
+                        }, 3000);
                         $('#registerGreeneryBttn').prop('disabled', false)
                    }
 
@@ -152,7 +176,17 @@
                 data: data,
                 dataType: 'json',
                 success: function(response) {
-                    alert('Greenery registered successfully');
+                    // alert('Greenery registered successfully');
+
+                    $('<div role="alert" class="alert alert-success rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                        '<span> <p class="font-extrabold">SUCCESS</p>Greenery registered successfully.</span>' +
+                        '</div>').appendTo('body');
+
+                    setTimeout(function () {
+                        $('.alert').remove();
+                    }, 3000);
+
                     if(response.status === 'True'){
                         window.location.href =  response.redirect_to;
                     }

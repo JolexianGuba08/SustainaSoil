@@ -184,13 +184,13 @@
 
         <!-- Save Changes Button -->
         {% if take_cared %}
-            <div class="w-[90%] m-auto mt-3 flex justify-between">
-             <button id="set_default_parameter" data-package_key="{{ package_key }}" data-plant_id="{{ plants.plant_id }}">Set Default</button>
+            <div class="w-[90%] m-auto mt-3 flex justify-between" id="para_buttons">
+             <button id="set_default_parameter" class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full font-bold" style="background: var(--accent2)" data-package_key="{{ package_key }}" data-plant_id="{{ plants.plant_id }}">SET DEFAULT</button>
               <button
                 data-package_key = "{{package_key}}"
                 data-plant_id = "{{plants.plant_id}}"
                 id="parameter_save"
-                class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold"
+                class="border p-2 w-[200px] max-[450px]:w-full max-sm:w-full text-sm tracking-widest text-background rounded-full border-solid border-1 border-accent1 transition ease-in-out duration-500 bg-accent1 font-bold"
               >
                 SAVE CHANGES
               </button>

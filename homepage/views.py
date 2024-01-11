@@ -26,7 +26,7 @@ import homepage.firestore_db_modules.account_greenery as account_greenery
 def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
-    acc_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id')).first().package_key
+    acc_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id')).first()
 
     if acc_package:
         return render(request, 'dashboard_page/user-dashboard.html', {'package_key': acc_package})
@@ -112,7 +112,10 @@ def greenery(request):
             hasPackage = True
             return render(request, 'greenery_page/user-greenery.html', {'account_package': account_package,
                                                                         'package_key': account_package,
-                                                                        'hasPackage': hasPackage})
+                                                                   'hasPackage': hasPackage})
+
+        else:
+            return render(request,'greenery_page/user-greenery.html')
     except Account_Package.DoesNotExist:
         return render(request, 'greenery_page/user-greenery.html', {'hasPackage': hasPackage})
 
