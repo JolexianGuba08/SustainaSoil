@@ -237,9 +237,9 @@
     </main>
     <!-- End Main -->
 
-    <script>
+    <script defer>
         // Like Button
-        /* let like_button = document.getElementById('like_button');
+        let like_button = document.getElementById('like_button');
         let like_path = document.querySelector('.like_path')
 
         let isLiked = false;
@@ -256,7 +256,7 @@
             }
 
             isLiked = !isLiked;
-        }); */
+        });
 
         // Auto Resize Textarea
         let create_post = document.querySelector('textarea');
@@ -271,7 +271,7 @@
         let comment_post = document.querySelector('#comment');
 
         // No New Line when Pressing Enter
-        /* document.getElementById('comment').addEventListener('keydown', function (e) {
+        document.getElementById('comment').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 // You can add your own logic here if needed
@@ -283,7 +283,7 @@
             comment_post.style.height = "10px";
             let scroll_height = e.target.scrollHeight;
             comment_post.style.height = `${scroll_height}px`;
-        }); */
+        });
 
         // Preview Image
         const image = document.querySelector(".prev_image");
