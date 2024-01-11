@@ -70,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'homepage.weather_api.get_weather_data_context',
+                'homepage.weather_api.get_weather_data_context',
                 'homepage.user_context.context_processor.user_context',
                 'homepage.user_context.context_processor.get_greenery_count',
             ],

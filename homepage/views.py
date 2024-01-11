@@ -34,8 +34,6 @@ def homepage(request):
         return render(request, 'dashboard_page/user-dashboard.html')
 
 
-
-
 def process_location(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
@@ -109,8 +107,6 @@ def greenery(request):
     try:
 
         account_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id'))
-
-
 
         if account_package:
             hasPackage = True
@@ -259,6 +255,7 @@ def presets(request, package_key):
 
     return render(request, 'greenery_page/user-presets.html', {'package_key': package_key})
 
+
 def get_sensor_data(collection_name, package_keys):
     try:
         firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com"
@@ -284,6 +281,7 @@ def get_sensor_data(collection_name, package_keys):
     except Exception as e:
         print(f"Error getting data from RTDB: {e}")
         return False
+
 
 def plant_profile(request, package_key, plant_id):
     user_id = request.session.get('session_user_id')
@@ -311,8 +309,6 @@ def plant_profile(request, package_key, plant_id):
     try:
         water_schedule_data = get_sensor_data('schedule_water', [package_key])
         pesc_schedule_data = get_sensor_data('schedule_pesticide', [package_key])
-
-
 
         water_data = {
             'am_pm_value': water_schedule_data.get('am_pm', ""),
@@ -362,6 +358,7 @@ def plant_profile(request, package_key, plant_id):
         }
     )
 
+
 def take_care_plant(request):
     if request.method == 'POST':
         user_id = request.session.get('session_user_id')
@@ -385,6 +382,7 @@ def take_care_plant(request):
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'{e}'})
+
 
 def save_acc_preferences(request):
     if request.method == 'POST':
@@ -412,6 +410,7 @@ def save_acc_preferences(request):
             print(e)
             return JsonResponse({'error': f'{e}'})
 
+
 def set_default_values(request):
     print("setting to default values")
     if request.method == 'POST':
@@ -427,12 +426,15 @@ def set_default_values(request):
             acc_package.acc_plant_pref_id.acc_plant_min_moist_lvl = plant.plant_pref_id.plant_min_moist_lvl
             acc_package.acc_plant_pref_id.acc_plant_max_moist_lvl = plant.plant_pref_id.plant_max_moist_lvl
             acc_package.acc_plant_pref_id.save()
-            update_parameter('parameters', package_key, plant.plant_pref_id.plant_max_moist_lvl, plant.plant_pref_id.plant_max_temp, plant.plant_pref_id.plant_min_moist_lvl, plant.plant_pref_id.plant_min_temp)
+            update_parameter('parameters', package_key, plant.plant_pref_id.plant_max_moist_lvl,
+                             plant.plant_pref_id.plant_max_temp, plant.plant_pref_id.plant_min_moist_lvl,
+                             plant.plant_pref_id.plant_min_temp)
 
             return JsonResponse({'message': 'Set to default values successfully'})
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'{e}'})
+
 
 def water_scheduling(request, package_key):
     try:
@@ -465,29 +467,32 @@ def water_scheduling(request, package_key):
         if schedule_type == "watering":
             schedule_type = "schedule_water"
             message = "Watering schedule saved successfully"
-            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input, week_days_dict, schedule_type,isDaily)
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input,
+                                                      week_days_dict, schedule_type, isDaily)
             if return_response["status"] == "success":
-                return JsonResponse({'message':message})
+                return JsonResponse({'message': message})
             elif return_response["status"] == "error":
                 message = "Failed to save watering schedule"
-                return JsonResponse({'status':'error','message': message})
+                return JsonResponse({'status': 'error', 'message': message})
 
         else:
 
             schedule_type = "schedule_pesticide"
             message = "Pestecide schedule saved successfully"
-            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input, week_days_dict, schedule_type,isDaily)
+            return_response = update_water_scheduling(package_key, am_pm_value, hour_input, minutes_input,
+                                                      week_days_dict, schedule_type, isDaily)
             if return_response["status"] == "success":
                 return JsonResponse({'message': message})
             elif return_response["status"] == "error":
                 message = "Failed to save pestecide schedule"
-                return JsonResponse({'status':'error', 'message': message})
+                return JsonResponse({'status': 'error', 'message': message})
         return JsonResponse({'message': message})
     except Exception as e:
         print(e)
         return JsonResponse({'error': f'{e}'})
 
-def schedule_on_off(request,package_key):
+
+def schedule_on_off(request, package_key):
     try:
         is_on = request.POST.get('isSchedule')
         schedule_type = request.POST.get('schedule_type')
@@ -499,30 +504,30 @@ def schedule_on_off(request,package_key):
 
         if schedule_type == "watering":
             schedule_type = "schedule_water"
-            return_response = turning_on_off(schedule_type,package_key,is_on)
+            return_response = turning_on_off(schedule_type, package_key, is_on)
             if return_response["status"] == "success":
-                message = "Watering "+ return_response["message"]
-                return JsonResponse({'message':message})
+                message = "Watering " + return_response["message"]
+                return JsonResponse({'message': message})
             elif return_response["status"] == "error":
                 message = "Failed to save watering schedule"
-                return JsonResponse({'status':'error','message': message})
+                return JsonResponse({'status': 'error', 'message': message})
 
         else:
             schedule_type = "schedule_pesticide"
-            return_response = turning_on_off(schedule_type,package_key, is_on)
+            return_response = turning_on_off(schedule_type, package_key, is_on)
             if return_response["status"] == "success":
-                message = "Pestecide "+ return_response["message"]
+                message = "Pestecide " + return_response["message"]
                 return JsonResponse({'message': message})
             elif return_response["status"] == "error":
                 message = "Failed to save pestecide schedule"
-                return JsonResponse({'status':'error', 'message': message})
+                return JsonResponse({'status': 'error', 'message': message})
 
     except Exception as e:
         print(e)
         return JsonResponse({'error': f'{e}'})
 
 
-def schedule_reset(request,package_key):
+def schedule_reset(request, package_key):
     try:
         am_pm_value = ""
         hour_input = ""
@@ -569,15 +574,11 @@ def schedule_reset(request,package_key):
     except Exception as e:
         print(e)
         return JsonResponse({'error': f'{e}'})
+
+
 # Includes Plant Profile Views
 def parameter_form(request):
     return render(request, 'greenery_page/include_plant_profile/parameter_form.html')
-
-
-
-
-
-
 
 
 @require_POST

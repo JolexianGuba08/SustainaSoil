@@ -5,6 +5,7 @@ import httpx
 import requests
 from channels.generic.websocket import AsyncWebsocketConsumer
 
+
 # -------------------------------------------- REALTIME DATABASE FUNCTIONS -----------------------------------------------------
 async def get_sensor_data(collection_name, field_name, package_key):
     try:
@@ -32,7 +33,6 @@ async def get_sensor_data(collection_name, field_name, package_key):
         return False  # Indicate failure
 
 
-
 class RealTimeData(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
@@ -41,16 +41,16 @@ class RealTimeData(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print("Disconnected from websocket")
 
-
-    async def receive(self,text_data):
+    async def receive(self, text_data):
         try:
             data = json.loads(text_data)
             package_key = data['package_key']
             while True:
                 real_time_data = {
-                    'soil_moist_sensor':await get_sensor_data('soil_moisture_sensor', 'moisture_level',package_key),
-                    'humidity_sensor':await get_sensor_data('temperature_humidity_sensor', 'humidity',package_key),
-                    'temperature_sensor':await get_sensor_data('temperature_humidity_sensor', 'temperature',package_key),
+                    'soil_moist_sensor': await get_sensor_data('soil_moisture_sensor', 'moisture_level', package_key),
+                    'humidity_sensor': await get_sensor_data('temperature_humidity_sensor', 'humidity', package_key),
+                    'temperature_sensor': await get_sensor_data('temperature_humidity_sensor', 'temperature',
+                                                                package_key),
                 }
 
                 await self.send(text_data=json.dumps({
@@ -81,8 +81,9 @@ class DashBoardRealTime(AsyncWebsocketConsumer):
                 package_key = data['package_key']
 
                 real_time_data = {
-                    'water_level_sensor': await get_sensor_data('water_level_sensor', 'water_level',package_key),
-                    'water_level_sensor_pesticide': await get_sensor_data('water_level_sensor_pesticide', 'water_level',package_key,),
+                    'water_level_sensor': await get_sensor_data('water_level_sensor', 'water_level', package_key),
+                    'water_level_sensor_pesticide': await get_sensor_data('water_level_sensor_pesticide', 'water_level',
+                                                                          package_key, ),
                 }
                 await self.send(text_data=json.dumps({
                     'message': real_time_data
@@ -119,11 +120,10 @@ class GetNotifications(AsyncWebsocketConsumer):
 
                     sorted_data = sorted(data.values(), key=lambda x: x['date'], reverse=True)
 
-
                     if data:
                         await self.send(text_data=json.dumps({
                             'message': sorted_data,
-                            'id': data
+                            'id': sorted_data
                         }))
                     else:
                         await self.send(text_data=json.dumps({
