@@ -37,5 +37,5 @@ urlpatterns = [
     # Forums Urls
     path('forums/', views.forums, name='forums'),
     path('view_comments/', views.view_comment_forums, name='view_comments'),
-
+    path('create-forum-post/', views.create_forum_post, name='create_forum_post')
 ]

@@ -4,7 +4,7 @@
 
 {% block title %} Forums | SustainAsoil {% endblock %}
 
-{% block forum  %}
+{% block forum %}
     <a class="drpBTN w-full tracking-normal focus:bg-secondary bg-secondary text-accent1 hover:text-accent1 hover:bg-secondary text-accent1"
     >FORUMS</a>
 {% endblock %}
@@ -35,20 +35,24 @@
 
             <!-- Create Post Section -->
             <div class="create flex flex-col">
-                <h2 class="text-accent1 text-2xl px-5 font-bold tracking-widest font-extralight rounded-full mt-2 inline-block">HELLO THERE,</h2>
+                <h2 class="text-accent1 text-2xl px-5 font-bold tracking-widest font-extralight rounded-full mt-2 inline-block">
+                    HELLO THERE,</h2>
                 <!-- DISPLAY NAME -->
-                <h2 class="text-accent1 text-3xl px-5 font-bold tracking-widest mb-3 rounded-full inline-block">GIANNI DYLAN</h2>
+                <h2 class="text-accent1 text-3xl px-5 font-bold tracking-widest mb-3 rounded-full inline-block uppercase">{{ first_name }}</h2>
                 <!-- END DISPLAY NAME -->
                 <!-- <p class="text-sm inline-block px-5 mb-4 text-accent2">You can start sharing and connecting with your fellow plantits.</p> -->
 
                 <!-- Profile Picture & Create Post -->
                 <div class="cont flex gap-2 w-full align-center justify-center">
                     <!-- DISPLAY PROFILE PICTURE -->
-                    <div class="profile"></div>
+                    <div class="profile"
+                         style="background: url({{ user_profile_pic }}) no-repeat center center !important; background-size: cover !important;"></div>
                     <!-- END DISPLAY PROFILE PICTURE -->
 
                     <div class="w-[85%] flex flex-col">
-                        <textarea class="textarea w-full tracking-wide text-md mt-4" maxlength="442" placeholder="What's on your mind..."></textarea>
+
+                        <textarea id="text-content" class="textarea w-full tracking-wide text-md mt-4" maxlength="442"
+                                  placeholder="What's on your mind..."></textarea>
 
                         <!-- Preview Added Image -->
                         <div class="prev_image relative">
@@ -62,14 +66,19 @@
                             <!-- Add Photo -->
                             <input type="file" id="file" class="hidden">
                             <label for="file" id="upload_btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-accent2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-accent2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
                                 </svg>
                             </label>
                             <!-- End Add Photo -->
 
                             <!-- Post Button -->
-                            <button class="inline-block bg-accent1 p-2 px-5 rounded-full text-background tracking-widest font-normal">POST </button>
+                            <button id="post-btn"
+                                    class="inline-block bg-accent1 p-2 px-5 rounded-full text-background tracking-widest font-normal">
+                                POST
+                            </button>
                             <!-- End Post Button -->
                         </div>
                     </div>
@@ -81,114 +90,139 @@
             <!-- Post Section -->
             <div class="post flex w-full h-full justify-end">
                 <div class="cont">
-
                     <!-- Post Card -->
-                    <div class="post-card mb-5" style="margin-bottom: 30px">
-                        <!-- Post Title -->
-                        <div class="post-title flex items-center gap-3">
-                            <!-- DISPLAY DIFFERENT USERS PROFILE -->
-                            <div class="users-profile"></div>
-                            <!-- END DISPLAY DIFFERENT USERS PROFILE -->
+                    {% for data in posts %}
+                        <div class="post-card mb-5" style="margin-bottom: 30px" data-pk="{{ data.post_id }}">
+                            <!-- Post Title -->
+                            <div class="post-title flex items-center gap-3">
+                                <!-- DISPLAY DIFFERENT USERS PROFILE -->
+                                <div class="users-profile"
+                                     style="background: url({{ data.user_data.profile_image }}) no-repeat center center !important; border-radius:50%; background-size: cover !important;"></div>
+                                <!-- END DISPLAY DIFFERENT USERS PROFILE -->
 
-                            <!-- DISPLAY USERS DETAILS -->
-                            <div class="users-details flex w-full items-center gap-2" style="width: 90%">
-                                <!-- DISPLAY USERS NAME -->
-                                <h2 class="font-normal text-accent2 text-lg uppercase tracking-wide">Jim Laroco</h2>
-                                <!-- END DISPLAY USERS NAME -->
+                                <!-- DISPLAY USERS DETAILS -->
+                                <div class="users-details flex w-full items-center gap-2" style="width: 90%">
+                                    <!-- DISPLAY USERS NAME -->
+                                    <h2 class="font-normal text-accent2 text-lg uppercase tracking-wide">{{ data.user_data.first_name }}</h2>
+                                    <!-- END DISPLAY USERS NAME -->
 
-                                <div class="user-date-cont flex justify-between flex-1 w-full">
-                                    <!-- DISPLAY USERS EMAIL -->
-                                    <h3>jimlaroco@gmail.com</h3>
-                                    <!-- END DISPLAY USERS EMAIL -->
+                                    <div class="user-date-cont flex justify-between flex-1 w-full">
+                                        <!-- DISPLAY USERS EMAIL -->
+                                        <h3>{{ data.user_data.email }}</h3>
+                                        <!-- END DISPLAY USERS EMAIL -->
 
-                                    <!-- DISPLAY POST DATE -->
-                                    <p>1/10/2024</p>
-                                    <!-- END DISPLAY POST DATE -->
+                                        <!-- DISPLAY POST DATE -->
+                                        <p>{{ data.date_added }}</p>
+                                        <!-- END DISPLAY POST DATE -->
+                                    </div>
                                 </div>
+                                <!-- END DISPLAY USERS DETAILS -->
                             </div>
-                            <!-- END DISPLAY USERS DETAILS -->
-                        </div>
-                        <!-- End Post Title -->
+                            <!-- End Post Title -->
 
-                        <!-- Post Content -->
-                        <div class="users-post mt-5">
-                            <!-- DISPLAY POST TEXT -->
-                            <div class="post-text">
-                                <p class="truncate-text" id="post-text">Lorem ipsum dolor sit amet, eu fugiat nulla pariatur officia deserunt mollit. fugiat nulla pariatur officia deserunt. fugiat nulla pariatur officia deserunt. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum.</p>
-                                <span class="see-more" onclick="SeeMore()">See More</span>
-                            </div>
-                            <!-- END DISPLAY POST TEXT -->
-
-                            <!-- DISPLAY POST IMAGE -->
-                            <div class="post-image mt-2"></div>
-                            <!-- END DISPLAY POST IMAGE -->
-
-                            <!-- Post Actions -->
-                            <div class="post-action mt-5 flex gap-2 justify-between w-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mt-3">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-
-                                <div class="p-0 w-full">
-                                    <textarea class="textarea tracking-wide text-md p-0" id="comment" maxlength="442" placeholder="Write a comment..."></textarea>
+                            <!-- Post Content -->
+                            <div class="users-post mt-5">
+                                <!-- DISPLAY POST TEXT -->
+                                <div class="post-text">
+                                    <p class="truncate-text post-text"
+                                       data-post-id="{{ data.post_id }}">{{ data.content }}</p>
+                                    <span class="see-more" data-pk="{{ data.post_id }}"
+                                          onclick="SeeMore('{{ data.post_id }}')">See More</span>
                                 </div>
-                            </div>
-                            <!-- End Post Actions -->
+                                <!-- END DISPLAY POST TEXT -->
 
-                            <!-- Comment Actions -->
-                            <div class="comment-action flex justify-between items-center cursor-pointer">
-                                <a href="{% url 'view_comments' %}" class="view-all-comments text-accent1 tracking-widest" style="font-size: 12px">VIEW ALL COMMENTS</a>
-                                <button class="rounded-full p-2 px-5 bg-accent2 text-background tracking-wide">COMMENT</button>
-                            </div>
-                            <!-- End Comment Actions -->
+                                <!-- DISPLAY POST IMAGE -->
+                                {% if data.attachment %}
+                                    <div class="post-image mt-2"
+                                         style="background: url({{ data.attachment }}) no-repeat center center !important; background-size: cover !important">
+                                    </div>
+                                {% endif %}
+                                {#                                <img src="{{ data.attachment }}">#}
+                                <!-- END DISPLAY POST IMAGE -->
+                                <!-- Post Actions -->
+                                <div class="post-action mt-5 flex gap-2 justify-between w-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mt-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                                    </svg>
 
-                            <!-- DISPLAY COMMENT -->
-                            <div class="comment-display mt-5">
-                                <!-- Comment Card -->
-                                <div class="comment-card">
-                                    <!-- DISPLAY COMMENTS -->
-                                    <div class="flex gap-2">
-                                        <!-- DISPLAY USERS PROFILE -->
-                                        <div class="users-profile"></div>
-                                        <!-- END DISPLAY USERS PROFILE -->
+                                    <div class="p-0 w-full">
+                                    <textarea class="textarea tracking-wide text-md p-0" id="comment" maxlength="442"
+                                              placeholder="Write a comment..."></textarea>
+                                    </div>
+                                </div>
+                                <!-- End Post Actions -->
 
-                                        <!-- DISPLAY NAME & COMMENT -->
-                                        <div class="flex-1">
-                                            <div>
-                                                <!-- DISPLAY NAME -->
-                                                <p class="text-accent1">Gianni Dylan Cabahug</p>
-                                                <!-- END DISPLAY NAME -->
+                                <!-- Comment Actions -->
+                                <div class="comment-action flex justify-between items-center cursor-pointer">
+                                    <a href="{% url 'view_comments' %}"
+                                       class="view-all-comments text-accent1 tracking-widest" style="font-size: 12px">VIEW
+                                        ALL COMMENTS</a>
+                                    <button class="rounded-full p-2 px-5 bg-accent2 text-background tracking-wide">
+                                        COMMENT
+                                    </button>
+                                </div>
+                                <!-- End Comment Actions -->
 
-                                                <!-- DISPLAY DATE OF COMMENT -->
-                                                <p class="text-sm" style="font-size: 12px">01/11/2024</p>
-                                                <!-- END DISPLAY DATE OF COMMENT -->
-                                            </div>
+                                <!-- DISPLAY COMMENT -->
+                                {% if data.comments %}
+                                    <div class="comment-display mt-5">
+                                        <!-- Comment Card -->
+                                        <div class="comment-card">
+                                            <!-- DISPLAY COMMENTS -->
+                                            <div class="flex gap-2">
+                                                <!-- DISPLAY USERS PROFILE -->
+                                                <div class="users-profile"></div>
+                                                <!-- END DISPLAY USERS PROFILE -->
 
-                                            <div style="">
-                                                <!-- DISPLAY COMMENT -->
-                                                <div>
-                                                    <p class="truncate-text" id="user-comment" style="text-align: justify">Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.</p>
-                                                    <span class="see-more-comments" onclick="SeeMoreComments()">See More</span>
+                                                <!-- DISPLAY NAME & COMMENT -->
+                                                <div class="flex-1">
+                                                    <div>
+                                                        <!-- DISPLAY NAME -->
+                                                        <p class="text-accent1">Gianni Dylan Cabahug</p>
+                                                        <!-- END DISPLAY NAME -->
+
+                                                        <!-- DISPLAY DATE OF COMMENT -->
+                                                        <p class="text-sm" style="font-size: 12px">01/11/2024</p>
+                                                        <!-- END DISPLAY DATE OF COMMENT -->
+                                                    </div>
+
+                                                    <div style="">
+                                                        <!-- DISPLAY COMMENT -->
+                                                        <div>
+                                                            <p class="truncate-text" id="user-comment"
+                                                               style="text-align: justify">Lorem ipsum dolor sit amet,
+                                                                consequat.Lorem ipsum dolor sit amet, consequat.Lorem
+                                                                ipsum
+                                                                dolor sit amet, consequat.Lorem ipsum dolor sit amet,
+                                                                consequat.Lorem ipsum dolor sit amet, consequat.Lorem
+                                                                ipsum
+                                                                dolor sit amet, consequat.</p>
+                                                            <span class="see-more-comments"
+                                                                  onclick="SeeMoreComments()">See More</span>
+                                                        </div>
+                                                        <!-- END DISPLAY COMMENT -->
+                                                    </div>
                                                 </div>
-                                                <!-- END DISPLAY COMMENT -->
+                                                <!-- END DISPLAY NAME & COMMENT -->
                                             </div>
+                                            <!-- End DISPLAY COMMENTS -->
                                         </div>
-                                        <!-- END DISPLAY NAME & COMMENT -->
+                                        <!-- End Comment Card -->
                                     </div>
-                                    <!-- End DISPLAY COMMENTS -->
-                                    </div>
-                                <!-- End Comment Card -->
+                                {% endif %}
+                                <!-- End DISPLAY COMMENT -->
                             </div>
-                            <!-- End DISPLAY COMMENT -->
+                            <!-- End Post Content -->
                         </div>
-                        <!-- End Post Content -->
-                    </div>
-                    <!-- End Post Card -->
-
+                        <!-- End Post Card -->
+                    {% endfor %}
                 </div>
                 <!-- End Post Title -->
             </div>
             <!-- End Post Section -->
+
 
         </section>
         <!-- End Heading Section -->
@@ -209,23 +243,22 @@
         let comment_post = document.querySelector('#comment');
 
         // No New Line when Pressing Enter
-          document.getElementById('comment').addEventListener('keydown', function (e) {
+        /* document.getElementById('comment').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
-              e.preventDefault();
-              // You can add your own logic here if needed
+                e.preventDefault();
+                // You can add your own logic here if needed
             }
-          });
+        });
 
         // Auto Resize Textarea Comment
         comment_post.addEventListener("keyup", e => {
             comment_post.style.height = "10px";
             let scroll_height = e.target.scrollHeight;
             comment_post.style.height = `${scroll_height}px`;
-        });
+        }); */
 
         // Preview Image
         const image = document.querySelector(".prev_image");
-        {#const image = document.querySelector(".post-image");#}
         const file = document.querySelector("#file");
         const upload_btn = document.querySelector("#upload_btn");
         const close_btn = document.querySelector(".close_image");
@@ -254,13 +287,26 @@
         });
 
         // See More
-        function SeeMore() {
-            const textElement = document.querySelector("#post-text");
-            const seeMore = document.querySelector(".see-more");
+        function SeeMore(postId) {
+            console.log(`Clicked on post with ID: ${postId}`);
 
-            textElement.classList.remove("truncate-text");
-            seeMore.style.display = "none";
+            const textElement = document.querySelector(`.post-text[data-post-id="${postId}"]`);
+            const seeMore = document.querySelector(`.see-more[data-pk="${postId}"]`);
+
+            console.log('Text Element:', textElement);
+            console.log('See More Link:', seeMore);
+
+            if (textElement && seeMore) {
+                // Toggle the 'truncate-text' class on the text element
+                textElement.classList.toggle("truncate-text");
+
+                // Change the text of the 'See More' link based on the current state
+                seeMore.textContent = textElement.classList.contains("truncate-text") ? "See More" : "See Less";
+            } else {
+                console.error('Text element or See More link not found.');
+            }
         }
+
 
         // See More Comment
         function SeeMoreComments() {
@@ -270,5 +316,51 @@
             textElement.classList.remove("truncate-text");
             seeMore.style.display = "none";
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the post button
+            const postButton = document.getElementById('post-btn');
+
+            // Add an event listener to the post button
+            postButton.addEventListener('click', async () => {
+                // Get the text content from the textarea
+                const textContent = document.getElementById('text-content').value;
+
+                // Create a new FormData object
+                const formData = new FormData();
+
+                // Append the CSRF token, text content, and file to the FormData object
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append('text-content', textContent);
+
+                const fileInput = document.getElementById('file');
+                const file = fileInput.files[0]; // Get the selected file
+                formData.append('attachment', file);
+
+                try {
+                    // Send a POST request to the "create_forum_post" URL
+                    const response = await fetch('{% url "create_forum_post" %}', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    // Check if the request was successful
+                    if (response.ok) {
+                        // If successful, log the success message
+                        console.log('Success: ' + (await response.json()).message);
+
+                        // Reset the form fields
+                        document.getElementById('text-content').value = '';
+                        fileInput.value = ''; // Reset the file input
+                        image.style.display = "none"; // Hide the preview image
+                    }
+                } catch (error) {
+                    // Log any errors
+                    console.error(error);
+                }
+            });
+        });
+
+
     </script>
 {% endblock %}

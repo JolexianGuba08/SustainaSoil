@@ -162,8 +162,6 @@
 }
 
 
-
-
 /* ----------------------------------- */
 /*  navbar */
 /* ----------------------------------- */
@@ -228,7 +226,7 @@
 }
 
 .water_level {
-    width: 20% ;
+    width: 20%;
 
     --mask: radial-gradient(24.60px at calc(100% - 33.00px) 50%, #000 99%, #0000 101%) 0 calc(50% - 22px)/100% 44px,
     radial-gradient(24.60px at calc(100% + 22.00px) 50%, #0000 99%, #000 101%) calc(100% - 11px) 50%/100% 44px repeat-y;
@@ -616,7 +614,7 @@
 }
 
 .forums-container .post {
-    margin-left: 600px ;
+    margin-left: 600px;
 }
 
 .forums-container .create .cont {
@@ -629,8 +627,8 @@
 .forums-container .cont .profile {
     width: 70px !important;
     height: 70px !important;
-    background: url(../images/default-profile.png) no-repeat center center !important;
-    background-size: cover !important;
+    border-radius: 50%;
+
 }
 
 .forums-container .cont textarea {
@@ -751,14 +749,12 @@
 
 .forums-container .post .post-image {
     width: 100% !important;
-    height: 400px !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center;
+    height: 400px !important;;
     margin-bottom: 10px;
-    display: none;
+    /*display: none;*/
     border-radius: 10px !important;
     margin-top: 20px !important;
+    /*background-color: red !important;*/
 }
 
 .forums-container .post .post-action {
@@ -803,7 +799,7 @@
         width: 95%;
     }
 
-    .forums-container .post  {
+    .forums-container .post {
         margin-left: 500px;
     }
 }
@@ -814,13 +810,13 @@
         width: 95%;
     }
 
-    .forums-container .post  {
+    .forums-container .post {
         margin-left: 490px;
     }
 }
 
 @media (max-width: 1311px) {
-    .forums-container .post  {
+    .forums-container .post {
         margin-left: 400px;
     }
 }
@@ -830,7 +826,7 @@
         position: static !important;
     }
 
-    .forums-container .post  {
+    .forums-container .post {
         margin-left: 0px;
     }
 }
@@ -867,6 +863,7 @@
     .forums-container .create {
         width: 100% !important;
     }
+
     .forums-container .cont textarea {
         width: 100% !important;
     }
@@ -878,8 +875,8 @@
 }
 
 
-@media  (max-width: 670px) {
-    .users-details  {
+@media (max-width: 670px) {
+    .users-details {
         flex-direction: column !important;
         align-items: start;
         column-gap: 0 !important;
@@ -890,16 +887,16 @@
         flex: 1;
     }
 
-    .forums-container .post .post-card  {
+    .forums-container .post .post-card {
         width: 100% !important;
     }
 
-    .forums-container .post .cont  {
+    .forums-container .post .cont {
         width: 100% !important;
         justify-content: center;
     }
 
-    .forums-container .post  {
+    .forums-container .post {
         width: 100% !important;
         justify-content: center;
     }
@@ -919,7 +916,7 @@
     }
 
     .forums-container .post {
-    overflow: auto !important;
+        overflow: auto !important;
     }
 
     .forums-container .users-post {
@@ -949,7 +946,7 @@
     }
 }
 
-@media  (max-width: 450px) {
+@media (max-width: 450px) {
     .forums-container {
         width: 95%;
     }
