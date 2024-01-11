@@ -12,5 +12,7 @@ urlpatterns = [
     path('signup/otp/resend', views.resend_otp, name='otp_resend'),
 
     path('forgot/', views.forgot_password_page, name='forgot_password_page'),
-    path('change/', views.change_password_page, name='change_password_page'),
+    path('change/<str:session_token>', views.change_password_page, name='change_password_page'),
+    path('check_forgot_password/', views.check_forgot_password, name='check_forgot_password'),
+    path('change_forgot_password/<str:session_token>/', views.change_forgot_password, name='change_forgot_password'),
 ]

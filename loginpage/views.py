@@ -8,6 +8,7 @@ from google.cloud.firestore_v1 import FieldFilter
 from loginpage.forms import LoginForm, SignUpPageForm, OTPVerificationForm, ForgotPasswordForm, ChangePasswordForm
 from homepage.models import Account
 from loginpage.otp_verification import *
+import homepage.firestore_db_modules.forgot_password_module as forgot_password_module
 
 
 # Login page with session
@@ -139,9 +140,9 @@ def otp_verification(request):
 
             # Check if token, email, and OTP match in the database
             otp_verification_ref = db.collection('otp_verification') \
-                .where('token', '==', token) \
-                .where('email', '==', email) \
-                .where('otp', '==', otp) \
+                .where(filter=FieldFilter('token', '==', token)) \
+                .where(filter=FieldFilter('email', '==', email)) \
+                .where(filter=FieldFilter('otp', '==', otp)) \
                 .stream()
 
             found = False
@@ -163,7 +164,7 @@ def otp_verification(request):
                     acc_last_name=last_name,
                     acc_password=password
                 )
-
+                send_congrats_email(email)  # Send congratulatory email function
                 # Optionally, clear the session variables after successful creation
                 del request.session['redirect_email']
                 del request.session['redirect_token']
@@ -234,6 +235,107 @@ def forgot_password_page(request):
 
 
 # Change Password Page
-def change_password_page(request):
+def change_password_page(request, session_token):
+    session_data = forgot_password_module.search_forgot_password_session(session_token)
+    if session_data is None:
+        return HttpResponse('403 Forbidden Token not Valid')
+    expiration_date = ''
+    expired = False
+    for doc in session_data:
+        email = doc.to_dict()['email']
+        expiration_date = doc.to_dict()['expiration_date']
+        expired = doc.to_dict()['expired']
+        print(email)
+    # check if the token is expired
+    if datetime.now() > datetime.strptime(expiration_date, "%B %d, %Y at %I:%M:%S %p UTC+8"):
+        print('Token is expired')
+        return HttpResponse('403 Token is expired')
+    if expired:
+        print('Token is expired')
+        return HttpResponse('403 Token is expired')
+    # print remaining time in minutes
+    remaining_time = datetime.strptime(expiration_date, "%B %d, %Y at %I:%M:%S %p UTC+8") - datetime.now()
+    print(remaining_time.seconds / 60, 'minutes remaining')
+
     form = ChangePasswordForm(request.POST)
+    return render(request, 'change_password.html', {'form': form})
+
+
+def check_forgot_password(request):
+    if request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            email = cleaned_data['acc_email'].lower()
+            try:
+                account = Account.objects.get(acc_email=email)
+                if account:
+                    session_token = generate_token()
+                    forgot_password_module.add_forgot_password_session(email, session_token)
+                    send_link_change_password_to_email(email, session_token)
+                    return JsonResponse({'success': True})
+                else:
+                    return JsonResponse({'success': False})
+            except ObjectDoesNotExist:
+                return JsonResponse({'success': False, 'errors': 'Account not found'})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = ForgotPasswordForm()
+    return render(request, 'forgot_password.html', {'form': form})
+
+
+def change_forgot_password(request, session_token):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            password = cleaned_data['new_password']
+            confirm_password = cleaned_data['confirm_password']
+            session_search = forgot_password_module.search_forgot_password_session(session_token)
+            if session_search is None:
+                return HttpResponse('403 Forbidden Token not Valid')
+            expiration_date = ''
+            expired = False
+            email = ''
+            for doc in session_search:
+                email = doc.to_dict()['email']
+                expiration_date = doc.to_dict()['expiration_date']
+                expired = doc.to_dict()['expired']
+            # check if the token is expired
+            if datetime.now() > datetime.strptime(expiration_date, "%B %d, %Y at %I:%M:%S %p UTC+8"):
+                return JsonResponse({'success': False, 'errors': 'Token is expired'})
+            if expired:
+                return JsonResponse({'success': False, 'errors': 'Token is expired'})
+
+            if password != confirm_password:
+                return JsonResponse({'success': False, 'errors': 'Passwords do not match'})
+            # validate password should be 8 characters long and should contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character
+            if len(password) < 8:
+                return JsonResponse({'success': False, 'errors': 'Password should be at least 8 characters long'})
+            if not any(char.isdigit() for char in password):
+                return JsonResponse({'success': False, 'errors': 'Password should contain at least 1 number'})
+            if not any(char.isupper() for char in password):
+                return JsonResponse({'success': False, 'errors': 'Password should contain at least 1 uppercase letter'})
+            if not any(char.islower() for char in password):
+                return JsonResponse({'success': False, 'errors': 'Password should contain at least 1 lowercase letter'})
+            if not any(char in '!@#$%^&*()_+{}[]|:;<>,.?/~`' for char in password):
+                return JsonResponse(
+                    {'success': False, 'errors': 'Password should contain at least 1 special character'})
+            # Update the Account password in the database
+            account = Account.objects.get(acc_email=email)
+            # check if password is the same as the old password
+            if bcrypt.checkpw(password.encode('utf8'), account.acc_password.encode('utf8')):
+                return JsonResponse(
+                    {'success': False, 'errors': 'New password should be different from the old password'})
+            account.acc_password = password
+            account.save()
+            # Update the Forgot Password Session to expired
+            forgot_password_module.update_forgot_password_session(session_token)
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = ChangePasswordForm()
     return render(request, 'change_password.html', {'form': form})

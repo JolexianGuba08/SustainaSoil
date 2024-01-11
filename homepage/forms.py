@@ -29,12 +29,12 @@ class EditProfileForm(forms.Form):
 
     acc_phone = forms.CharField(
         label='',
+        required=False,
         widget=forms.TextInput(attrs={
             'type': 'text',
             'inputmode': 'numeric',
             'placeholder': 'Contact No.',
             'maxlength': '11',
-            'required': True,
             'id': 'contact',
             'class': 'input input-bordered input-md w-full mb-4 bg-transparent text-accent1 pl-40 placeholder:tracking-wide',
         })

@@ -1,6 +1,5 @@
 from django import forms
 from django.core.validators import MaxLengthValidator
-
 from homepage.models import Account
 
 
@@ -11,8 +10,8 @@ class LoginForm(forms.Form):
             'class': 'input input-bordered input-md w-full bg-transparent rounded-lg pl-40 '
                      'placeholder:tracking-wide text-accent1 border-accent1',
             'placeholder': 'Email Address',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
     acc_password = forms.CharField(
         label='',
@@ -20,8 +19,8 @@ class LoginForm(forms.Form):
             'class': 'input input-bordered input-md w-full bg-transparent pl-40 rounded-lg '
                      'placeholder:tracking-wide text-accent1 border-accent1 ',
             'placeholder': 'Password',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
 
 
@@ -32,8 +31,8 @@ class SignUpPageForm(forms.ModelForm):
             'class': 'input input-bordered input-md w-full bg-transparent rounded-lg border-accent1 pl-40 '
                      'placeholder:tracking-wide text-accent1 ',
             'placeholder': 'Email Address',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
     acc_first_name = forms.CharField(
         label='',
@@ -41,8 +40,8 @@ class SignUpPageForm(forms.ModelForm):
             'class': 'input input-bordered input-md w-full bg-transparent border-accent1 pl-40 rounded-lg '
                      'placeholder:tracking-wide text-accent1',
             'placeholder': 'First Name',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
     acc_last_name = forms.CharField(
         label='',
@@ -50,8 +49,8 @@ class SignUpPageForm(forms.ModelForm):
             'class': 'input input-bordered input-md w-full bg-transparent border-accent1 pl-40 rounded-lg '
                      'placeholder:tracking-wide text-accent1',
             'placeholder': 'Last Name',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
     acc_password = forms.CharField(
         label='',
@@ -60,8 +59,8 @@ class SignUpPageForm(forms.ModelForm):
                      'rounded-lg'
                      'placeholder:tracking-wide text-accent1',
             'placeholder': 'Password',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'
+        })
     )
     confirm_password = forms.CharField(
         label='',
@@ -69,8 +68,8 @@ class SignUpPageForm(forms.ModelForm):
             'class': 'confirm_password input input-bordered input-md w-full bg-transparent border-accent1 pl-40 '
                      'rounded-lg placeholder:tracking-wide text-accent1',
             'placeholder': 'Confirm Password',
-            'autocomplete': 'off',
-            'onpaste': 'return false'}),
+            'autocomplete': 'off'
+        }),
     )
 
     def clean(self):
@@ -194,8 +193,7 @@ class ForgotPasswordForm(forms.Form):
             'class': 'input input-bordered input-md w-full bg-transparent rounded-lg pl-40 '
                      'placeholder:tracking-wide text-accent1 border-accent1',
             'placeholder': 'Email Address',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'})
     )
 
 
@@ -206,8 +204,7 @@ class ChangePasswordForm(forms.Form):
             'class': 'input input-bordered input-md w-full bg-transparent pl-40 rounded-lg '
                      'placeholder:tracking-wide text-accent1 border-accent1 ',
             'placeholder': 'New Password',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'})
     )
     confirm_password = forms.CharField(
         label='',
@@ -215,6 +212,5 @@ class ChangePasswordForm(forms.Form):
             'class': 'input input-bordered input-md w-full bg-transparent pl-40 rounded-lg '
                      'placeholder:tracking-wide text-accent1 border-accent1 ',
             'placeholder': 'Confirm Password',
-            'autocomplete': 'off',
-            'onpaste': 'return false'})
+            'autocomplete': 'off'})
     )

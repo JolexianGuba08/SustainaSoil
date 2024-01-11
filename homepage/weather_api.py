@@ -14,6 +14,7 @@ API_KEY = os.getenv('WEATHER_API_KEY')
 
 # fetch the weather data
 def fetch_weather_data(lat, lon, key=API_KEY):
+    print(API_KEY)
     url = f'https://api.weatherbit.io/v2.0/forecast/daily?&lat={lat}&lon={lon}&key={key}&days=7'
     res = requests.get(url)
     data = res.json()
