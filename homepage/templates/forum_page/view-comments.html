@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Forums | SustainAsoil {% endblock %}
+
+{% block forum  %}
+    <a class="drpBTN w-full tracking-normal focus:bg-secondary bg-secondary text-accent1 hover:text-accent1 hover:bg-secondary text-accent1"
+    >FORUMS</a>
+{% endblock %}
+
+{% block content %}
+    <!-- Main -->
+    <main id="pageContent"
+          class="flex flex-grow flex-col items-center max-[450px]:mt-5 max-[450px]:mb-2 z-40 max-xl:ml-[80px] ml-[285px] max-[450px]:ml-0 max-[450px]:z-40"
+    >
+        <!-- Header -->
+        <header
+                class="bg-secondary px-2 items-center flex justify-between z-50 max-[450px]:w-full max-[450px]:hidden max-[450px]:mb-2 max-[450px]:rounded-none max-[450px]:bg-transparent mt-[2%] w-[90%] p-1 rounded-full mb-7 max-sm:flex max-sm:justify-center"
+        >
+
+            <!-- Back Redirect to Greenery -->
+            <h1
+                    class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
+            >
+                <a href="{% url 'forums' %}" class="flex">
+
+
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 text-background bg-accent1 p-1 rounded-full"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
+                    </svg>
+                    &nbsp;ALL COMMENTS
+                </a>
+            </h1>
+            <!-- End Back Redirect to Greenery -->
+
+            <!-- Include Notification -->
+            {% include 'web_notification.html' %}
+        </header>
+        <!-- End Header -->
+
+ <!-- Heading Section -->
+        <section class="all-comment w-[90%] flex z-40 justify-between">
+
+            <!-- DISPLAY COMMENT -->
+            <div class="comment-display mt-5 ">
+                <!-- Comment Card -->
+                <div class="comment-card">
+                    <!-- DISPLAY COMMENTS -->
+                    <div class="flex gap-2">
+                        <!-- DISPLAY USERES PROFILE -->
+                        <div class="users-profile"></div>
+                        <!-- END DISPLAY USERES PROFILE -->
+
+                        <!-- DISPLAY NAME & COMMENT -->
+                        <div class="flex-1">
+                            <div>
+                                <!-- DISPLAY NAME -->
+                                <p class="text-accent1">Gianni Dylan Cabahug</p>
+                                <!-- END DISPLAY NAME -->
+
+                                <!-- DISPLAY DATE OF COMMENT -->
+                                <p class="text-sm" style="font-size: 12px">01/11/2024</p>
+                                <!-- END DISPLAY DATE OF COMMENT -->
+                            </div>
+
+                            <div style="">
+                                <!-- DISPLAY COMMENT -->
+                                <div>
+                                    <p class="truncate-text" id="user-comment" style="text-align: justify">Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.</p>
+                                    <span class="see-more-comments" onclick="SeeMoreComments()">See More</span>
+                                </div>
+                                <!-- END DISPLAY COMMENT -->
+                            </div>
+                        </div>
+                        <!-- END DISPLAY NAME & COMMENT -->
+                    </div>
+                    <!-- End DISPLAY COMMENTS -->
+                    </div>
+                <!-- End Comment Card -->
+            </div>
+            <!-- End DISPLAY COMMENT -->
+
+        </section>
+
+    </main>
+{% endblock %}

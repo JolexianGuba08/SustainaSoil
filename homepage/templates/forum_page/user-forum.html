@@ -136,7 +136,8 @@
                             <!-- End Post Actions -->
 
                             <!-- Comment Actions -->
-                            <div class="comment-action flex justify-end">
+                            <div class="comment-action flex justify-between items-center cursor-pointer">
+                                <a href="{% url 'view_comments' %}" class="view-all-comments text-accent1 tracking-widest" style="font-size: 12px">VIEW ALL COMMENTS</a>
                                 <button class="rounded-full p-2 px-5 bg-accent2 text-background tracking-wide">COMMENT</button>
                             </div>
                             <!-- End Comment Actions -->
@@ -147,111 +148,9 @@
                                 <div class="comment-card">
                                     <!-- DISPLAY COMMENTS -->
                                     <div class="flex gap-2">
-                                        <!-- DISPLAY USERES PROFILE -->
+                                        <!-- DISPLAY USERS PROFILE -->
                                         <div class="users-profile"></div>
-                                        <!-- END DISPLAY USERES PROFILE -->
-
-                                        <!-- DISPLAY NAME & COMMENT -->
-                                        <div class="flex-1">
-                                            <div>
-                                                <!-- DISPLAY NAME -->
-                                                <p class="text-accent1">Gianni Dylan Cabahug</p>
-                                                <!-- END DISPLAY NAME -->
-
-                                                <!-- DISPLAY DATE OF COMMENT -->
-                                                <p class="text-sm" style="font-size: 12px">01/11/2024</p>
-                                                <!-- END DISPLAY DATE OF COMMENT -->
-                                            </div>
-
-                                            <div style="">
-                                                <!-- DISPLAY COMMENT -->
-                                                <div>
-                                                    <p class="truncate-text" id="user-comment" style="text-align: justify">Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.Lorem ipsum dolor sit amet, consequat.</p>
-                                                    <span class="see-more-comments" onclick="SeeMoreComments()">See More</span>
-                                                </div>
-                                                <!-- END DISPLAY COMMENT -->
-                                            </div>
-                                        </div>
-                                        <!-- END DISPLAY NAME & COMMENT -->
-                                    </div>
-                                    <!-- End DISPLAY COMMENTS -->
-                                    </div>
-                                <!-- End Comment Card -->
-                            </div>
-                            <!-- End DISPLAY COMMENT -->
-                        </div>
-                        <!-- End Post Content -->
-                    </div>
-                    <!-- End Post Card -->
-
-                    <!-- Post Card -->
-                    <div class="post-card mb-5" style="margin-bottom: 30px">
-                        <!-- Post Title -->
-                        <div class="post-title flex items-center gap-3">
-                            <!-- DISPLAY DIFFERENT USERS PROFILE -->
-                            <div class="users-profile"></div>
-                            <!-- END DISPLAY DIFFERENT USERS PROFILE -->
-
-                            <!-- DISPLAY USERS DETAILS -->
-                            <div class="users-details flex w-full items-center gap-2" style="width: 90%">
-                                <!-- DISPLAY USERS NAME -->
-                                <h2 class="font-normal text-accent2 text-lg uppercase tracking-wide">Jim Laroco</h2>
-                                <!-- END DISPLAY USERS NAME -->
-
-                                <div class="user-date-cont flex justify-between flex-1 w-full">
-                                    <!-- DISPLAY USERS EMAIL -->
-                                    <h3>jimlaroco@gmail.com</h3>
-                                    <!-- END DISPLAY USERS EMAIL -->
-
-                                    <!-- DISPLAY POST DATE -->
-                                    <p>1/10/2024</p>
-                                    <!-- END DISPLAY POST DATE -->
-                                </div>
-                            </div>
-                            <!-- END DISPLAY USERS DETAILS -->
-                        </div>
-                        <!-- End Post Title -->
-
-                        <!-- Post Content -->
-                        <div class="users-post mt-5">
-                            <!-- DISPLAY POST TEXT -->
-                            <div class="post-text">
-                                <p class="truncate-text" id="post-text">Lorem ipsum dolor sit amet, eu fugiat nulla pariatur officia deserunt mollit. fugiat nulla pariatur officia deserunt. fugiat nulla pariatur officia deserunt. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum. fugiat nulla pariatur officia deserunt. anim id est laborum.</p>
-                                <span class="see-more" onclick="SeeMore()">See More</span>
-                            </div>
-                            <!-- END DISPLAY POST TEXT -->
-
-                            <!-- DISPLAY POST IMAGE -->
-                            <div class="post-image mt-2"></div>
-                            <!-- END DISPLAY POST IMAGE -->
-
-                            <!-- Post Actions -->
-                            <div class="post-action mt-5 flex gap-2 justify-between w-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mt-3">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-
-                                <div class="p-0 w-full">
-                                    <textarea class="textarea tracking-wide text-md p-0" id="comment" maxlength="442" placeholder="Write a comment..."></textarea>
-                                </div>
-                            </div>
-                            <!-- End Post Actions -->
-
-                            <!-- Comment Actions -->
-                            <div class="comment-action flex justify-end">
-                                <button class="rounded-full p-2 px-5 bg-accent2 text-background tracking-wide">COMMENT</button>
-                            </div>
-                            <!-- End Comment Actions -->
-
-                            <!-- DISPLAY COMMENT -->
-                            <div class="comment-display mt-5">
-                                <!-- Comment Card -->
-                                <div class="comment-card">
-                                    <!-- DISPLAY COMMENTS -->
-                                    <div class="flex gap-2">
-                                        <!-- DISPLAY USERES PROFILE -->
-                                        <div class="users-profile"></div>
-                                        <!-- END DISPLAY USERES PROFILE -->
+                                        <!-- END DISPLAY USERS PROFILE -->
 
                                         <!-- DISPLAY NAME & COMMENT -->
                                         <div class="flex-1">

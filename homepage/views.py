@@ -440,3 +440,7 @@ def change_password(request):
 
 def forums(request):
     return render(request, 'forum_page/user-forum.html')
+
+
+def view_comment_forums(request):
+    return render(request, 'forum_page/view-comments.html')
