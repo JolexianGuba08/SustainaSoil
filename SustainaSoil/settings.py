@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'homepage.user_context.context_processor.user_context',
                 'homepage.user_context.context_processor.get_greenery_count',
+                'homepage.weather_api.get_weather_data_context',
             ],
         },
     },

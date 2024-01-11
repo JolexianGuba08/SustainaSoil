@@ -30,6 +30,7 @@ def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
     acc_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id')).first()
+
     # context = get_weather_data_context(request)
     if acc_package:
         return render(request, 'dashboard_page/user-dashboard.html', {'package_key': acc_package})
@@ -752,7 +753,11 @@ def change_password(request):
 
 
 def get_user_data(user_id):
-    account = Account.objects.get(acc_id=user_id)
+    try:
+        account = Account.objects.get(acc_id=user_id)
+    except Account.DoesNotExist:
+        return None
+
 
     # Serialize the user data into a dictionary
     serialized_user = serializers.serialize('python', [account])

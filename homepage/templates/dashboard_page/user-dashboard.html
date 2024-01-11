@@ -67,7 +67,7 @@
                 </div>
             </div>
             <!-- End Greenery Count Container -->
-            <div id="dash_package_id" class="hidden" data-packagekey="{{ package_key }}"></div>
+            <div id="dash_package_id" class="hidden" data-packagekey="{{ package_key.package_key }}"></div>
             <!-- Average Water & Pesticide Level Container -->
             <div
                     class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
@@ -332,6 +332,7 @@
         const package_key = $("#dash_package_id").data("packagekey");
         // Connection opened event handler
         socket.addEventListener('open', (event) => {
+
             socket.send(JSON.stringify({ package_key: package_key }));
         });
 
