@@ -26,9 +26,45 @@
       <!-- Greenery Section -->
       <section class="greenery-section flex w-[90%] h-full mb-[2%]">
          <!-- Greenery Container -->
-         <div class="greneery w-full h-full flex max-sm:justify-center">
-            <!-- Add Greenery Button -->
-{#            {% if account_package %}#}
+         <div class="greneery w-full h-full flex max-sm:justify-center gap-4 ">
+
+            <!-- Added Greenery Button -->
+            {% if account_package %}
+            {% for account_package in account_package%}
+            <button
+               data-packagekey = "{{ account_package.package_key }}"
+               class="addPlantButton group bg-secondary cursor-pointer shadow-xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[280px] w-[280px] rounded-3xl max-sm:w-full"
+               >
+               <div class="flex flex-col items-center">
+                  <svg
+                     width="130"
+                     height="130"
+                     fill="currentColor"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg"
+                     class="flex-shrink-0 text-accent1"
+                     >
+                     <path
+                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                        ></path>
+                  </svg>
+                  <!-- DISPLAY PACKAGE NAME -->
+                  <h2 class="tracking-[3px] text-accent1 text-md font-normal mt-5 uppercase">
+                     {{ account_package.acc_package_name }}
+                  </h2>
+                  <!-- END PACKAGE NAME -->
+                  <!-- DISPLAY PACKAGE NAME -->
+                  <p class="tracking-[3px] text-accent1 text-sm font-extralight mt-1">
+                     {{ account_package.date_added }}
+                  </p>
+                  <!-- END PACKAGE NAME -->
+               </div>
+            </button>
+            {% endfor %}
+            {% endif %}
+            <!-- End Added Greenery Button -->
+
+             <!-- Add Greenery Button -->
             <button
                data-packageacc = "{{ hasPackage }}"
                id="addGreeneryButton"
@@ -50,46 +86,10 @@
                   </svg>
                </div>
             </button>
-{#            {% endif %}#}
             <!-- End Add Greenery Button -->
-            <!-- Added Greenery Button -->
-
-            {% if account_package %}
-            {% for account_package in account_package%}
-            <button
-               data-packagekey = "{{ account_package.package_key }}"
-               class="addPlantButton group bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[280px] w-[280px] rounded-3xl max-sm:w-full"
-               >
-               <div class="flex flex-col items-center">
-                  <svg
-                     width="130"
-                     height="130"
-                     fill="currentColor"
-                     viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg"
-                     class="flex-shrink-0 text-accent1"
-                     >
-                     <path
-                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-                        ></path>
-                  </svg>
-                  <!-- DISPLAY PACKAGE NAME -->
-                  <h2 class="tracking-[3px] text-accent1 text-md font-bold mt-5">
-                     {{ account_package.acc_package_name }}
-                  </h2>
-                  <!-- END PACKAGE NAME -->
-                  <!-- DISPLAY PACKAGE NAME -->
-                  <p class="tracking-[3px] text-accent1 text-sm font-extralight mt-1">
-                     {{ account_package.date_added }}
-                  </p>
-                  <!-- END PACKAGE NAME -->
-               </div>
-            </button>
-            {% endfor %}
-            {% endif %}
-            <!-- End Added Greenery Button -->
          </div>
          <!-- End Greenery Container -->
+
          <!-- Enable Location Modal -->
          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box bg-background shadow-sm">

@@ -19,7 +19,7 @@
             <h1
                     class="max-[450px]:text-lg max-[450px]:font-bold max-[450px]:tracking-[1px] text-accent1 font-light tracking-[3px] text-md bg-background flex items-center p-3 px-5 rounded-full max-sm:w-full max-sm:text-center"
             >
-                <a href="{% url 'greenery' %}" class="flex">
+                <a href="{% url 'greenery' %}" class="flex uppercase">
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -46,68 +46,26 @@
         <section class="greenery-section flex w-[90%] h-full mb-[2%]">
             <!-- Greenery Container -->
             <div class="hidden" id="acc_count" data-count="{{ hasSlot }}"></div>
-            <div class="greneery w-full h-full flex max-sm:justify-center">
+            <div class="greneery w-full h-full flex max-sm:justify-center gap-4">
 
-                    <!-- Add Plant UI -->
-                    <button
-                            data-packagekey="{{ package_key }}"
-                            id="selectPlant"
-                            class="group hover:bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[300px] w-[250px] rounded-3xl max-sm:w-full"
-                    >
-                        <div class="flex flex-col items-center">
-                            <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-16 h-16 text-accent1 group-hover:w-14 group-hover:h-14 transition ease-in-out duration-500"
-                            >
-                                <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                />
-                            </svg>
-                            <p
-                                    class="tracking-wider text-accent1 font-bold text-2xl group-hover:hidden mt-5"
-                            >
-                                ADD PLANT
-                            </p>
-                            <svg
-                                    width="130"
-                                    height="130"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="flex-shrink-0 text-accent1 opacity-0 absolute group-hover:static group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-500"
-                            >
-                                <path
-                                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
-                                ></path>
-                            </svg>
-                        </div>
-                    </button>
-
-                <!-- End Add Plant -->
                 <!-- Added Plant -->
                 {% if account_plants and plant_img %}
                     {% for plant in account_plants %}
                         <button
                                 onclick=location.href="{% url 'plant_profile' package_key=package_key plant_id=plant.plant_id.pk %}"
                                 title="card"
-                                class="group  hover:bg-secondary hover:shadow-2xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[250px] rounded-3xl max-md:w-full"
+                                class="group  bg-secondary shadow-xl transition ease-in-out duration-500 flex flex-col p-4 items-center border border-secondary h-[300px] w-[280px] rounded-3xl max-md:w-full"
                         >
                             <!-- DISPLAY IMAGE -->
                             <div class="bg-accent1 w-full h-[150px] rounded-2xl"
                                  style="background-image: url('{{ plant_img }}'); background-size: cover; background-position: center;">
                             </div>
-
                             <!-- END DISPLAY IMAGE -->
+
                             <!-- DISPLAY NAME -->
                             <div class="w-full mt-3">
                                 <h2
-                                        class="w-full text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
+                                        class="w-full uppercase text-left text-lg tracking-widest text-accent1 font-extrabold indent-2">
                                     {{ plant.plant_id }}
                                 </h2>
                                 <!-- END DISPLAY NAME -->
@@ -137,6 +95,48 @@
                     {% endfor %}
                 {% endif %}
                 <!-- End Added Plant -->
+
+                <!-- Add Plant UI -->
+                    <button
+                            data-packagekey="{{ package_key }}"
+                            id="selectPlant"
+                            class="group hover:bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[300px] w-[250px] rounded-3xl max-sm:w-full"
+                    >
+                        <div class="flex flex-col items-center">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-11 text-accent1 group-hover:w-14 group-hover:h-14 transition ease-in-out duration-500"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                />
+                            </svg>
+                            <p
+                                    class="tracking-wider text-accent1 font-bold text-2xl group-hover:hidden mt-5"
+                            >
+                                ADD PLANT
+                            </p>
+                            <svg
+                                    width="130"
+                                    height="130"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="flex-shrink-0 text-accent1 opacity-0 absolute group-hover:static group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-500"
+                            >
+                                <path
+                                        d="M21 3v2c0 9.627-5.373 14-12 14H5.243A17.056 17.056 0 0 0 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0Zm-8 2a8 8 0 0 0-8 8c0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5Z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </button>
+                <!-- End Add Plant -->
             </div>
             <!-- End Greenery Container -->
         </section>
@@ -148,10 +148,20 @@
         $('#selectPlant').on('click', function (event) {
             event.preventDefault();
             var hasSlot = $('#acc_count').data('count');
-            if(hasSlot !== "True"){
-                alert("You have reached the maximum number of plants for this package.");
-                return;
-            }
+                if(hasSlot !== "True"){
+                    {#alert("You have reached the maximum number of plants for this package.");#}
+                    {#return;#}
+            $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                '<span> <p class="font-extrabold">WARNING</p>You have reached the maximum number of plants for this package.</span>' +
+                '</div>').appendTo('body');
+
+            setTimeout(function () {
+                $('.alert').remove();
+            }, 3000);
+
+            return;
+                }
             var package_key = $(this).data('packagekey');
             console.log("clicked", package_key);
             window.location.href = "/presets/" + package_key

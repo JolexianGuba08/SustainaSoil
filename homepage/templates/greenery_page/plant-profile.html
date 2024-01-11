@@ -45,9 +45,9 @@
                         />
                     </svg>
                 {% if take_cared %}
-                    &nbsp{{ plants.plant_name }}
+                    &nbsp <span class="uppercase">{{ plants.plant_name }}</span>
                 {% else  %}
-                    &nbsp<span>Presets</span>
+                    &nbsp<span class="uppercase">Presets</span>
                 {% endif %}
 
                 </a>
@@ -304,7 +304,15 @@
                 data: data,
                 success: function (data) {
                     var message = data.message
-                    alert(message)
+                    {#alert(message)#}
+                    $('<div role="alert" class="alert alert-success rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                        '<span> <p class="font-extrabold">SUCCESS</p>Set to default values successfully.</span>' +
+                        '</div>').appendTo('body');
+
+                    setTimeout(function () {
+                        $('.alert').remove();
+                    }, 3000);
                     window.location.href = '/plant_profile/' + package_key + '/' + plant_id;
                 },
                 error: function (error) {
@@ -338,21 +346,67 @@
             const mins_input = $(`#${mins_input_id}`).val();
 
             if (hrs_input === "" || mins_input === "") {
-                alert("Please fill in all the fields");
+                {#alert("Please fill in all the fields");#}
+
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please fill in all the fields.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
 
             }
             else if (isNaN(hrs_input) || isNaN(mins_input)) {
-                alert("Please enter valid numeric values for hours and minutes");
+                {#alert("Please enter valid numeric values for hours and minutes");#}
+
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please enter valid numeric values for hours and minutes.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
             }
             else {
                 if (hrs_input > 12 || hrs_input < 1) {
-                    alert("Please enter a valid hour");
+                    {#alert("Please enter a valid hour");#}
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please enter valid numeric values for hours and minutes.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
                 } else {
                     if (mins_input > 59 || mins_input < 0) {
-                        alert("Please enter a valid minute");
+                        {#alert("Please enter a valid minute");#}
+
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please enter a valid minute.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
+
                     } else {
                         if (am_pm_value === undefined) {
-                            alert("Please select AM or PM");
+                            {#alert("Please select AM or PM");#}
+
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>Please select AM or PM.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
+
                         } else {
                             dynamic_dict.isValid= true;
                             dynamic_dict.am_pm_value = am_pm_value;
@@ -454,7 +508,16 @@
                 data: data,
                 success: function (data) {
                     var message = data.message
-                    alert(message)
+
+                    $('<div role="alert" class="alert alert-success rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                        '<span> <p class="font-extrabold">SUCCESS</p>Plant taken cared successfully.</span>' +
+                        '</div>').appendTo('body');
+
+                    setTimeout(function () {
+                        $('.alert').remove();
+                    }, 3000);
+                    {#alert(message)#}
                     window.location.href = '/add_plant/' + package_key;
                 },
                 error: function (error) {
@@ -493,7 +556,16 @@
                 data: data,
                 success: function (data) {
                     var message = data.message
-                    alert(message)
+                    {#alert(message)#}
+
+                    $('<div role="alert" class="alert alert-success rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                        '<span> <p class="font-extrabold">SUCCESS</p>User preferences updated successfully.</span>' +
+                        '</div>').appendTo('body');
+
+                    setTimeout(function () {
+                        $('.alert').remove();
+                    }, 3000);
 
                 },
                 error: function (error) {
