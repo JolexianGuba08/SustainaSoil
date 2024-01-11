@@ -22,6 +22,7 @@ import homepage.firestore_db_modules.cloud_storage as cloud_storage
 import homepage.firestore_db_modules.account_greenery as account_greenery
 from homepage.weather_api import get_weather_data_context
 from homepage.firestore_db_modules.create_forum_post import *
+from homepage.firestore_db_modules.create_forum_comment import *
 
 
 # Create your views here.
@@ -714,39 +715,94 @@ def get_user_data(user_id):
     return context
 
 
+# def forums(request):
+#     data = get_all_posts()
+#
+#     # Loop through the data and access each post
+#     for post in data:
+#         # Get the user id of the post
+#         user_id = post['user_id']
+#         attachment = post['attachment']
+#
+#         # Request a link from the firebase storage if there's an attachment
+#         if attachment:
+#             attachment = cloud_storage.get_file_url_from_firebase(attachment)
+#             post['attachment'] = attachment
+#
+#         # Get the user data using the user id
+#         user_data = get_user_data(user_id)
+#
+#         # Add the user data to the post
+#         post['user_data'] = user_data
+#
+#         # Get the comments of the post using the post_id
+#         post_id = post['post_id']
+#         comments = get_all_comments(post_id)
+#
+#         # Add the comments to the post
+#         post['comments'] = comments
+#
+#         # Add user data to each comment
+#         for comment in comments:
+#             # Get the user id of the comment
+#             user_id = comment['user_id']
+#
+#             # Get the user data using the user id
+#             user_data = get_user_data(user_id)
+#
+#             # Add the user data to the comment
+#             comment['user_data'] = user_data
+#
+#     return render(request, 'forum_page/user-forum.html', {'posts': data})
 def forums(request):
-    data = get_all_posts()
+    db = firestore_db()
 
-    # Loop through the data and access each data
-    for post in data:
-        # Get the user id of the post
-        user_id = post['user_id']
-        attachment = post['attachment']
-        # request a link from the firebase storage
-        if attachment:
-            attachment = cloud_storage.get_file_url_from_firebase(attachment)
-            post['attachment'] = attachment
-        # add the attachment to the post
+    # Create a reference to the collection
+    collection_ref = db.collection('forum_posts')
+
+    # Create a query against the collection
+    query_ref = collection_ref.order_by('date_added', direction=firestore.Query.DESCENDING)
+
+    # Retrieve all documents
+    docs = query_ref.stream()
+
+    posts = []
+
+    for doc in docs:
+        post_data = doc.to_dict()
+        user_id = post_data['user_id']
+        post_id = post_data['post_id']
+
+        # Request a link from Firebase storage if there's an attachment
+        if post_data['attachment']:
+            post_data['attachment'] = cloud_storage.get_file_url_from_firebase(post_data['attachment'])
 
         # Get the user data using the user id
         user_data = get_user_data(user_id)
-        # Add the user data to the post
-        post['user_data'] = user_data
-        print(post)
-        # # Get the comments of the post
-        # comments = get_comments(post['post_id'])
-        # # Loop through the comments and access each comment
-        # for comment in comments:
-        #     # Get the user id of the comment
-        #     comment_user_id = comment['user_id']
-        #     # Get the user data using the user id
-        #     comment_user_data = get_user_data(comment_user_id)
-        #     # Add the user data to the comment
-        #     comment['user_data'] = comment_user_data
-        #
-        # # Add the comments to the post
 
-    return render(request, 'forum_page/user-forum.html', {'posts': data})
+        # Add the user data to the post
+        post_data['user_data'] = user_data
+
+        # Get the comments of the post using the post_id
+        comments = get_all_comments(post_id)
+
+        # Add the comments to the post
+        post_data['comments'] = comments
+
+        # Add user data to each comment
+        for comment in comments:
+            # Get the user id of the comment
+            comment_user_id = comment['user_id']
+
+            # Get the user data using the user id
+            comment_user_data = get_user_data(comment_user_id)
+
+            # Add the user data to the comment
+            comment['user_data'] = comment_user_data
+
+        posts.append(post_data)
+
+    return render(request, 'forum_page/user-forum.html', {'posts': posts})
 
 
 def view_comment_forums(request):
@@ -796,3 +852,27 @@ def create_forum_post(request):
         create_post_forum(post_id, acc_id, attachment, is_attachment, text_content)
 
         return JsonResponse({'success': True, 'message': 'Post created successfully'})
+
+
+def generate_comment_id(user_id):
+    # Generate a random UUID (Universally Unique Identifier)
+    unique_id = uuid.uuid4().hex
+    date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    # Combine the random UUID with the user ID
+    comment_id = f"{user_id}_{unique_id}_{date}"
+
+    return comment_id
+
+
+def create_forum_comment(request):
+    # Get the text content and attachment from the request
+    comment = request.POST.get('comment')
+    post_id = request.POST.get('post_id')
+    acc_id = request.session.get('session_user_id')
+    # Check if text content is provided
+    if not comment:
+        return JsonResponse({'success': False, 'error': 'Please provide a text content'})
+    comment_id = generate_comment_id(acc_id)
+    create_comment_forum(comment_id, comment, post_id, acc_id)
+    return JsonResponse({'success': True, 'message': 'Comment created successfully'})
