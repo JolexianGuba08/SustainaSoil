@@ -20,6 +20,9 @@ from homepage.models import Packages, Account_Package, Account, Account_Plants, 
 from homepage.user_context.context_processor import user_context
 import homepage.firestore_db_modules.cloud_storage as cloud_storage
 import homepage.firestore_db_modules.account_greenery as account_greenery
+from homepage.weather_api import get_weather_data_context
+from homepage.firestore_db_modules.create_forum_post import *
+from homepage.firestore_db_modules.create_forum_comment import *
 
 
 # Create your views here.
@@ -27,7 +30,7 @@ def homepage(request):
     if 'session_email' not in request.session and 'session_user_id' not in request.session and 'session_user_type' not in request.session:
         return redirect('login_page')
     acc_package = Account_Package.objects.filter(user_id=request.session.get('session_user_id')).first()
-
+    # context = get_weather_data_context(request)
     if acc_package:
         return render(request, 'dashboard_page/user-dashboard.html', {'package_key': acc_package})
     else:
@@ -112,10 +115,7 @@ def greenery(request):
             hasPackage = True
             return render(request, 'greenery_page/user-greenery.html', {'account_package': account_package,
                                                                         'package_key': account_package,
-                                                                   'hasPackage': hasPackage})
-
-        else:
-            return render(request,'greenery_page/user-greenery.html')
+                                                                        'hasPackage': hasPackage})
     except Account_Package.DoesNotExist:
         return render(request, 'greenery_page/user-greenery.html', {'hasPackage': hasPackage})
 
@@ -697,9 +697,182 @@ def change_password(request):
         return JsonResponse({'error': 'Invalid request'})
 
 
+def get_user_data(user_id):
+    account = Account.objects.get(acc_id=user_id)
+
+    # Serialize the user data into a dictionary
+    serialized_user = serializers.serialize('python', [account])
+    user_data = serialized_user[0]['fields']
+    profile_img = cloud_storage.get_file_url_from_firebase(user_data['acc_profile_img'])
+    # Extract required fields
+    context = {
+        'first_name': user_data['acc_first_name'],
+        'last_name': user_data['acc_last_name'],
+        'profile_image': profile_img,
+        'email': user_data['acc_email'],
+    }
+
+    return context
+
+
+# def forums(request):
+#     data = get_all_posts()
+#
+#     # Loop through the data and access each post
+#     for post in data:
+#         # Get the user id of the post
+#         user_id = post['user_id']
+#         attachment = post['attachment']
+#
+#         # Request a link from the firebase storage if there's an attachment
+#         if attachment:
+#             attachment = cloud_storage.get_file_url_from_firebase(attachment)
+#             post['attachment'] = attachment
+#
+#         # Get the user data using the user id
+#         user_data = get_user_data(user_id)
+#
+#         # Add the user data to the post
+#         post['user_data'] = user_data
+#
+#         # Get the comments of the post using the post_id
+#         post_id = post['post_id']
+#         comments = get_all_comments(post_id)
+#
+#         # Add the comments to the post
+#         post['comments'] = comments
+#
+#         # Add user data to each comment
+#         for comment in comments:
+#             # Get the user id of the comment
+#             user_id = comment['user_id']
+#
+#             # Get the user data using the user id
+#             user_data = get_user_data(user_id)
+#
+#             # Add the user data to the comment
+#             comment['user_data'] = user_data
+#
+#     return render(request, 'forum_page/user-forum.html', {'posts': data})
 def forums(request):
-    return render(request, 'forum_page/user-forum.html')
+    db = firestore_db()
+
+    # Create a reference to the collection
+    collection_ref = db.collection('forum_posts')
+
+    # Create a query against the collection
+    query_ref = collection_ref.order_by('date_added', direction=firestore.Query.DESCENDING)
+
+    # Retrieve all documents
+    docs = query_ref.stream()
+
+    posts = []
+
+    for doc in docs:
+        post_data = doc.to_dict()
+        user_id = post_data['user_id']
+        post_id = post_data['post_id']
+
+        # Request a link from Firebase storage if there's an attachment
+        if post_data['attachment']:
+            post_data['attachment'] = cloud_storage.get_file_url_from_firebase(post_data['attachment'])
+
+        # Get the user data using the user id
+        user_data = get_user_data(user_id)
+
+        # Add the user data to the post
+        post_data['user_data'] = user_data
+
+        # Get the comments of the post using the post_id
+        comments = get_all_comments(post_id)
+
+        # Add the comments to the post
+        post_data['comments'] = comments
+
+        # Add user data to each comment
+        for comment in comments:
+            # Get the user id of the comment
+            comment_user_id = comment['user_id']
+
+            # Get the user data using the user id
+            comment_user_data = get_user_data(comment_user_id)
+
+            # Add the user data to the comment
+            comment['user_data'] = comment_user_data
+
+        posts.append(post_data)
+
+    return render(request, 'forum_page/user-forum.html', {'posts': posts})
 
 
 def view_comment_forums(request):
     return render(request, 'forum_page/view-comments.html')
+
+
+def generate_post_id(user_id):
+    # Generate a random UUID (Universally Unique Identifier)
+    unique_id = uuid.uuid4().hex
+
+    # Combine the random UUID with the user ID
+    post_id = f"{user_id}_{unique_id}"
+
+    return post_id
+
+
+def create_forum_post(request):
+    # Get the text content and attachment from the request
+    text_content = request.POST.get('text-content')
+    attachment = request.FILES.get('attachment')
+    acc_id = request.session.get('session_user_id')
+
+    # Check if text content is provided
+    if not text_content:
+        return JsonResponse({'success': False, 'error': 'Please provide a text content'})
+    else:
+        # Check if an attachment is provided
+        is_attachment = False
+        if attachment:
+            is_attachment = True
+
+            # Save the attachment to a temporary location
+            fs = FileSystemStorage(location='homepage/temp/forums/')
+            filename = fs.save(attachment.name, attachment)
+            file_path = fs.path(filename)
+
+            # Upload the attachment to Firebase and get the URL
+            attachment = cloud_storage.upload_file_to_firebase(file_path, f'forum_posts/{generate_filename(acc_id)}')
+
+            # Delete the temporary file
+            fs.delete(filename)
+        else:
+            attachment = None
+
+        # Generate a post ID and create the forum post
+        post_id = generate_post_id(acc_id)
+        create_post_forum(post_id, acc_id, attachment, is_attachment, text_content)
+
+        return JsonResponse({'success': True, 'message': 'Post created successfully'})
+
+
+def generate_comment_id(user_id):
+    # Generate a random UUID (Universally Unique Identifier)
+    unique_id = uuid.uuid4().hex
+    date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    # Combine the random UUID with the user ID
+    comment_id = f"{user_id}_{unique_id}_{date}"
+
+    return comment_id
+
+
+def create_forum_comment(request):
+    # Get the text content and attachment from the request
+    comment = request.POST.get('comment')
+    post_id = request.POST.get('post_id')
+    acc_id = request.session.get('session_user_id')
+    # Check if text content is provided
+    if not comment:
+        return JsonResponse({'success': False, 'error': 'Please provide a text content'})
+    comment_id = generate_comment_id(acc_id)
+    create_comment_forum(comment_id, comment, post_id, acc_id)
+    return JsonResponse({'success': True, 'message': 'Comment created successfully'})
