@@ -59,7 +59,7 @@
         </header>
         <!-- End Header -->
 
-
+        <div class="hidden" id="websocketData" data-packagekey="{{ package_key }} " data-plantid="{{ plants.plant_id }}"></div>
         <!-- Plant Profile Section -->
         <section class="plant_profile w-[80%] max-lg:w-[90%] max-lg:mb-8">
             {% include 'greenery_page/include_plant_profile/plant_profile_section.html' %}
@@ -165,7 +165,149 @@
     <!-- End Main -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
+
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/real_time_data/');
+        const package_key = $("#websocketData").data("packagekey");
+        // Connection opened event handler
+        socket.addEventListener('open', (event) => {
+            console.log('WebSocket connection opened:', event);
+
+            // Send a message to the server (replace 'your_package_key' with the actual package key)
+            socket.send(JSON.stringify({ 'package_key': package_key }));
+        });
+
+        // Message received event handler
+        socket.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+
+        $("#displayMoisture").text(data.message.soil_moist_sensor + "%");
+        $("#displayTemperature").text(data.message.temperature_sensor + "°C");
+        $("#displayHumidity").text(data.message.humidity_sensor + "%");
+
+        if (data.message.soil_moist_sensor === false) {
+            $("#displayMoisture").css({
+            "color": "red",
+            "font-size": "smaller", // Set the font size for error messages
+        }).text("No Data");
+
+        }
+
+        if (data.message.temperature_sensor === false) {
+            $("#displayTemperature").css({
+            "color": "red",
+            "font-size": "smaller", // Set the font size for error messages
+        }).text("No Data");
+
+        }
+
+        if (data.message.humidity_sensor === false) {
+            $("#displayHumidity").css({
+            "color": "red",
+            "font-size": "smaller", // Set the font size for error messages
+        }).text("No Data");
+
+        }
+
+        });
+
+
+        // Connection closed event handler
+        socket.addEventListener('close', (event) => {
+            console.log('WebSocket connection closed:', event);
+        });
+
+        // Error event handler
+        socket.addEventListener('error', (event) => {
+            console.error('WebSocket error:', event);
+        });
+    </script>
+
+    <script>
+
+        $('#set_default_parameter').on('click', function (event) {
+            event.preventDefault();
+            $(this).prop('disabled', true);
+            const package_key = $(this).data('package_key');
+            const plant_id = $(this).data('plant_id');
+            console.log(package_key, plant_id)
+            var data = {
+                'package_key': package_key,
+                'plant_id': plant_id,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),  // Include the CSRF token
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'set_default_values' %}',
+                headers: {'X-CSRFToken': data.csrfmiddlewaretoken},  // Set the CSRF token in headers
+                data: data,
+                success: function (data) {
+                    var message = data.message
+                    alert(message)
+                    window.location.href = '/plant_profile/' + package_key + '/' + plant_id;
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                },
+                complete: function () {
+                    // Re-enable the button after the AJAX request is completed
+                    $('#set_default_parameters').prop('disabled', false);
+                }
+            });
+        });
+
+       function validateScheduleInput(am_pm_id, days_checked_id, hrs_input_id, mins_input_id, schedule_type) {
+
+            const dynamic_dict = {
+                'isValid': false,
+                'am_pm_value': undefined,
+                'selected_days': [],
+                'hour_input': undefined,
+                'minutes_input': undefined,
+                'schedule_type': schedule_type,
+            };
+
+
+            const am_pm_value = $(`input[name="${am_pm_id}"]:checked`).val();
+
+           $('input[name=' + days_checked_id + ']:checked').each(function () {
+                dynamic_dict.selected_days.push($(this).val());
+            });
+            const hrs_input = $(`#${hrs_input_id}`).val();
+            const mins_input = $(`#${mins_input_id}`).val();
+
+            if (hrs_input === "" || mins_input === "") {
+                alert("Please fill in all the fields");
+
+            }
+            else if (isNaN(hrs_input) || isNaN(mins_input)) {
+                alert("Please enter valid numeric values for hours and minutes");
+            }
+            else {
+                if (hrs_input > 12 || hrs_input < 1) {
+                    alert("Please enter a valid hour");
+                } else {
+                    if (mins_input > 59 || mins_input < 0) {
+                        alert("Please enter a valid minute");
+                    } else {
+                        if (am_pm_value === undefined) {
+                            alert("Please select AM or PM");
+                        } else {
+                            dynamic_dict.isValid= true;
+                            dynamic_dict.am_pm_value = am_pm_value;
+
+
+                            dynamic_dict.hour_input = hrs_input;
+                            dynamic_dict.minutes_input = mins_input;
+                        }
+                    }
+                }
+            }
+
+            return dynamic_dict;
+        }
+
         // Function to update the range input based on the selected radio button
         function minTemp(value) {
             $("#min_temperature_level").text(value + "%");
@@ -220,11 +362,11 @@
 
         $("#parameter_button").on("click", function () {
             $("#schedule_button").removeClass("pref_active");
-            ;
             $("#parameter_button").addClass("pref_active");
             $("#parameter_section").removeClass("hidden");
             $("#schedule_section").addClass("hidden");
         });
+
 
         $("#schedule_button").on("click", function () {
             $("#schedule_button").addClass("pref_active");
@@ -232,6 +374,7 @@
             $("#schedule_section").removeClass("hidden");
             $("#parameter_section").addClass("hidden");
         });
+
 
         $('#takeCareBttn').on('click', function (event) {
             event.preventDefault();
@@ -291,7 +434,7 @@
                 success: function (data) {
                     var message = data.message
                     alert(message)
-                    window.location.href = '/plant_profile/' + package_key + '/' + plant_id
+
                 },
                 error: function (error) {
                     console.error('Error:', error);
@@ -302,6 +445,390 @@
                 }
             });
         });
+
+        $('#set_water_schedule').on('click', function (event) {
+        event.preventDefault();
+
+        var results = validateScheduleInput("am/pm_water", "days_checked", "hrs_input_water", "mins_input_water","watering");
+
+        var data = {
+            'am_pm_value': results.am_pm_value,
+            'selected_days': JSON.stringify(results.selected_days),
+            'hour_input': results.hour_input,
+            'minutes_input': results.minutes_input,
+            'schedule_type': results.schedule_type,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+        }
+        if (results.isValid === true)
+        {
+            $('#set_water_schedule').prop('disabled', true);
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'water_scheduling' package_key=package_key %}',
+                headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                data: data,
+                success: function (data) {
+                   if (data.status === "error"){
+                       alert(data.message)
+                        window.location.reload()
+                    }
+                   else {
+                        alert(data.message)
+                    }
+
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                    window.location.reload()
+                },
+                complete: function () {
+                    // Re-enable the button after the AJAX request is completed
+                    $('#set_water_schedule').prop('disabled', false);
+                }
+            });
+
+        }
+
+        });
+
+        $('#set_pesticide_schedule').on('click', function (event) {
+        event.preventDefault();
+
+        var results = validateScheduleInput("am_pm_pesc", "days_checked_pesc", "hrs_input_pesticide", "mins_input_pesticide","pesticide");
+
+        var data = {
+            'am_pm_value': results.am_pm_value,
+            'selected_days': JSON.stringify(results.selected_days),
+            'hour_input': results.hour_input,
+            'minutes_input': results.minutes_input,
+            'schedule_type': results.schedule_type,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+        }
+        if (results.isValid === true)
+        {
+            $('#set_pesticide_schedule').prop('disabled', true);
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'water_scheduling' package_key=package_key %}',
+                headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                data: data,
+                success: function (data) {
+                       if (data.status === "error"){
+                       alert(data.message)
+                        window.location.reload()
+                    }
+                   else {
+                        alert(data.message)
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                    window.location.reload()
+                },
+                complete: function () {
+                    // Re-enable the button after the AJAX request is completed
+                    $('#set_pesticide_schedule').prop('disabled', false);
+                }
+            });
+
+        }
+
+        });
+
+        $('#turn_on_water_sched').on('click', function (event) {
+          event.preventDefault();
+
+            var results = validateScheduleInput("am/pm_water", "days_checked", "hrs_input_water", "mins_input_water","watering");
+
+            var data = {
+                'isSchedule': $(this).val(),
+                'schedule_type': results.schedule_type,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            }
+            console.log(data)
+            if (results.isValid === true)
+            {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'schedule_on_off' package_key=package_key %}',
+                    headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                    data: data,
+                    success: function (data) {
+                        console.log(data)
+                       if (data.status === "error"){
+                           alert(data.message)
+                            window.location.reload()
+                        }
+                       else {
+                            alert(data.message)
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        window.location.reload()
+                    },
+                    complete: function () {
+                        if  (data.isSchedule === "true"){
+                            $("#turn_on_water_sched").text("Turn off Schedule");
+                            $("#turn_on_water_sched").val(false);
+                        }
+                        else{
+                            $("#turn_on_water_sched").text("Turn on Schedule");
+                            $("#turn_on_water_sched").val(true);
+                        }
+
+                    }
+                });
+
+            }
+
+            });
+
+        $('#turn_on_pesc_sched').on('click', function (event) {
+          event.preventDefault();
+            var results = validateScheduleInput("am_pm_pesc", "days_checked_pesc", "hrs_input_pesticide", "mins_input_pesticide","pesticide");
+
+
+            var data = {
+                'isSchedule': $(this).val(),
+                'schedule_type': results.schedule_type,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            }
+            console.log(data)
+            if (results.isValid === true)
+            {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'schedule_on_off' package_key=package_key %}',
+                    headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                    data: data,
+                    success: function (data) {
+                        console.log(data)
+                       if (data.status === "error"){
+                           alert(data.message)
+                            window.location.reload()
+                        }
+                       else {
+                            alert(data.message)
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        window.location.reload()
+                    },
+                    complete: function () {
+                        if (data.isSchedule === "true"){
+                            $("#turn_on_pesc_sched").text("Turn off Schedule");
+                            $("#turn_on_pesc_sched").val(false);
+                        }
+                        else{
+                            $("#turn_on_pesc_sched").text("Turn on Schedule");
+                            $("#turn_on_pesc_sched").val(true);
+                        }
+                    }
+                });
+
+            }
+
+            });
+
+        $('#water_reset').on('click', function (event) {
+          event.preventDefault();
+
+            var data = {
+
+                'schedule_type': 'watering',
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            }
+           var result = confirm("Do you want to reset?");
+
+
+            if (result) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'schedule_reset' package_key=package_key %}',
+                    headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                    data: data,
+                    success: function (data) {
+                        console.log(data)
+                       if (data.status === "error"){
+                           alert(data.message)
+                            window.location.reload()
+                        }
+                       else {
+                            alert(data.message)
+                            window.location.reload()
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        window.location.reload()
+                    },
+                    complete: function () {
+
+                    }
+                });
+            } else {
+                return  false;
+            }
+
+        });
+
+         $('#pesc_reset').on('click', function (event) {
+          event.preventDefault();
+
+            var data = {
+
+                'schedule_type': 'pesticide',
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            }
+           var result = confirm("Do you want to reset?");
+
+
+            if (result) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'schedule_reset' package_key=package_key %}',
+                    headers: {'X-CSRFToken': data.csrfmiddlewaretoken},
+                    data: data,
+                    success: function (data) {
+                        console.log(data)
+                       if (data.status === "error"){
+                           alert(data.message)
+                            window.location.reload()
+                        }
+                       else {
+                            alert(data.message)
+                            window.location.reload()
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        window.location.reload()
+                    },
+                    complete: function () {
+
+                    }
+                });
+            } else {
+                return  false;
+            }
+
+        });
+
+       {% autoescape off %}
+            $(document).ready(function() {
+                water_data = {{ water_data|safe }};
+
+                // Set Schedule for water
+
+                var hrs_input_water = $("#hrs_input_water");
+                var mins_input_water = $("#mins_input_water");
+
+
+                if (water_data.hours_value === 0 || water_data.minutes_value === 0) {
+
+                    hrs_input_water.val("");
+                    mins_input_water.val("");
+
+                }
+                else{
+
+                    hrs_input_water.val(water_data.hours_value);
+                    mins_input_water.val(water_data.minutes_value);
+                }
+
+                 if (water_data['is_Schedule'] === 'true') {
+                     $("#turn_on_water_sched").text("Turn off Schedule");
+                     $("#turn_on_water_sched").val(false);
+
+
+                 }
+                else{
+
+                    $("#turn_on_water_sched").text("Turn on Schedule");
+                    $("#turn_on_water_sched").val(true);
+
+                }
+
+
+                var selectedAmPmWater = water_data.am_pm_value;
+
+                if (selectedAmPmWater === "") {
+                    // If undefined, uncheck both AM and PM radio buttons
+                    $('input[name="am/pm_water"]').prop('checked', false);
+                } else {
+                    // If defined, check the corresponding radio button
+                    $('input[name="am/pm_water"]').filter('[value="' + selectedAmPmWater + '"]').prop('checked', true);
+                }
+                var daysCheckboxes_water = document.getElementsByName("days_checked");
+
+                daysCheckboxes_water.forEach((checkbox) => {
+                    const dayValue = checkbox.value;
+                    checkbox.checked = water_data[dayValue] === 'true'; // Assuming 'true' or 'false' strings
+                });
+
+                // PESTICIDE SECTION
+
+                pesc_data = {{ pesc_data|safe }};
+                // Similarly, set Schedule for pesticide
+                var hrs_input_pesc = $("#hrs_input_pesticide");
+                var mins_input_pesc = $("#mins_input_pesticide");
+
+                if (pesc_data["isSchedule"] === 'true'){
+                    $("#turn_on_pesc_sched").text("Turn off Schedule");
+                    $("#turn_on_pesc_sched").val(false);
+
+                }
+                else{
+                    $("#turn_on_pesc_sched").text("Turn on Schedule");
+                    $("#turn_on_pesc_sched").val(true);
+
+                }
+                // Set hours and minutes for pesticide
+
+                if (pesc_data.hours_value === 0 || pesc_data.minutes_value === 0) {
+
+                    hrs_input_pesc.val("");
+                    mins_input_pesc.val("");
+
+                }
+                else{
+
+                    hrs_input_pesc.val(pesc_data.hours_value);
+                    mins_input_pesc.val(pesc_data.minutes_value);
+                }
+
+                var selectedAmPmPesc = pesc_data.am_pm_value;
+
+                if (selectedAmPmPesc === "") {
+                    // If undefined, uncheck both AM and PM radio buttons
+                    $('input[name="am_pm_pesc"]').prop('checked', false);
+                } else {
+                    // If defined, check the corresponding radio button
+                    $('input[name="am_pm_pesc"]').filter('[value="' + selectedAmPmPesc + '"]').prop('checked', true);
+                }
+                var daysCheckboxes_pesc = document.getElementsByName("days_checked_pesc");
+
+
+                // Set days checkboxes for pesticide
+                daysCheckboxes_pesc.forEach(function(checkbox) {
+                    var dayValue = checkbox.value;
+                    checkbox.checked = pesc_data[dayValue] === 'true';
+                });
+            });
+        {% endautoescape %}
     </script>
 
 {% endblock %}

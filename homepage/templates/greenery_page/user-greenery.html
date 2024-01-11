@@ -28,8 +28,9 @@
          <!-- Greenery Container -->
          <div class="greneery w-full h-full flex max-sm:justify-center">
             <!-- Add Greenery Button -->
-            {% if not account_package %}
+{#            {% if account_package %}#}
             <button
+               data-packageacc = "{{ hasPackage }}"
                id="addGreeneryButton"
                class="group  hover:bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[280px] w-[280px] rounded-3xl max-sm:w-full">
                <div class="flex flex-col items-center">
@@ -49,15 +50,15 @@
                   </svg>
                </div>
             </button>
-            {% endif %}
+{#            {% endif %}#}
             <!-- End Add Greenery Button -->
             <!-- Added Greenery Button -->
 
             {% if account_package %}
+            {% for account_package in account_package%}
             <button
-               id="addPlantButton"
-               data-packagekey = "{{ account_package.package_key.package_key }}"
-               class="group bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[280px] w-[280px] rounded-3xl max-sm:w-full"
+               data-packagekey = "{{ account_package.package_key }}"
+               class="addPlantButton group bg-secondary cursor-pointer hover:shadow-2xl transition ease-in-out duration-500 flex items-center justify-center border border-secondary h-[280px] w-[280px] rounded-3xl max-sm:w-full"
                >
                <div class="flex flex-col items-center">
                   <svg
@@ -84,6 +85,7 @@
                   <!-- END PACKAGE NAME -->
                </div>
             </button>
+            {% endfor %}
             {% endif %}
             <!-- End Added Greenery Button -->
          </div>
@@ -197,6 +199,7 @@
                   <form method="dialog " class="flex gap-4">
                      <!-- Close Button -->
                      <button
+                        data-accpackage = "{{ account_package }}"
                         id="registerGreeneryBttn"
                         class="save btn border p-1 w-[120px] text-sm tracking-widest text-background rounded-full border-accent1 transition ease-in-out duration-500 hover:bg-transparent bg-accent1 hover:text-accent1 font-bold">
                      REGISTER
@@ -218,12 +221,13 @@
    <!-- Include JQuery -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script src="{%static 'js/greenery_page/user-greenery.js' %}"></script>
+
    <script>
-       $('#addPlantButton').on('click', function (event) {
+       $('.addPlantButton').on('click', function (event) {
                 event.preventDefault();
                 var package_key = $(this).data('packagekey');
                 window.location.href = "/add_plant/" + package_key
         });
    </script>
-   <script src="{%static 'js/greenery_page/user-greenery.js' %}"></script>
    {% endblock %}

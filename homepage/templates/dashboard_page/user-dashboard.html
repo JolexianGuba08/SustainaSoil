@@ -10,7 +10,6 @@
     >
 {% endblock %}
 
-
 {% block content %}
     <!-- Include Preloader-->
     {% include 'preloader.html' %}
@@ -48,6 +47,7 @@
                     >
                         GREENERY
                     </h2>
+
                     <div class="flex items-start justify-center w-full">
                         <svg
                                 width="50"
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <!-- End Greenery Count Container -->
-
+            <div id="dash_package_id" class="hidden" data-packagekey="{{ package_key }}"></div>
             <!-- Average Water & Pesticide Level Container -->
             <div
                     class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
@@ -92,7 +92,7 @@
                     <div
                             class="w-full h-[100%] rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
                     >
-                        <div class="water_level absolute h-[100vh] z-50"></div>
+                        <div class="water_level absolute h-[100vh] z-50" id="waterLevel"></div>
                     </div>
                 </div>
                 <!-- End Water Level Container -->
@@ -108,7 +108,7 @@
                     <div
                             class="w-full h-full rounded-full bg-[#edeff1] relative overflow-hidden max-xl:h-[35px]"
                     >
-                        <div class="pesticide_level absolute h-[100vh] z-50"></div>
+                        <div class="pesticide_level absolute h-[100vh] z-50" id="pesticideLevel"></div>
                     </div>
                 </div>
                 <!-- End Pesticide Level Container -->
@@ -311,6 +311,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
     <!-- Include JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+    <script>
+        function updateWidth(className, newWidth) {
+        const elements = document.querySelectorAll(className);
+
+            elements.forEach((element) => {
+              element.style.width = newWidth;
+            });
+          }
+
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/dash_real_time_data/');
+        const package_key = $("#dash_package_id").data("packagekey");
+        // Connection opened event handler
+        socket.addEventListener('open', (event) => {
+            socket.send(JSON.stringify({ package_key: package_key }));
+        });
+
+
+        socket.addEventListener('message', (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                var water_level = data.message.water_level_sensor;
+                var pesticide_level = data.message.water_level_sensor_pesticide;
+                console.log(water_level, pesticide_level);
+
+                const waterLevelElement = document.getElementById('waterLevel');
+                const pestLevelElement = document.getElementById('pesticideLevel');
+                waterLevelElement.style.width = `${water_level}% `;
+                pestLevelElement.style.width = `${pesticide_level}% `;
+
+
+            } catch (error) {
+                console.error("Error handling WebSocket message:", error);
+            }
+        });
+
+        // Connection closed event handler
+        socket.addEventListener('close', (event) => {
+            console.log('WebSocket connection closed:', event);
+        });
+
+        // Error event handler
+        socket.addEventListener('error', (event) => {
+            console.error('WebSocket error:', event);
+        });
+    </script>
 
     <script>
         window.addEventListener('load', function () {

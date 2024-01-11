@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
-    'loginpage.apps.LoginpageConfig'
+    'loginpage.apps.LoginpageConfig',
+
 ]
+ASGI_APPLICATION = 'SustainaSoil.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'homepage.weather_api.get_weather_data_context',
+                # 'homepage.weather_api.get_weather_data_context',
                 'homepage.user_context.context_processor.user_context',
                 'homepage.user_context.context_processor.get_greenery_count',
             ],
