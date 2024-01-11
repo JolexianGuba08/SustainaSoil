@@ -37,9 +37,24 @@ class Account(models.Model):
         return self.acc_first_name + ' ' + self.acc_last_name
 
     def save(self, *args, **kwargs):
-        if self.acc_password:
-            hashed_password = bcrypt.hashpw(self.acc_password.encode('utf8'), bcrypt.gensalt())
-            self.acc_password = hashed_password.decode('utf8')
+        if self._state.adding or not self.acc_id:  # Check if it's a new user being created
+            print('new user')
+            password = self.acc_password.encode('utf-8')
+            salt = bcrypt.gensalt()
+            hashed_password = bcrypt.hashpw(password, salt)
+            self.acc_password = hashed_password.decode('utf-8')
+            print('done hashing')
+        else:
+            try:
+                print('existing user')
+                existing_user = Account.objects.get(pk=self.pk)
+                if self.acc_password != existing_user.acc_password:  # Check if the password has changed
+                    password = self.acc_password.encode('utf-8')
+                    salt = bcrypt.gensalt()
+                    hashed_password = bcrypt.hashpw(password, salt)
+                    self.acc_password = hashed_password.decode('utf-8')
+            except Account.DoesNotExist:
+                pass
         super(Account, self).save(*args, **kwargs)
 
     class Meta:

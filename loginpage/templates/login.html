@@ -164,6 +164,7 @@
 <script>
     $(document).ready(function () {
         const preloader = $('#preloader');
+        const preloadertext = $('#preloader-text');
 
         function showLoader() {
             preloader.show();
@@ -177,7 +178,11 @@
 
         function handleLoginResponse(response) {
             if (response.success) {
-                window.location.href = "{% url 'homepage' %}";
+                preloadertext.html('Login successfully');
+                // add 2-second delay time before redirecting to homepage
+                setTimeout(function () {
+                    window.location.href = "{% url 'homepage' %}";
+                }, 2000);
                 console.log("Login successful");
             } else {
                 console.log("Login unsuccessful");
@@ -205,7 +210,11 @@
                 url: '{% url "login_page" %}',
                 data: $(this).serialize(), // Serialize form data
                 success: function (response) {
-                    handleLoginResponse(response);
+                    preloadertext.html('Checking Credentials');
+                    // add 5 second delay time for the preloader
+                    setTimeout(function () {
+                        handleLoginResponse(response);
+                    }, 2900);
                 },
                 error: function (xhr, errmsg, err) {
                     console.log(xhr.status + ": " + xhr.responseText);
