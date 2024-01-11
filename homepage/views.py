@@ -691,3 +691,11 @@ def change_password(request):
     except Exception as e:
         print(e)
         return JsonResponse({'error': 'Invalid request'})
+
+
+def forums(request):
+    return render(request, 'forum_page/user-forum.html')
+
+
+def view_comment_forums(request):
+    return render(request, 'forum_page/view-comments.html')
