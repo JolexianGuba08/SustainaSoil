@@ -50,8 +50,13 @@
     </ul>
 
     <!-- WebSocket Script -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
-        function calculateTimeDifference(notificationDate, currentDate) {
+        function calculateTimeDifference(notificationDateString, currentDate) {
+            // Parse the date string into a Date object
+            const notificationDate = new Date(notificationDateString);
+
             const timeDifference = Math.floor((currentDate - notificationDate) / (60 * 1000));
 
             if (timeDifference < 60) {
@@ -60,9 +65,17 @@
                 const hours = Math.floor(timeDifference / 60);
                 return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
             } else {
-                return notificationDate.toLocaleDateString(); // or format as you desire
+                // Format the date as MM/DD/YYYY
+                const formattedDate = notificationDate.toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric'
+                });
+
+                return formattedDate;
             }
         }
+
         const socket2 = new WebSocket("ws://" + window.location.host + "/ws/notifications/");
 
         socket2.onopen = function (event) {
@@ -73,12 +86,11 @@
         const data = JSON.parse(event.data);
         const notifications = data.message;
         const datas = data.id
+        const package_id = data.package_id
         const notificationIds = Object.keys(notifications);
         const notificationCount = notificationIds.length;
         const notificationCountElement = document.getElementById("notification_count");
         notificationCountElement.innerText = notificationCount;
-
-
 
         const notificationsContainer = document.getElementById("notifications_container");
         notificationsContainer.innerHTML = '';
@@ -93,7 +105,7 @@
                 const timeDifferenceText = calculateTimeDifference(notificationDate, currentDate);
 
 
-                if (notification.type === "Low Moisture Level"){
+                if (notification.type === "LOW MOISTURE"){
                     const notificationElement = document.createElement("li");
                     notificationElement.className = "notification_item";
                     // Create and append elements for each notification
@@ -111,23 +123,23 @@
                     descriptionElement.innerText = notification.description;
 
                     const irrigateButton = document.createElement('button');
-                    irrigateButton.id = 'irrigate-now-button';
                     irrigateButton.setAttribute('data-id', item_id);
+                    irrigateButton.setAttribute('data-package-id', package_id);
                     irrigateButton.title = 'Irrigate Now';
                     irrigateButton.className = 'water_now_bttn';
                     irrigateButton.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        Irrigate Now`;
+                        Water Now`;
 
 
 
 
                     // Create "Decline" button
                     const declineButton = document.createElement('button');
-                    irrigateButton.id = 'decline-now-button';
-                    irrigateButton.setAttribute('data-id', item_id);
+                    declineButton.setAttribute('data-id', item_id);
+                    declineButton.setAttribute('data-package-id', package_id);
                     declineButton.className = 'decline_bttn';
                     declineButton.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
@@ -175,9 +187,52 @@
             console.log("WebSocket connection closed:", event);
         };
 
-        // Function to fetch notifications when needed
         function getNotification() {
             socket2.send(JSON.stringify({ message: "Fetch notifications" }));
         }
+
+
+        $('#notifications_container').on('click', '.water_now_bttn', function () {
+            const id = $(this).data('id');
+            const package_id = $(this).data('package-id');
+
+            console.log(id, package_id);
+
+            var result = confirm('Are you sure you want to water now?');
+            if (result){
+                $.ajax({
+                    url: '/water_now/' + package_id + '/',
+                    data: {
+                        'notif_id': id
+                    },
+                    type: 'GET',
+                    success: function (response) {
+                        alert(response.message)
+                    }
+                });
+            }
+        });
+
+        $('#notifications_container').on('click', '.decline_bttn', function () {
+            const id = $(this).data('id');
+            const package_id = $(this).data('package-id');
+
+            console.log(id, package_id);
+
+            var result = confirm('Are you sure you want to decline it ?');
+            if (result){
+                $.ajax({
+                    url: '/cancel_now/' + package_id + '/',
+                    data: {
+                        'notif_id': id
+                    },
+                    type: 'GET',
+                    success: function (response) {
+                        alert(response.message)
+                    }
+                });
+            }
+        });
+
     </script>
 </div>

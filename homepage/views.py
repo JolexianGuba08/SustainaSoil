@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from homepage.firestore_db_modules.realtime_database_connection import update_water_scheduling, update_parameter, \
-    turning_on_off, get_notification
+    turning_on_off, pesticide_now, update_notification_type, water_now
 # Other imports...
 from homepage.forms import EditProfileForm, ChangePasswordForm
 from homepage.models import Packages, Account_Package, Account, Account_Plants, Plants, Account_Plant_Preferences
@@ -575,6 +575,60 @@ def schedule_reset(request, package_key):
         print(e)
         return JsonResponse({'error': f'{e}'})
 
+def water_now_button(request,package_key):
+    notif_id = request.GET.get('notif_id')
+    try:
+        print(notif_id,package_key)
+        if notif_id:
+          update_notification_type(package_key,notif_id)
+
+        response = water_now(package_key)
+        if response["status"] == "success":
+            print(response["status"])
+            message = "Watering now"
+            return JsonResponse({'message': message})
+        elif response["status"] == "false":
+            message = "Currently Watering"
+            return JsonResponse({'message': message})
+
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
+
+def pesc_now(request ,package_key):
+    notif_id = request.GET.get('notif_id')
+    try:
+        if notif_id:
+           update_notification_type(package_key,notif_id)
+
+        response = pesticide_now(package_key)
+        if response["status"] == "success":
+            message = "Apply pesticide now"
+            return JsonResponse({'message': message})
+        elif response["status"] == "false":
+            message = "Currently Applying Pesticide"
+            return JsonResponse({'message': message})
+
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
+
+def cancel_now(request,package_key):
+    notif_id = request.GET.get('notif_id')
+    try:
+
+        response = update_notification_type(package_key,notif_id)
+
+        if response["status"] == "success":
+            message = "Cancel now"
+            return JsonResponse({'message': message})
+        elif response["status"] == "false":
+            message = "Failed to cancel"
+            return JsonResponse({'message': message})
+
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
 
 # Includes Plant Profile Views
 def parameter_form(request):
@@ -700,3 +754,5 @@ def forums(request):
 
 def view_comment_forums(request):
     return render(request, 'forum_page/view-comments.html')
+
+

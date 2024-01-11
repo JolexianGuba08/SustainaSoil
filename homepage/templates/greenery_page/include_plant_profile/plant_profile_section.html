@@ -27,7 +27,12 @@
                     >
                         TAKE CARE
                     </button>
+                {% else %}
+                    <button id="waterNow" data-package_key="{{ package_key }}">Water Now</button>
+                    <button id="pescNow" data-package_key="{{ package_key }}">Apply Pestecide Now</button>
                 {% endif %}
+
+
             </div>
             <!-- Temperature, Humidity & Moisture Level -->
             <div

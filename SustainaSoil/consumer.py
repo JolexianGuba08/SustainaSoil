@@ -1,9 +1,15 @@
 import asyncio
 import json
+import time
+from datetime import datetime
+
 import httpx
 
 import requests
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+from homepage.firestore_db_modules.realtime_database_connection import create_notification
+from homepage.models import Account_Plants
 
 
 # -------------------------------------------- REALTIME DATABASE FUNCTIONS -----------------------------------------------------
@@ -32,7 +38,7 @@ async def get_sensor_data(collection_name, field_name, package_key):
         print(f"Error getting data from RTDB: {e}")
         return False  # Indicate failure
 
-
+last_notification_time = 0
 class RealTimeData(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
@@ -41,7 +47,9 @@ class RealTimeData(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print("Disconnected from websocket")
 
+
     async def receive(self, text_data):
+        global last_notification_time
         try:
             data = json.loads(text_data)
             package_key = data['package_key']
@@ -58,6 +66,14 @@ class RealTimeData(AsyncWebsocketConsumer):
                 }))
                 # Wait for 2 seconds before fetching data again
                 await asyncio.sleep(3)
+                min_moisture = await get_sensor_data('parameters', 'min_moisture', package_key)
+                current_moisture = await get_sensor_data('soil_moisture_sensor', 'moisture_level', package_key)
+
+                if (int(current_moisture) < int(min_moisture) and time.time() - last_notification_time > 200 and
+                        int(current_moisture) != 0):
+                    print("Low moisture detected")
+                    create_notification(package_key, "LOW MOISTURE")
+                    last_notification_time = time.time()  # Update the last notification timestamp
 
         except json.JSONDecodeError as e:
             print(f"Error decoding JSON: {e}")
@@ -114,16 +130,16 @@ class GetNotifications(AsyncWebsocketConsumer):
                 url = f"{firebase_url}/notification/HESUYAM71Wzh_1001.json"
 
                 response = requests.get(url)
-                # Check if the request was successful (status code 200)
                 if response.status_code == 200:
                     data = response.json()
-
+                    data = dict(sorted(data.items(), key=lambda x: datetime.strptime(x[1]['date'], '%d/%m/%Y %H:%M:%S'), reverse=True))
                     sorted_data = sorted(data.values(), key=lambda x: x['date'], reverse=True)
 
                     if data:
                         await self.send(text_data=json.dumps({
                             'message': sorted_data,
-                            'id': sorted_data
+                            'id': data,
+                            'package_id':'HESUYAM71Wzh_1001'
                         }))
                     else:
                         await self.send(text_data=json.dumps({

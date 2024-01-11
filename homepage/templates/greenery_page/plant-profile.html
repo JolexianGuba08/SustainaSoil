@@ -226,6 +226,66 @@
 
     <script>
 
+        $('#waterNow').on('click', function (event) {
+            event.preventDefault();
+             var notif_id = ""
+             var package_key = $(this).data('package_key');
+             var result = confirm("Do you want to water now?");
+             if (result){
+                  $.ajax({
+                type: 'GET',
+                url: '/water_now/' + package_key + '/',
+                headers: {'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()},
+                data: {'notif_id': notif_id},
+                success: function (data) {
+
+                   if (data.status === "error"){
+                       alert(data.message)
+
+                    }
+                   else {
+                        alert(data.message)
+
+                    }
+
+                }
+                 });
+             }
+             else{
+                return false;
+             }
+         });
+
+        $('#pescNow').on('click', function (event){
+            event.preventDefault();
+             var notif_id = ""
+             var package_key = $(this).data('package_key');
+             var result = confirm("Do you want to apply pesticide now?");
+             if (result){
+              $.ajax({
+                type: 'GET',
+                url: '/pesticide_now/' + package_key + '/',
+                headers: {'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()},
+                data: {'notif_id': notif_id},
+                success: function (data) {
+
+                   if (data.status === "error"){
+                       alert(data.message)
+
+                    }
+                   else {
+                        alert(data.message)
+
+                    }
+
+             }
+             });
+             }
+             else{
+                return false;
+             }
+         });
+
         $('#set_default_parameter').on('click', function (event) {
             event.preventDefault();
             $(this).prop('disabled', true);
@@ -727,7 +787,9 @@
 
         });
 
+
        {% autoescape off %}
+
             $(document).ready(function() {
                 water_data = {{ water_data|safe }};
 

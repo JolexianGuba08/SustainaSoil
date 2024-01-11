@@ -72,16 +72,17 @@
             <div
                     class="card max-[450px]:border-none max-[450px]:shadow-none w-[68%] bg-base-100 shadow-xl bg-transparent border border-secondary rounded-[32px] max-xl:w-full max-xl:rounded-[20px] max-xl:mt-3 flex-shrink-0"
             >
+                {% if not package_key %}
                 <!-- No Device Connected Message -->
                 <div
-                        class="w-full h-full p-5 text-sm flex justify-center items-center"
-                >
+                        class="w-full h-full p-5 text-sm flex justify-center items-center">
                     <p class="tracking-widest text-xl text-accent1">NO DEVICE CONNECTED</p>
                 </div>
+                {% else %}
 
                 <!-- Water Level Container -->
                 <div
-                        class="empty_message water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
+                        class=" water card-body p-7 pb-5 max-[450px]:flex max-[450px]:justify-center"
                 >
                     <h2
                             class="card-title text-accent1 font-normal indent-5 tracking-[5px] text-center text-sm"
@@ -98,7 +99,7 @@
                 <!-- End Water Level Container -->
 
                 <!-- Pesticide Level Container -->
-                <div class="empty_message pesticide card-body p-6">
+                <div class=" pesticide card-body p-6">
                     <h2
                             class="card-title text-accent1 font-normal indent-5 tracking-[5px] text-center text-sm"
                     >
@@ -113,6 +114,7 @@
                 </div>
                 <!-- End Pesticide Level Container -->
             </div>
+            {% endif %}
         </section>
         <!-- End Greenery Count and Average Water & Pesticide Level Section -->
 

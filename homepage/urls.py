@@ -33,7 +33,9 @@ urlpatterns = [
     path('water_scheduling/<str:package_key>/', views.water_scheduling, name='water_scheduling'),
     path('schedule_on_off/<str:package_key>/', views.schedule_on_off, name='schedule_on_off'),
     path('schedule_reset/<str:package_key>/', views.schedule_reset, name='schedule_reset'),
-
+    path('water_now/<str:package_key>/', views.water_now_button, name='water_now'),
+    path('pesticide_now/<str:package_key>/', views.pesc_now, name='pesticide_now'),
+    path('cancel_now/<str:package_key>/', views.cancel_now, name='cancel_now'),
     # Forums Urls
     path('forums/', views.forums, name='forums'),
     path('view_comments/', views.view_comment_forums, name='view_comments'),

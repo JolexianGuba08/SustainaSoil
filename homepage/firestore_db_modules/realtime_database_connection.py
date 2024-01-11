@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 
 def update_water_scheduling(package_key, am_pm, hours, minutes, repeat_days, schedule_type,is_daily):
@@ -14,7 +16,7 @@ def update_water_scheduling(package_key, am_pm, hours, minutes, repeat_days, sch
         existing_data["minutes"] = minutes
         for day in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
             existing_data[day] = repeat_days.get(day)
-        existing_data["daily"] = 'true' if is_daily else 'false'
+        existing_data["daily"] = True if is_daily else False
 
         update_url = f"{firebase_url}/{data_path}"
 
@@ -106,7 +108,9 @@ def water_now(package_key):
         existing_data_response = requests.get(existing_data_url)
         existing_data = existing_data_response.json()
         if existing_data:
-            existing_data["waterNow"] = 'true'
+            if existing_data["waterNow"] == True:
+                return {"status": "false", "message": "Currently Watering"}
+            existing_data["waterNow"] = True
             update_url = f"{firebase_url}/{data_path}"
 
             response = requests.patch(update_url, json=existing_data)
@@ -130,7 +134,9 @@ def pesticide_now(package_key):
     existing_data_response = requests.get(existing_data_url)
     existing_data = existing_data_response.json()
     if existing_data:
-        existing_data["waterNow"] = 'true'
+        if existing_data["waterNow"] == True:
+            return {"status": "false", "message": "Currently Pesticiding"}
+        existing_data["waterNow"] = True
         update_url = f"{firebase_url}/{data_path}"
 
         response = requests.patch(update_url, json=existing_data)
@@ -160,9 +166,39 @@ def get_data(collection_name, field_name ,package_key):
         return False
 
 
-def create_notification(package_key, notification_data):
+def create_notification(package_key, type_of_notification):
+    type_of_notif = type_of_notification.upper()
+    header = ""
+    date = datetime.datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    description = ""
+    type = ""
+
+    if type_of_notif == "APPLIED WATER":
+        header = "WATERED"
+        description = "YOUR PLANT HAS BEEN WATERED "
+        type = "WATERED"
+    elif type_of_notif == "APPLIED PESTICIDE":
+        header = "PESTICIDED"
+        description = "YOUR PLANT HAS BEEN PESTICIDED"
+        type = "PESTICIDED"
+    elif type_of_notif == "LOW MOISTURE":
+        header = "LOW MOISTURE LEVEL"
+        description = "THE MOISTURE LEVEL OF THE PLANT IS LOW"
+        type = "LOW MOISTURE"
+    else:
+        return {"status": "error", "message": "Invalid notification type"}
+
+
+
+    notification_data = {
+        "header": header,
+        "description": description.capitalize(),
+        "date": date,
+        "type": type
+
+    }
     firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com/"
-    url = f"{firebase_url}/notification/{package_key}.json"
+    url = f"{firebase_url}/notification/HESUYAM71Wzh_1001.json"
 
     response = requests.post(url, json=notification_data)
     if response.status_code == 200:
@@ -171,21 +207,49 @@ def create_notification(package_key, notification_data):
         # Indicate failure by returning a dictionary
         return {"status": "error", "message": f"Failed to create notification. Status code: {response.status_code}"}
 
-
 def get_notification(package_key):
-    firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com/"
-    url = f"{firebase_url}/notification/{package_key}.json"
-    response = requests.get(url)
+    try:
+        firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com/"
+        url = f"{firebase_url}/notification/{package_key}.json"
+        response = requests.get(url)
 
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        data = response.json()
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            data = response.json()
 
-        if data:
-            return data
+            if data:
+                return data
+            else:
+                return False
         else:
+            # Handle the case where the request was not successful
+            print(f"Failed to fetch notification. Status code: {response.status_code}")
             return False
-    else:
-        # Handle the case where the request was not successful
-        print(f"Failed to fetch notification. Status code: {response.status_code}")
+    except Exception as e:
+        print(e)
+        return False
+
+def update_notification_type(package_key,notification_id):
+    try:
+        firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com/"
+        data_path = f"notification/{package_key}/{notification_id}.json"
+
+        existing_data_url = f"{firebase_url}/{data_path}"
+        existing_data_response = requests.get(existing_data_url)
+        existing_data = existing_data_response.json()
+        if existing_data:
+            existing_data["type"] = ""
+            update_url = f"{firebase_url}/{data_path}"
+
+            response = requests.patch(update_url, json=existing_data)
+            if response.status_code == 200:
+                return {"status": "success", "message": "Updated successfully"}
+            else:
+                # Indicate failure by returning a dictionary
+                return {"status": "error", "message": f"Failed to update data. Status code: {response.status_code}"}
+        else:
+            # Indicate package not found by returning a dictionary
+            return {"status": "error", "message": f"Package with key {package_key} not found"}
+    except Exception as e:
+        print(e)
         return False
