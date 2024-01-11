@@ -453,12 +453,30 @@
             console.log(old_password);
 
             if (new_password !== confirm_password) {
-                alert('New password and confirm password do not match');
+                {#alert('New password and confirm password do not match');#}
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>New password and confirm password do not match.</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
+                window.location.reload()
                 return;
             }
 
             if (old_password === new_password) {
-                alert('New password and old password are the same');
+                {#alert('New password and old password are the same');#}
+                $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                    '<span> <p class="font-extrabold">WARNING</p>New password and old password are the same</span>' +
+                    '</div>').appendTo('body');
+
+                setTimeout(function () {
+                    $('.alert').remove();
+                }, 3000);
+                window.location.reload()
                 return;
             }
 
@@ -500,7 +518,17 @@
                         });
                     } else {
                         console.log('Old password is incorrect');
-                        alert('Old password is incorrect');
+                        {#alert('Old password is incorrect');#}
+                        $('<div role="alert" class="alert alert-warning rounded-none flex justify-center absolute w-full" style="z-index: 10000;" ' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">' + '</svg>' +
+                            '<span> <p class="font-extrabold">WARNING</p>Old password is incorrect</span>' +
+                            '</div>').appendTo('body');
+
+                        setTimeout(function () {
+                            $('.alert').remove();
+                        }, 3000);
+                        window.location.reload()
+
                     }
                 },
                 error: function (xhr, errmsg, err) {
