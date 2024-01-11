@@ -1,229 +1,182 @@
-<!-- Notification Icon -->
+<!-- Notification Icon and Container -->
 <div class="dropdown dropdown-end mr-6 z-50">
-  <div
-    tabindex="0"
-    role="button"
-    title="Notification"
-    class="btn group notification_btn m-1 btn bg-transparent border-none shadow-none"
-  >
-    <!-- DISPLAY NUMBER OF NOTIFICATION -->
-    <h1
-      class="absolute cursor-pointer font-bold text-accent1 left-8 bottom-8"
-    >
-      5
-    </h1>
-
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      data-slot="icon"
-      class="w-8 h-8 text-accent1"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-      />
-    </svg>
-  </div>
-  <ul
-    tabindex="0"
-    class="notif dropdown-content z-[1] h-[410px] block menu p-2 shadow-xl bg-base-100 rounded-box w-96 bg-background overflow-auto border border-secondary"
-  >
-    <li class="">
-      <div
-        class="hover:bg-transparent see_all flex items-center justify-between"
-      >
-        <h1
-          class="text-2xl hover:bg-transparent font-bold tracking-wider text-accent1"
-        >
-          NOTIFICATION
+    <!-- Notification Button -->
+    <div
+        tabindex="0"
+        role="button"
+        title="Notification"
+        class="btn group notification_btn m-1 btn bg-transparent border-none shadow-none"
+        onclick="getNotification()">
+        <!-- Display Number of Notifications -->
+        <h1 class="absolute cursor-pointer font-bold text-accent1 left-8 bottom-8" id="notification_count">
         </h1>
-
-        <button class="tracking-wide">SEE ALL</button>
-      </div>
-      <div
-        class="n_div mx-2 border rounded-none bg border-t-secondary border-x-0 border-b-0 h-0"
-      ></div>
-    </li>
-
-    <!-- Low Moisture Level Notification -->
-    <li class="p-2">
-      <!-- DISPLAY HEADING NOTIF -->
-      <h2
-        class="uppercase tracking-widest text-accent1 font-bold mb-0 bg-secondary hover:bg-secondary"
-      >
-        Low Moisture Level
-      </h2>
-
-      <!-- DISPLAY DATE NOTIF -->
-      <p class="tracking-wider">12/21/2023</p>
-
-      <!-- DISPLAY DISCRIPTION -->
-      <p class="text-accent2 hover:bg-transparent text-left">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-        vero inventore quasi eum
-      </p>
-
-      <!-- IRRIGATE NOW BTN -->
-      <button title="check button" class="">
+        <!-- Notification Icon -->
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          data-slot="icon"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            data-slot="icon"
+            class="w-8 h-8 text-accent1">
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
         </svg>
-        Irrigate Now
-      </button>
+    </div>
 
-      <!-- DECLINE BTN -->
-      <button class="">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          data-slot="icon"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
-        </svg>
-        Decline
-      </button>
-    </li>
+    <!-- Notification Container -->
+    <ul
 
-    <!-- Weather Notification -->
-    <li class="p-2">
-      <!-- DISPLAY HEADING NOTIF -->
-      <h2
-        class="uppercase tracking-widest text-accent1 font-bold mb-1 bg-secondary hover:bg-secondary"
-      >
-        Stormy Day Today
-      </h2>
+        tabindex="0"
+        class="notif dropdown-content z-[1] h-[410px] block menu p-2 shadow-xl bg-base-100 rounded-box w-96 bg-background overflow-auto border border-secondary">
+        <!-- Notification Content Header -->
+        <li class="">
+            <div
+                class="hover:bg-transparent see_all flex items-center justify-between">
+                <h1
+                    class="text-2xl hover:bg-transparent font-bold tracking-wider text-accent1">
+                    NOTIFICATION
+                </h1>
+            </div>
+            <div
+                class="n_div mx-2 border rounded-none bg border-t-secondary border-x-0 border-b-0 h-0">
+            </div>
+        </li>
+        <div id="notifications_container">
 
-      <!-- DISPLAY DATE OF NOTIF -->
-      <p class="tracking-wider">12/21/2023</p>
+        </div>
+    </ul>
 
-      <!-- DISPLAY DESCRIPTION -->
-      <p class="text-accent2 hover:bg-transparent text-left">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-        vero inventore quasi eum
-      </p>
+    <!-- WebSocket Script -->
+    <script>
+        function calculateTimeDifference(notificationDate, currentDate) {
+            const timeDifference = Math.floor((currentDate - notificationDate) / (60 * 1000));
 
-      <!-- IRRIGATE NOW BTN -->
-      <button title="check button" class="">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          data-slot="icon"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
-        </svg>
-        Irrigate Now
-      </button>
+            if (timeDifference < 60) {
+                return `${timeDifference} ${timeDifference === 1 ? 'minute' : 'minutes'} ago`;
+            } else if (timeDifference < 24 * 60) {
+                const hours = Math.floor(timeDifference / 60);
+                return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+            } else {
+                return notificationDate.toLocaleDateString(); // or format as you desire
+            }
+        }
+        const socket2 = new WebSocket("ws://" + window.location.host + "/ws/notifications/");
 
-      <!-- DECLINE BTN -->
-      <button class="">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          data-slot="icon"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-          />
-        </svg>
-        Decline
-      </button>
-    </li>
+        socket2.onopen = function (event) {
+            console.log("WebSocket connection opened:", event);
+        };
 
-    <!-- Watered Successfully Notification -->
-    <li class="p-2">
-      <!-- DISPLAY HEADING NOTIF -->
-      <h2
-        class="uppercase tracking-widest text-accent1 font-bold mb-1 bg-secondary hover:bg-secondary"
-      >
-        WATERED
-      </h2>
+        socket2.addEventListener('message', function (event) {
+        const data = JSON.parse(event.data);
+        const notifications = data.message;
+        const datas = data.id
+        const notificationIds = Object.keys(notifications);
+        const notificationCount = notificationIds.length;
+        const notificationCountElement = document.getElementById("notification_count");
+        notificationCountElement.innerText = notificationCount;
 
-      <!-- DISPLAY DATE OF NOTIF -->
-      <p class="tracking-wider">12/21/2023</p>
 
-      <!-- DISPLAY DESCRIPTION -->
-      <p class="text-accent2 hover:bg-transparent text-left">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-        vero inventore quasi eum
-      </p>
-    </li>
 
-    <!-- Applied Pesticide Successfully Notification -->
-    <li class="p-2">
-      <!-- DISPLAY HEADING NOTIF -->
-      <h2
-        class="uppercase tracking-widest text-accent2 font-bold mb-1 bg-secondary hover:bg-secondary"
-      >
-        APPLIED PESTICIDE
-      </h2>
+        const notificationsContainer = document.getElementById("notifications_container");
+        notificationsContainer.innerHTML = '';
 
-      <!-- DISPLAY DATE OF NOTIF -->
-      <p class="tracking-wider">12/21/2023</p>
+        for (var items in datas) {
+            if (datas.hasOwnProperty(items)) {
+                const item_id = items
+                const notification = datas[items];
 
-      <!-- DISPLAY DESCRIPTION -->
-      <p class="text-accent2 hover:bg-transparent text-left">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-        vero inventore quasi eum
-      </p>
-    </li>
+                const notificationDate = new Date(notification.date);
+                const currentDate = new Date();
+                const timeDifferenceText = calculateTimeDifference(notificationDate, currentDate);
 
-    <!-- Annopuncement Notification -->
-    <li class="p-2">
-      <!-- DISPLAY HEADING NOTIF -->
-      <h2
-        class="uppercase tracking-widest text-red font-bold mb-1 bg-secondary hover:bg-secondary"
-      >
-        UNDER MAINTENANCE
-      </h2>
 
-      <!-- DISPLAY DATE OF NOTIF -->
-      <p class="tracking-wider">12/21/2023</p>
+                if (notification.type === "Low Moisture Level"){
+                    const notificationElement = document.createElement("li");
+                    notificationElement.className = "notification_item";
+                    // Create and append elements for each notification
+                    const headerElement = document.createElement("h2");
+                    headerElement.className = "notification_header uppercase tracking-widest text-accent1 font-bold mb-0 bg-secondary hover:bg-secondary";
+                    headerElement.innerText = notification.header;
 
-      <!-- DISPLAY DESCRIPTION -->
-      <p class="text-accent2 hover:bg-transparent text-left">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-        vero inventore quasi eum
-      </p>
-    </li>
-  </ul>
+                    // Create and append elements for each notification
+                    const dateElement = document.createElement("p");
+                    dateElement.className = "tracking-wider";
+                    dateElement.innerText = `${timeDifferenceText}`;
+
+                    const descriptionElement = document.createElement("p");
+                    descriptionElement.className = "notification_description text-accent2 hover:bg-transparent text-left";
+                    descriptionElement.innerText = notification.description;
+
+                    const irrigateButton = document.createElement('button');
+                    irrigateButton.id = 'irrigate-now-button';
+                    irrigateButton.setAttribute('data-id', item_id);
+                    irrigateButton.title = 'Irrigate Now';
+                    irrigateButton.className = 'water_now_bttn';
+                    irrigateButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        Irrigate Now`;
+
+                    {#var irrigateNowButton = document.getElementById('irrigate-now-button');#}
+                    {#// Add the data-id attribute with a value#}
+
+
+                    // Create "Decline" button
+                    const declineButton = document.createElement('button');
+                    declineButton.className = 'decline_bttn';
+                    declineButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        Decline`;
+
+                    // Append elements to the notification item
+                    notificationElement.appendChild(headerElement);
+                    notificationElement.appendChild(dateElement);
+                    notificationElement.appendChild(descriptionElement)
+                    notificationElement.appendChild(irrigateButton);
+                    notificationElement.appendChild(declineButton);
+                    notificationsContainer.appendChild(notificationElement);
+
+                }
+                else{
+                    const notificationElement = document.createElement("li");
+                    notificationElement.className = "notification_item";
+
+                    // Create and append elements for each notification
+                    const headerElement = document.createElement("h2");
+                    headerElement.className = "notification_header uppercase tracking-widest text-accent1 font-bold mb-0 bg-secondary hover:bg-secondary";
+                    headerElement.innerText = notification.header;
+
+                      const dateElement = document.createElement("p");
+                    dateElement.className = "tracking-wider";
+                    dateElement.innerText = `${timeDifferenceText}`;
+
+                    const descriptionElement = document.createElement("p");
+                    descriptionElement.className = "notification_description text-accent2 hover:bg-transparent text-left";
+                    descriptionElement.innerText = notification.description;
+
+                    // Append elements to the notification item
+                    notificationElement.appendChild(headerElement);
+                    notificationElement.appendChild(dateElement);
+                    notificationElement.appendChild(descriptionElement);
+                    notificationsContainer.appendChild(notificationElement);
+                }
+            }
+        }
+        });
+
+        socket2.onclose = function (event) {
+            console.log("WebSocket connection closed:", event);
+        };
+
+        // Function to fetch notifications when needed
+        function getNotification() {
+            socket2.send(JSON.stringify({ message: "Fetch notifications" }));
+        }
+    </script>
 </div>
-<!-- End Notification Icon -->

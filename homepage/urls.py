@@ -29,6 +29,7 @@ urlpatterns = [
     path('water_scheduling/<str:package_key>/', views.water_scheduling, name='water_scheduling'),
     path('schedule_on_off/<str:package_key>/', views.schedule_on_off, name='schedule_on_off'),
     path('schedule_reset/<str:package_key>/', views.schedule_reset, name='schedule_reset'),
+
     # Includes for Plant Profile Urls
 
 ]

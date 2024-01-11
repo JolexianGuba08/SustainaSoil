@@ -7,7 +7,7 @@ import requests
 from django.urls import reverse
 
 from homepage.firestore_db_modules.realtime_database_connection import update_water_scheduling, update_parameter, \
-    turning_on_off
+    turning_on_off, get_notification
 # Other imports...
 from homepage.forms import EditProfileForm
 from homepage.models import Packages, Account_Package, Account, Account_Plants, Plants, Account_Plant_Preferences
@@ -559,6 +559,9 @@ def schedule_reset(request,package_key):
     except Exception as e:
         print(e)
         return JsonResponse({'error': f'{e}'})
+
+
+
 
 
 

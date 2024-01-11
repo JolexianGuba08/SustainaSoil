@@ -95,3 +95,51 @@ class DashBoardRealTime(AsyncWebsocketConsumer):
 
         except Exception as e:
             print(f"Error in receive: {e}")
+
+
+# -------------------------------------------- NOTIFICATION FUNCTIONS -----------------------------------------------------
+class GetNotifications(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        print("Connected to notifiction socket")
+
+    async def disconnect(self, close_code):
+        print("Disconnected from ")
+
+    async def receive(self, text_data):
+        try:
+            while True:
+                firebase_url = "https://sustainasoil-22edf-default-rtdb.firebaseio.com"
+                url = f"{firebase_url}/notification/HESUYAM71Wzh_1001.json"
+
+                response = requests.get(url)
+                # Check if the request was successful (status code 200)
+                if response.status_code == 200:
+                    data = response.json()
+
+                    sorted_data = sorted(data.values(), key=lambda x: x['date'], reverse=True)
+
+
+                    if data:
+                        await self.send(text_data=json.dumps({
+                            'message': sorted_data,
+                            'id': data
+                        }))
+                    else:
+                        await self.send(text_data=json.dumps({
+                            'message': 'No notifications'
+                        }))
+                else:
+                    # Handle the case where the request was not successful
+                    print(f"Failed to fetch notification. Status code: {response.status_code}")
+                    await self.send(text_data=json.dumps({
+                        'message': 'No notifications'
+                    }))
+
+                await asyncio.sleep(10)
+
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+
+        except Exception as e:
+            print(f"Error in receive: {e}")
